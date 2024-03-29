@@ -2,12 +2,14 @@ from pymongo import MongoClient
 
 class MongoDB():
     def __init__(self, host):
+        print("Intentando conectarse a MongoDB en", host)
         self.client = MongoClient(host)
 
         self.bbdd = self.client["test_polycapglot"]
 
         self.users = self.bbdd["users"]
         self.videos = self.bbdd["videos"]
+        self.translated = self.bbdd["translated"]
         self.counters = self.bbdd["counters"]
 
         self.initialize_counters()
@@ -130,7 +132,7 @@ class MongoDB():
     
     #* Video
 
-    def preupload_video(self, email: str, id: str, title: str, language: str):
+    def preupload_video(self, email: str, id: str, title: str, language: str, uri: str):
         
         found = self.videos.find_one({"id": id})
 
@@ -141,7 +143,9 @@ class MongoDB():
                 "id": id,
                 "title": title,
                 "language": language,
-                "firebase_uri": "EMPTY"
+                "firebase_uri": uri,
+                "video_url" : "INSERT URL" #! INSERT FIREBASE VIDEO URL AFTER PREREQUEST
+                "translations": []
             })
             self.users.update_one(
                 {"email": email},
@@ -150,4 +154,16 @@ class MongoDB():
 
         return proceed
     
+    def insert_translation(self, id: str, sub: str, trans_id):
+        found = self.videos.find_one({"id": id})
+        
+        if found is None:
+            return False
+        
+        self.translated.insert_one({
+            "id": trans_id,
+
+        })
+
+        return True
     

@@ -2,7 +2,7 @@ from flask import request, jsonify
 from flask_restx import Namespace, Resource
 
 from extensions import db, video_processor
-from utils.controller_utils import generate_hash, generate_firebase
+from utils.controller_utils import generate_video_hash, generate_translation_hash
 from models.video_models import video_model, videoDTO_model, prerequest_model
 
 video_controller = Namespace("video")
@@ -45,9 +45,10 @@ class VideoRequest(Resource):
             video_controller.abort(404, "email uploading not registered")
             pass
 
-        generated = generate_hash(data["email"], data["title"], data["language"])
+        generated = generate_video_hash(data["email"], data["title"], data["language"])
+        uri = f"raw_videos/{generated}"
 
-        proceed = db.preupload_video(data["email"], generated, data["title"], data["language"]) #TODO: Can it proceed or not process USING MONGO
+        proceed = db.preupload_video(data["email"], generated, data["title"], data["language"], uri) #TODO: Can it proceed or not process USING MONGO
 
         if proceed:
             
@@ -55,28 +56,37 @@ class VideoRequest(Resource):
                     {
                         "message": "proceed", 
                         "firebase" : {
-                            "uri": "INSERT_FIREBASE_URI",
-                            "bucket": "INSERT_FIREBASE_BUCKET",
-                            #TODO: Autentification
+                            "uri": uri,
+                            #? really needed? TODO: Autentification
                         }
                     }
-                    ) #? Maybe I can return the Firebase URL from here so the client doesn't store it? On Android perhaps, on React IDK
+                    )
         video_controller.abort(403, "Not able to proceed")
 
-
+@video_controller.route("/upload")
 class VideoUpload(Resource):
     def post(self):
-        data = request.json
+        data = request.json        
+        
+        user = data["user"]
+
+        id = data["video"]["id"]
+        filename = id #Hash de video
+
+        original = data["video"]["language"] #Idioma original
+        sub = data["video"]["sub"] #Idioma del subtitulo
 
         #TODO: AUTENTIFICATION CHECK AND STUFF
+        #! USER CHECKING NEEDED
+
+        trans_id = generate_translation_hash(id, sub)
+
+        #Database insertion
+        if db.insert_translation(id, sub, trans_id):
+            video_controller.abort(400, "Error creating translation")
 
         #TODO: Descargar video desde firebase
         print("Descargando video de URI: ", data["firebase_uri"])
-        
-        filename = data["id"] #Hash de video
-
-        original = data["language"] #Idioma original
-        sub = data["sub"] #Idioma del subtitulo
 
         video_processor.process_video(filename, original, sub) #Lee desde /tmp/{id}.mp4, saca en /tmp/final_{id}.mp4
 

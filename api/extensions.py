@@ -11,4 +11,4 @@ api = Api(
     default_swagger_filename="/docs/swagger"
 )
 
-video_processor = MyVideoProcessor()
+video_processor = None #MyVideoProcessor()
