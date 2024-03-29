@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource
 
-from extensions import db
+from extensions import db, video_processor
 from utils.controller_utils import generate_hash, generate_firebase
 from models.video_models import video_model, videoDTO_model, prerequest_model
 
@@ -42,11 +42,12 @@ class VideoRequest(Resource):
         data = request.json
 
         if db.find_user_email(data["email"]) is None:
-            #video_controller.abort(404, "email uploading not registered")
+            video_controller.abort(404, "email uploading not registered")
             pass
+
         generated = generate_hash(data["email"], data["title"], data["language"])
 
-        proceed = db.preupload_video(generated) #TODO: Can it proceed or not process USING MONGO
+        proceed = db.preupload_video(data["email"], generated, data["title"], data["language"]) #TODO: Can it proceed or not process USING MONGO
 
         if proceed:
             
@@ -64,4 +65,24 @@ class VideoRequest(Resource):
 
 
 class VideoUpload(Resource):
-    pass
+    def post(self):
+        data = request.json
+
+        #TODO: AUTENTIFICATION CHECK AND STUFF
+
+        #TODO: Descargar video desde firebase
+        print("Descargando video de URI: ", data["firebase_uri"])
+        
+        filename = data["id"] #Hash de video
+
+        original = data["language"] #Idioma original
+        sub = data["sub"] #Idioma del subtitulo
+
+        video_processor.process_video(filename, original, sub) #Lee desde /tmp/{id}.mp4, saca en /tmp/final_{id}.mp4
+
+        #TODO: Descargar video desde firebase
+        print("Subiendo video a URI: ", data["firebase_uri"])
+
+        video_processor.delete_files(filename)
+
+

@@ -64,7 +64,7 @@ class MongoDB():
 
         return True
 
-    def update_user(self, data, email):
+    def update_user(self, data, email: str):
         print("MongoDB - update_user:\t" + str(data))
 
         operation = data["operation"]
@@ -99,7 +99,7 @@ class MongoDB():
 
         return {"value": 0}
 
-    def delete_user_email(self, email):
+    def delete_user_email(self, email: str):
         found = self.find_user_email(email)
         
         if found is not None:
@@ -114,14 +114,14 @@ class MongoDB():
 
         return found
 
-    def find_user_email(self, email):
+    def find_user_email(self, email: str):
         found = self.users.find_one({"email": email})
 
         print("MongoDB - find_user_email:\t" + str(found))
 
         return found
     
-    def find_user_username(self, username):
+    def find_user_username(self, username: str):
         found = self.users.find_one({"username": username})
 
         print("MongoDB - find_user_username:\t" + str(found))
@@ -130,13 +130,24 @@ class MongoDB():
     
     #* Video
 
-    def preupload_video(self, id, title, ):
-
+    def preupload_video(self, email: str, id: str, title: str, language: str):
+        
         found = self.videos.find_one({"id": id})
 
         proceed = found is None
 
         if proceed:
-            pass #TODO:
+            self.videos.insert_one({
+                "id": id,
+                "title": title,
+                "language": language,
+                "firebase_uri": "EMPTY"
+            })
+            self.users.update_one(
+                {"email": email},
+                {"$push": {"videos": id} }
+                )
 
         return proceed
+    
+    
