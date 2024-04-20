@@ -1,6 +1,6 @@
 from pymongo import MongoClient
-
-class MongoDB():
+import time
+class MongoRepository():
     def __init__(self, host):
         print("Intentando conectarse a MongoDB en", host)
         self.client = MongoClient(host)
@@ -53,84 +53,48 @@ class MongoDB():
 
     #* User
 
-    def register_user(self, data): #TODO: Hash password
-        print("MongoDB - register_user:\t" + str(data))
-        if self.find_user_email(data["email"])  is not None:
-            return False
-        print("MongoDB - register_user:\t" + "No email found, proceed")
-        if self.find_user_username(data["username"]) is not None:
-            return False
-        print("MongoDB - register_user:\t" + "No username found, proceed")
-
-        self.users.insert_one(data)
-
-        return True
-
-    def update_user(self, data, email: str):
-        print("MongoDB - update_user:\t" + str(data))
-
-        operation = data["operation"]
-        data.pop("operation")
-
-        found = self.find_user_email(email)
-
-        if found is None:
-            return {"value": 404, "message": "User doesn't exist"}
-
-        match operation:
-            case "email":
-                """
-                if self.find_user_email(data["email"]) is not None:
-                    return {"value": 400, "message": "Email already in use"}
-                found["email"] = data["email"]
-                """
-                return {"value": 400, "message": "email not replaceable"}
-
-            case "username":
-                if self.find_user_username(data["username"])["email"] != data["email"]:
-                    return {"value": 400, "message": "Username already in use"}
-                found["username"] = data["username"]
-                
-            case "password":
-                found["password"] = data["password"] #TODO: Hash password
-
-        self.users.update_one(
-            {"email": email},
-            {"$set": {operation: found[operation]}}
-        )
-
-        return {"value": 0}
-
-    def delete_user_email(self, email: str):
-        found = self.find_user_email(email)
+    def insert_user(self, username, email, password):
+        self.users.insert_one({
+            "username": username,
+            "email": email,
+            "password": password #TODO: Hash password
+        })
         
-        if found is not None:
-            self.users.delete_one({"email": found["email"]})
+    def update_user_username(self, email, username):
+        return self.users.update_one(
+            {"email": email},
+            {"$set": {"username": username}}
+        ).matched_count == 1;
+
+    def update_user_password(self, email, password):
+        return self.users.update_one(
+            {"email": email},
+            {"$set": {"password": password}}
+        ).matched_count == 1;
+
+    def delete_user(self, email: str):
+        found = self.users.find_one_and_delete({"email": email})
 
         return found
 
     def find_users(self):
-        found = list(self.users.find())
+        return list(self.users.find())
 
-        print("MongoDB - find_users:\t" + str(found))
-
-        return found
-
-    def find_user_email(self, email: str):
-        found = self.users.find_one({"email": email})
-
-        print("MongoDB - find_user_email:\t" + str(found))
-
-        return found
+    def find_user(self, email: str):
+        return self.users.find_one({"email": email})
     
-    def find_user_username(self, username: str):
-        found = self.users.find_one({"username": username})
-
-        print("MongoDB - find_user_username:\t" + str(found))
+    def find_by_username(self, username: str):
+        found = list()
+        
+        for user in self.users.find({"username": username}):
+            found.append(user)
 
         return found
     
     #* Video
+
+    def find_video(self, id):
+        return self.videos.find_one({"id": id})
 
     def preupload_video(self, email: str, id: str, title: str, language: str, uri: str):
         
@@ -143,8 +107,7 @@ class MongoDB():
                 "id": id,
                 "title": title,
                 "language": language,
-                "firebase_uri": uri,
-                "video_url" : "INSERT URL" #! INSERT FIREBASE VIDEO URL AFTER PREREQUEST
+                "firebase_uri": uri, #! Generate URL from this firebase URI
                 "translations": []
             })
             self.users.update_one(
@@ -155,15 +118,27 @@ class MongoDB():
         return proceed
     
     def insert_translation(self, id: str, sub: str, trans_id):
+        print("MongoRepository - insert_translation:\t" + f"id={id}, sub={sub}, trans_id={trans_id}")
         found = self.videos.find_one({"id": id})
-        
+        print("found" + str(found))
+
         if found is None:
             return False
-        
+
+        uri = f"translated_videos/{trans_id}.mp4"
+
         self.translated.insert_one({
             "id": trans_id,
-
+            "sub_language": sub,
+            "firebase_uri": uri, #! Generate URL from this firebase URI
         })
+
+        print
+
+        self.videos.find_one_and_update(
+            {"id": found["id"]},
+            {"$push": {"translations": trans_id}}
+        )
 
         return True
     

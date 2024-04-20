@@ -1,10 +1,13 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource
 
-from extensions import db, video_processor
+from extensions import db, video_processor, storage, config
+from services.user_service import UserService
 from utils.controller_utils import generate_video_hash, generate_translation_hash
-from models.video_models import video_model, videoDTO_model, prerequest_model
+from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
 
+
+user_service = UserService()
 video_controller = Namespace("video")
 
 @video_controller.route("/")
@@ -41,12 +44,11 @@ class VideoRequest(Resource):
         '''
         data = request.json
 
-        if db.find_user_email(data["email"]) is None:
-            video_controller.abort(404, "email uploading not registered")
-            pass
+        if user_service.find_one(data["email"]) is None:
+            video_controller.abort(400, "email uploading not registered")
 
         generated = generate_video_hash(data["email"], data["title"], data["language"])
-        uri = f"raw_videos/{generated}"
+        uri = f"raw_videos/{generated}.mp4"
 
         proceed = db.preupload_video(data["email"], generated, data["title"], data["language"], uri) #TODO: Can it proceed or not process USING MONGO
 
@@ -65,16 +67,16 @@ class VideoRequest(Resource):
 
 @video_controller.route("/upload")
 class VideoUpload(Resource):
+    @video_controller.expect(request_model)
     def post(self):
         data = request.json        
         
-        user = data["user"]
+        email = data["email"]
 
-        id = data["video"]["id"]
+        id = data["video_id"]
         filename = id #Hash de video
 
-        original = data["video"]["language"] #Idioma original
-        sub = data["video"]["sub"] #Idioma del subtitulo
+        sub = data["sub"] #Idioma del subtitulo
 
         #TODO: AUTENTIFICATION CHECK AND STUFF
         #! USER CHECKING NEEDED
@@ -82,17 +84,21 @@ class VideoUpload(Resource):
         trans_id = generate_translation_hash(id, sub)
 
         #Database insertion
-        if db.insert_translation(id, sub, trans_id):
-            video_controller.abort(400, "Error creating translation")
+        if db.insert_translation(id, sub, trans_id) is False:
+            video_controller.abort(400, "Error saving translation")
+
+        video_found = db.find_video(id)
 
         #TODO: Descargar video desde firebase
-        print("Descargando video de URI: ", data["firebase_uri"])
+        print("Descargando video de URI: ", video_found["firebase_uri"])
 
-        video_processor.process_video(filename, original, sub) #Lee desde /tmp/{id}.mp4, saca en /tmp/final_{id}.mp4
+        storage.child(video_found["firebase_uri"]).download("", f"./temp/{id}.mp4")
+        print(storage.child(f"raw_videos/{id}.mp4").get_url(config["apiKey"]))
+        #video_processor.process_video(filename, original, sub) #Lee desde /tmp/{id}.mp4, saca en /tmp/final_{id}.mp4
 
         #TODO: Descargar video desde firebase
-        print("Subiendo video a URI: ", data["firebase_uri"])
+        print("Subiendo video a URI: ", video_found["firebase_uri"])
 
-        video_processor.delete_files(filename)
+        #video_processor.delete_files(filename)
 
 

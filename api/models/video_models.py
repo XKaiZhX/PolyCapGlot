@@ -29,3 +29,12 @@ prerequest_model = api.model(
         "language": fields.String(required=True, description="Idioma original del video")
     }
 )
+
+request_model = api.model(
+    name="Request",
+    model={
+        "email": fields.String(required=True, description="Email del usuario del video"),
+        "video_id": fields.String(required=True, description="Identificacion del video"),
+        "sub": fields.String(required=True, description="Idioma de los subtitulos para video")
+    }
+)

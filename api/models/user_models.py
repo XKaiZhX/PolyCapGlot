@@ -19,12 +19,18 @@ user_model = api.model(
     }
 )
 
-user_update_model = api.model(
-    name="UserUpdate",
+user_update_username_model = api.model(
+    name="UserUpdateUsername",
     model={
-        "username": fields.String(required=True, description="nombre del usuario"),
         "email": fields.String(required=True, description="email del usuario"),
-        "password": fields.String(required=True, description="password del usuario"),
-        "operation": fields.String(required=True, description="nombre del campo a actualizar"),
+        "username": fields.String(required=True, description="nombre del usuario")
+    }
+)
+
+user_update_password_model = api.model(
+    name="UserUpdatePassword",
+    model={
+        "email": fields.String(required=True, description="email del usuario"),
+        "password": fields.String(required=True, description="password del usuario")
     }
 )

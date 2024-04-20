@@ -1,9 +1,10 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource
 
-from extensions import db
-from models.user_models import user_model, user_update_model, userDTO_public_model
+from services.user_service import UserService
+from models.user_models import user_model, user_update_username_model, user_update_password_model, userDTO_public_model
 
+user_service = UserService()
 user_controller = Namespace("user")
 
 @user_controller.route("/")
@@ -14,50 +15,84 @@ class UserList(Resource):
         '''
         Devuelve todos los DTO de los usuarios registrados
         '''
-        return db.find_users()
+        return user_service.find_all()
     
     @user_controller.response(200, "User has been uploaded")
-    @user_controller.response(400, "Username or email already exist")
+    @user_controller.response(400, "Email already exist")
     @user_controller.expect(user_model)
     @user_controller.marshal_with(userDTO_public_model)
     def post(self):
         '''
-        Registra el usuario
+        Registra un usuario
         '''
         data = request.json
-        if db.register_user(data):
+        if user_service.register(data["username"], data["email"], data["password"]):
             return data
-        user_controller.abort(400, "Username or email already exist")
-        
+        user_controller.abort(400, "Email already exist")
+
+@user_controller.route("/<string:username>")
+class UserUsernameList(Resource):
+    @user_controller.response(200, "Showing users found")
+    @user_controller.marshal_with(userDTO_public_model)
+    def get(self, username):
+        '''
+        Devuelve todos los usuarios con el username
+        '''
+        return user_service.find_by_username(username)
+
 @user_controller.route("/<string:email>")
 class User(Resource):
+
     @user_controller.response(200, "User has been deleted")
     @user_controller.response(404, "User not found")
     @user_controller.marshal_with(userDTO_public_model)
     def delete(self, email):
-        found = db.delete_user_email(email)
+        '''
+        Borra a un usuario
+        '''
+        found = user_service.delete(email)
         if found is not None:
             return found
         user_controller.abort(404, "User not found")
 
-    @user_controller.response(200, "User has been uploaded")
-    @user_controller.response(400, "Username already exist")
+    @user_controller.response(200, "User found")
     @user_controller.response(404, "User not found")
-    @user_controller.expect(user_update_model)
-    def put(self, email):
-        '''
-        Registra el usuario
-        '''
-        data = request.json
-        error = db.update_user(data, email)
-        if error["value"] == 0:
-            return (200, {"message": "updated correctly"})
-        else:
-            user_controller.abort(error["value"], error["message"])
-
     @user_controller.marshal_with(userDTO_public_model)
     def get(self, email):
-        found = db.find_user_email(email)
+        '''
+        Busca a un usuario
+        '''
+        found = user_service.find_one(email)
         if found is not None:
             return found
         user_controller.abort(404, "User not found")
+
+@user_controller.route("/update/username")
+class UserUpdateUsername(Resource):
+    @user_controller.response(200, "User has been updated")
+    @user_controller.response(404, "User not found")
+    @user_controller.expect(user_update_username_model)
+    def put(self):
+        '''
+        Actualiza el username del usuario
+        '''
+        data = request.json
+        if user_service.update_username(data["email"], data["username"]):
+            return ("User has been updated")
+        else:
+            user_controller.abort(404, "User not found")
+
+@user_controller.route("/update/password")
+class UserUpdatePassword(Resource):
+    @user_controller.response(200, "User has been updated")
+    @user_controller.response(404, "User not found")
+    @user_controller.expect(user_update_password_model)
+    def put(self):
+        '''
+        Actualiza el password del usuario
+        '''
+        data = request.json
+        if user_service.update_password(data["email"], data["password"]):
+            return ("User has been updated")
+        else:
+            user_controller.abort(404, "User not found")
