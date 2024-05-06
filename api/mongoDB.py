@@ -53,11 +53,12 @@ class MongoRepository():
 
     #* User
 
-    def insert_user(self, username, email, password):
+    def insert_user(self, username, email, password, salt):
         self.users.insert_one({
             "username": username,
             "email": email,
-            "password": password #TODO: Hash password
+            "password": password,
+            "salt": salt
         })
         
     def update_user_username(self, email, username):

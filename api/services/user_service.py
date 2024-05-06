@@ -8,6 +8,7 @@ from abc import abstractmethod
 from abc import ABCMeta
 
 from extensions import db
+from utils.service_utils import generate_password_salt, generate_password_hash
 
 class AbstractUserService(metaclass=ABCMeta):
     @abstractmethod
@@ -49,10 +50,12 @@ class UserService(AbstractUserService):
         if db.find_user(email) is not None:
             return False
 
-        encrypted = password #TODO: Hash password
-        print("UserService - register:\tTODO: HASH PASSWORD")
+        salt = generate_password_salt()
 
-        db.insert_user(username, email, encrypted)
+        encrypted = generate_password_hash(password, salt)
+        print("UserService - register:\t" + encrypted)
+
+        db.insert_user(username, email, encrypted, salt)
         print("UserService - register:\tInserted")
 
         return True
@@ -80,8 +83,8 @@ class UserService(AbstractUserService):
         if found is None:
             return False
 
-        encrypted = password #TODO: Hash password
-        print("UserService - register:\tTODO: HASH PASSWORD")
+        encrypted = generate_password_hash(password, found["salt"])
+        print("UserService - register:\t" + encrypted)
 
         return db.update_user_password(email, encrypted)
 
@@ -94,9 +97,11 @@ class UserService(AbstractUserService):
             return False
 
         stored = found["password"]
-        hashed = password #TODO: Hash password
+        salt = found["salt"]
 
-        return stored == hashed
+        encrypted = generate_password_hash(password, salt)
+
+        return stored == encrypted
 
     def find_all(self):
         found = db.find_users()
