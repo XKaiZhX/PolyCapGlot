@@ -27,7 +27,7 @@ user_update_username_model = api.model(
     }
 )
 
-user_update_password_model = api.model(
+user_password_model = api.model(
     name="UserUpdatePassword",
     model={
         "email": fields.String(required=True, description="email del usuario"),

@@ -4,37 +4,41 @@ es porque no existen interfaces en python, así que la siguiente manera de imple
 la idea de interfaz sería con la herencia de una clase abstracta
 '''
 
-from abc import abstractclassmethod 
+from abc import abstractmethod 
 from abc import ABCMeta
 
 from extensions import db
 
 class AbstractUserService(metaclass=ABCMeta):
-    @abstractclassmethod
+    @abstractmethod
     def register(self, username:str, email:str, password:str):
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def delete(self, email: str):
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def update_username(self, email:str, username:str):
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def update_password(self, email:str, password:str):
         pass
 
-    @abstractclassmethod
-    def find_one(self):
+    @abstractmethod
+    def find_one(self, email:str):
         pass
 
-    @abstractclassmethod
+    @abstractmethod
+    def check_user_password(self, email:str, password:str):
+        pass
+
+    @abstractmethod
     def find_all(self):
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def find_by_username(self, username:str):
         pass
 
@@ -83,6 +87,16 @@ class UserService(AbstractUserService):
 
     def find_one(self, email:str):
         return db.find_user(email)
+
+    def check_user_password(self, email:str, password:str):
+        found = self.find_one(email)
+        if found is None:
+            return False
+
+        stored = found["password"]
+        hashed = password #TODO: Hash password
+
+        return stored == hashed
 
     def find_all(self):
         found = db.find_users()

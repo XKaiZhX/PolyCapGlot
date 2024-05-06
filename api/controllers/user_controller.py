@@ -2,7 +2,7 @@ from flask import request, jsonify
 from flask_restx import Namespace, Resource
 
 from services.user_service import UserService
-from models.user_models import user_model, user_update_username_model, user_update_password_model, userDTO_public_model
+from models.user_models import user_model, user_update_username_model, user_password_model, userDTO_public_model
 
 user_service = UserService()
 user_controller = Namespace("user")
@@ -39,6 +39,16 @@ class UserUsernameList(Resource):
         Devuelve todos los usuarios con el username
         '''
         return user_service.find_by_username(username)
+
+@user_controller.route("/login")
+class Login(Resource):
+    @user_controller.expect(user_password_model)
+    def post(self):
+        '''
+        Login
+        '''
+        data = request.json
+        return user_service.check_user_password(data["email"], data["password"])
 
 @user_controller.route("/<string:email>")
 class User(Resource):
@@ -86,7 +96,7 @@ class UserUpdateUsername(Resource):
 class UserUpdatePassword(Resource):
     @user_controller.response(200, "User has been updated")
     @user_controller.response(404, "User not found")
-    @user_controller.expect(user_update_password_model)
+    @user_controller.expect(user_password_model)
     def put(self):
         '''
         Actualiza el password del usuario

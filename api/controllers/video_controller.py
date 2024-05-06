@@ -93,7 +93,9 @@ class VideoUpload(Resource):
         print("Descargando video de URI: ", video_found["firebase_uri"])
 
         storage.child(video_found["firebase_uri"]).download("", f"./temp/{id}.mp4")
-        print(storage.child(f"raw_videos/{id}.mp4").get_url(config["apiKey"]))
+        
+        #print(storage.child(f"raw_videos/{id}.mp4").get_url(config["apiKey"]))
+
         #video_processor.process_video(filename, original, sub) #Lee desde /tmp/{id}.mp4, saca en /tmp/final_{id}.mp4
 
         #TODO: Descargar video desde firebase
