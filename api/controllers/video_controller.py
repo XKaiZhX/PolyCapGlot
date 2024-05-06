@@ -3,7 +3,7 @@ from flask_restx import Namespace, Resource
 
 from extensions import db, processor, storage, config
 from services.user_service import UserService
-from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder
+from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder, check_file_exists
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
 
 
@@ -78,7 +78,7 @@ class VideoUpload(Resource):
         email = data["email"]
 
         id = data["video_id"]
-        filename = id #Hash de video
+        filename = id + ".mp4" #Hash de video
 
         sub = data["sub"] #Idioma del subtitulo
 
@@ -95,7 +95,8 @@ class VideoUpload(Resource):
         generate_temp_folder()
         storage.child(video_found["firebase_uri"]).download("", f"./temp/{id}.mp4")
 
-        processor.process_video(filename, id, original, sub)
+        processor.process_video(filename, id, video_found["language"], sub)
+        check_file_exists(f"./temp/{id}_final.mp4")
 
         print("Subiendo video a URI: ", video_found["firebase_uri"])
         storage.child(f"translated_videos/{trans_id}.mp4").put(f"./temp/{id}_final.mp4") #TODO Generate translated video

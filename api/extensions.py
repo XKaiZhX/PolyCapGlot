@@ -24,7 +24,7 @@ firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 
 #deepl in this case
-translator_api_key = ''
+
 
 print("Start Process")
 processor = video_processor()

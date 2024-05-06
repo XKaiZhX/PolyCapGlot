@@ -33,7 +33,7 @@ class toText:
         self.transcribe_chunks()
 
     def transcribe_chunks(self):
-        output_dir = "./tmp"
+        output_dir = "./temp"
         os.makedirs(output_dir, exist_ok=True)
 
         audio_segment = AudioSegment.from_file(self.audio)

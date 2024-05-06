@@ -49,15 +49,15 @@ class video_processor:
             # Si todas las comprobaciones pasan
 
             # Verificar y procesar el archivo de audio reducido
-            self.video_file_path = f'./tmp/{self.id}.mp4'
+            self.video_file_path = f'./temp/{self.id}.mp4'
             self.check_and_process_file(self.video_file_path, split, self.id, self.video_file_path)
 
             # Verificar y procesar el archivo de audio reducido
-            self.audio_file_path = f'./tmp/{self.id}_audio_reduced.wav'
+            self.audio_file_path = f'./temp/{self.id}_audio_reduced.wav'
             self.check_and_process_file(self.audio_file_path, toText, self.id, self.audio_file_path, self.original, self.target)
 
             # Verificar y procesar el archivo de subtítulos
-            self.srt_file_path = f'./tmp/{self.id}_subtitle.srt'
+            self.srt_file_path = f'./temp/{self.id}_subtitle.srt'
             self.check_and_process_file(self.srt_file_path, merge, self.id, self.video, self.srt_file_path, self.target)
 
             print("......Process End......")

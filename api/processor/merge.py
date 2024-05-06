@@ -80,7 +80,7 @@ class merge():
             self.final_video = CompositeVideoClip([self.video_editor] + self.subtitulos)
 
             # Define la ruta y el nombre del archivo de salida
-            self.output_file = os.path.join(f'./tmp/{self.id}_final.mp4')
+            self.output_file = os.path.join(f'./temp/{self.id}_final.mp4')
 
             # Guarda el video resultante
             self.final_video.write_videofile(self.output_file)

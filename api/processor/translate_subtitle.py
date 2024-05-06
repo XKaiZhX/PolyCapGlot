@@ -23,7 +23,12 @@ class toSub():
     def traducir(self, cadena):
 
         # Traduce una cadena usando DeepL API
-        self.auth_key = "193d2750-9b13-45d7-be4d-44329f8e97d0:fx"
+        apikey_file = open("./config/deepl.json")
+        tmp = json.load(apikey_file)
+        print("apikey_file: " + tmp["key"])
+        self.auth_key = tmp["key"]
+        apikey_file.close()
+
         self.textos_original = cadena
         self.target_language = 'es'
         
@@ -59,7 +64,7 @@ class toSub():
         self.lista.append(self.newDatos)
         self.lista.sort(key=lambda x: x['start'])
 
-        self.json_file = f'./tmp/{self.id}_datos.json'
+        self.json_file = f'./temp/{self.id}_datos.json'
         with open(self.json_file, 'w') as f:
             json.dump(self.lista, f, indent=4)
             print(f"Data appended to {self.json_file}")
@@ -69,7 +74,7 @@ class toSub():
         with open(self.json_file, 'r') as archivo:
             self.dato = json.load(archivo)
 
-        with open(f'./tmp/{self.id}_subtitle.srt', 'w') as sub:
+        with open(f'./temp/{self.id}_subtitle.srt', 'w') as sub:
             index = 1
             start_time = None
             end_time = None
