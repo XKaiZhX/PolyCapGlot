@@ -3,7 +3,7 @@ from flask_restx import Namespace, Resource
 
 from extensions import db, video_processor, storage, config
 from services.user_service import UserService
-from utils.controller_utils import generate_video_hash, generate_translation_hash
+from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
 
 
