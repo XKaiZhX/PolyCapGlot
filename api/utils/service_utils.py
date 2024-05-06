@@ -1,6 +1,9 @@
 from hashlib import sha256
+import os
 import random
 
+
+#print(storage.child(f"raw_videos/{id}.mp4").get_url(config["apiKey"])) Conservar para conseguir las urls
 def generate_video_hash(email, title, language):
 
     input = str(email + title + language)
@@ -48,3 +51,8 @@ def generate_password_hash(password: str, salt: str):
     print("service_utils - generate_password_hash: hash=" + hash)
 
     return hash
+
+def generate_temp_folder():
+    temp_filepath = "./temp"
+    if(os.path.exists(temp_filepath) is False):
+        os.makedirs(temp_filepath)
