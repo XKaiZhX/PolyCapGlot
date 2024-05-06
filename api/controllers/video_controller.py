@@ -30,7 +30,7 @@ class Video(Resource):
         '''
         Devuelve un video dado un id en la ruta
         '''
-        found = None #TODO: USING MONGO
+        found = None
         if found is not None:
             return found
         video_controller.abort(404, f"Video with id {id} not found")
