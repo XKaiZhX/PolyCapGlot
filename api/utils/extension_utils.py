@@ -1,3 +1,4 @@
+from moviepy.config import change_settings
 import os
 import json
 
@@ -23,3 +24,8 @@ def get_mongo_connection_string():
         print("Local connection string: " + connection)
     
     return connection
+
+def configure_moviepy():
+    key = os.environ.get("IS_THIS_CONTAINER", False)
+    if key:
+        change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert-im6.q16"})

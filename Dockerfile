@@ -14,9 +14,11 @@ FROM python:3.9
 
 # Actualiza el sistema operativo e instala git
 RUN apt-get update && \
-    apt-get install -y git
+    apt-get install -y git &&\
+    apt-get install -y ffmpeg
     
-RUN apt-get install -y ffmpeg
+RUN apt-get install -y imagemagick
+RUN apt-get install -y libmagick++-dev
 
 RUN pip install --upgrade pip &&\
     pip install --upgrade setuptools &&\
