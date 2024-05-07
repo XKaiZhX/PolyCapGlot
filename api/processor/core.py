@@ -58,7 +58,7 @@ class video_processor:
 
             # Verificar y procesar el archivo de subtítulos
             self.srt_file_path = f'./temp/{self.id}_subtitle.srt'
-            self.check_and_process_file(self.srt_file_path, merge, self.id, self.video, self.srt_file_path, self.target)
+            self.check_and_process_file(self.srt_file_path, merge, self.id, self.video_file_path, self.srt_file_path, self.target)
 
             print("......Process End......")
 
