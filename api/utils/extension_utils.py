@@ -28,5 +28,6 @@ def get_mongo_connection_string():
 def configure_moviepy():
     key = os.environ.get("IS_THIS_CONTAINER", False)
     if key:
-        print("ImageMagik updated")
-        change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert-im6.q16"})
+        pass
+        #print("ImageMagik updated")
+        #change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert-im6.q16"})

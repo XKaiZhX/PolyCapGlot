@@ -19,6 +19,7 @@ RUN apt-get update && \
     
 RUN apt-get install -y imagemagick
 RUN apt-get install -y libmagick++-dev
+RUN apt-get install -y build-essential
 
 RUN pip install --upgrade pip &&\
     pip install --upgrade setuptools &&\
