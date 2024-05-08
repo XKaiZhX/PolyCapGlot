@@ -27,6 +27,7 @@ class toText:
             use_auth_token='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',  # Token de autenticación para la descarga del modelo
         )
 
+        self.whisper_model = whisper.load_model('medium')
         self.sub = toSub(self.id, self.original, self.target)
 
         self.processed_chunks = set()
@@ -130,7 +131,7 @@ class toText:
 
     def transcribe(self, audio_path, accumulated_time):
         try:
-            self.resultado = whisper.load_model('medium').transcribe(audio_path, word_timestamps=True)
+            self.resultado = self.whisper_model.transcribe(audio_path, word_timestamps=True)
 
             print("@@@@@@")
             print("@@@@@@")
