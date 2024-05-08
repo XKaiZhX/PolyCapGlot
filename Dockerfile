@@ -51,8 +51,9 @@ RUN pip install --upgrade pip &&\
 RUN git clone https://github.com/XKaiZhX/PolyCapGlot.git /PolyCapGlot
 
 # Establece el directorio de trabajo
+#! Quitar en un futuro para que se quede en Main
 WORKDIR /PolyCapGlot/api
-RUN git checkout Andrew2 #! Quitar en un futuro para que se quede en Main
+RUN git checkout Andrew2 
 
 # Instala las dependencias de Python del GitHub
 RUN pip install -r requirements.txt
