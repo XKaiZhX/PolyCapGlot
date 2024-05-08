@@ -4,7 +4,7 @@
     #docker network create polycapglot_net
     #docker run --name pcg_mongo --network polycapglot_net -p 27017:27017 mongo
 
-    #docker run --name api --network polycapglot_net -p 9002:9002 -v path/to/local/firebase.json:/PolyCapGlot/api/config/firebase.json -v path/to/local/deepl.json.json:/PolyCapGlot/api/config/deepl.json docker_polycapglot
+    #docker run --name api --network polycapglot_net -p 9002:9002 -v path/to/local/firebase.json:/PolyCapGlot/api/config/firebase.json -v path/to/local/deepl.json:/PolyCapGlot/api/config/deepl.json docker_polycapglot
     #Andrew: docker run --name api --network polycapglot_net -p 9002:9002 -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/firebase.json:/PolyCapGlot/api/config/firebase.json -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/deepl.json:/PolyCapGlot/api/config/deepl.json docker_polycapglot
 
     #Para iniciar un api ya existente:

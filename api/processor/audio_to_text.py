@@ -33,82 +33,100 @@ class toText:
         self.transcribe_chunks()
 
     def transcribe_chunks(self):
-        output_dir = "./temp"
-        os.makedirs(output_dir, exist_ok=True)
+        try:
+            output_dir = "./temp/"  # Directorio de salida para archivos temporales
+            os.makedirs(output_dir, exist_ok=True)  # Crea el directorio si no existe
 
-        audio_segment = AudioSegment.from_file(self.audio)
-        silent_ranges = silence.detect_silence(audio_segment, min_silence_len=5000, silence_thresh=-40)
+            audio_segment = AudioSegment.from_file(self.audio)  # Carga el archivo de audio
+            audio_duration = len(audio_segment) / 1000  # Calcula la duración del audio en segundos
 
-        chunk_start_times = [0]  # Inicialmente, el primer chunk comienza desde el inicio
-        
-        for silent_range in silent_ranges:
-            start_time, end_time = silent_range
-            # Convertir a segundos y agregar al inicio del siguiente chunk
-            chunk_start_times.append(end_time / 1000)
-        
-        # Convertir los tiempos de inicio de los chunks en milisegundos para make_chunks
-        chunk_start_times_ms = [int(time * 1000) for time in chunk_start_times]
-        
-        # Crear chunks basados en los tiempos de inicio calculados
-        chunks = []
-        for i in range(len(chunk_start_times_ms) - 1):
-            chunk = audio_segment[chunk_start_times_ms[i]:chunk_start_times_ms[i + 1]]
-            chunks.append(chunk)
+            if audio_duration < 60:  # Si el audio es demasiado corto
+                print("Audio is too short.")
+                self.transcribe(self.audio, 0)  # Transcribe el audio completo
+                self.sub.toSubtitle()  # Traduce los subtítulos
+            else:
+                # Detecta los silencios en el audio
+                silent_ranges = silence.detect_silence(audio_segment, min_silence_len=5000, silence_thresh=-40)
 
-        maxProcesses = multiprocessing.cpu_count() - 1
-        internal_maxProcs = maxProcesses
-        actualCPUs = multiprocessing.cpu_count()
-        overUtilized = False
+                chunk_start_times = [0]  # Lista para almacenar los tiempos de inicio de los trozos
 
-        if internal_maxProcs <= 0:
-            internal_maxProcs = 1
-        if internal_maxProcs > actualCPUs:
-            internal_maxProcs = actualCPUs  # No tiene sentido crear más procesos que CPUs
-            overUtilized = True
+                
+                for silent_range in silent_ranges:
+                    start_time, end_time = silent_range
+                    # Convertir a segundos y agregar al inicio del siguiente chunk
+                    chunk_start_times.append(end_time / 1000)
+                
+                # Convertir los tiempos de inicio de los chunks en milisegundos para make_chunks
+                chunk_start_times_ms = [int(time * 1000) for time in chunk_start_times]
+                
+                # Crear chunks basados en los tiempos de inicio calculados
+                chunks = []
+                for i in range(len(chunk_start_times_ms) - 1):
+                    chunk = audio_segment[chunk_start_times_ms[i]:chunk_start_times_ms[i + 1]]
+                    chunks.append(chunk)
 
-        request = "Requested [%s] processes. Reducing number of processes to be no more than the number of CPUs/Cores, which are [%s]"
-        if overUtilized:
-            print(request % (maxProcesses, actualCPUs))
+                # Configura el número máximo de procesos para el procesamiento en paralelo
+                maxProcesses = multiprocessing.cpu_count() - 1
+                internal_maxProcs = maxProcesses
+                actualCPUs = multiprocessing.cpu_count()
+                overUtilized = False
 
-        futures = {}
+                if internal_maxProcs <= 0:
+                    internal_maxProcs = 1
+                if internal_maxProcs > actualCPUs:
+                    internal_maxProcs = actualCPUs  # No tiene sentido crear más procesos que CPUs
+                    overUtilized = True
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=internal_maxProcs) as executor:
-            for index, chunk in enumerate(chunks):
-                if index not in self.processed_chunks:
+                request = "Requested [%s] processes. Reducing number of processes to be no more than the number of CPUs/Cores, which are [%s]"
+                if overUtilized:
+                    print(request % (maxProcesses, actualCPUs))
+
+                futures = {}
+
+                # Procesa los trozos de audio en paralelo
+                with concurrent.futures.ThreadPoolExecutor(max_workers=internal_maxProcs) as executor:
+                    for index, chunk in enumerate(chunks):
+                        if index not in self.processed_chunks:
+                            chunk_name = f"chunk{index}.wav"
+                            temp_file = os.path.join(output_dir, chunk_name)
+                            chunk.export(temp_file, format="wav")
+                            # Transcribe each chunk
+                            futures[index] = executor.submit(self.transcribe, temp_file, chunk_start_times[index])
+                            self.processed_chunks.add(index)
+
+                all_segments = []
+
+                # Combina los resultados de los trozos transcritos
+                for index in sorted(futures.keys()):  # Iterate over sorted chunk indices
+                    future = futures[index]
+                    result = future.result()
+                    
+                    all_segments.extend(result["segments"])
+
+                # Ordena los segmentos según el tiempo de inicio
+                all_segments.sort(key=lambda x: x["start"])
+
+                # Convierte los segmentos en un formato de salida deseado
+                output_data = [{
+                    "text": segment["text"].strip(),
+                    "start": segment["start"],
+                    "end": segment["end"],
+                    "speaker": segment["speaker"]
+                } for segment in all_segments]
+
+                print(output_data)
+
+                self.sub.toSubtitle()
+
+                # Remove temporary files
+                for index, _ in enumerate(chunks):
                     chunk_name = f"chunk{index}.wav"
                     temp_file = os.path.join(output_dir, chunk_name)
-                    chunk.export(temp_file, format="wav")
-                    # Transcribe each chunk
-                    futures[index] = executor.submit(self.transcribe, temp_file, chunk_start_times[index])
-                    self.processed_chunks.add(index)
-
-        all_segments = []
-
-        for index in sorted(futures.keys()):  # Iterate over sorted chunk indices
-            future = futures[index]
-            result = future.result()
-            
-            all_segments.extend(result["segments"])
-
-        # Sort segments based on start time
-        all_segments.sort(key=lambda x: x["start"])
-
-        output_data = [{
-            "text": segment["text"].strip(),
-            "start": segment["start"],
-            "end": segment["end"],
-            "speaker": segment["speaker"]
-        } for segment in all_segments]
-
-        print(output_data)
-
-        self.sub.toSubtitle()
-
-        # Remove temporary files
-        for index, _ in enumerate(chunks):
-            chunk_name = f"chunk{index}.wav"
-            temp_file = os.path.join(output_dir, chunk_name)
-            os.remove(temp_file)
+                    os.remove(temp_file)
+        except Exception as e:
+            print(f"Error: {str(e)}. Reattempting transcription...")
+            self.transcribe(self.audio, 0)
+            self.sub.toSubtitle()
 
     def transcribe(self, audio_path, accumulated_time):
         try:

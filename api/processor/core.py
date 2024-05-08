@@ -77,6 +77,7 @@ class video_processor:
         Si el archivo existe, llama a la función de procesamiento con los argumentos dados.
         """
         if os.path.exists(file_path):
+            #print("Ejecutando: " + processing_function.__name__)
             processing_function(*args)
         else:
             print(f"The file '{file_path}' does not exist.")
