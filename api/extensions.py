@@ -2,7 +2,7 @@ from mongoDB import MongoRepository
 from flask_restx import Api
 from processor.core import video_processor
 
-from utils.extension_utils import load_firebase_json, get_mongo_connection_string, configure_moviepy
+from utils.extension_utils import load_firebase_json, get_mongo_connection_string
 import pyrebase
 import json
 
@@ -26,6 +26,5 @@ storage = firebase.storage()
 
 
 print("Start Process")
-configure_moviepy()
 processor = video_processor()
 print("End Process")

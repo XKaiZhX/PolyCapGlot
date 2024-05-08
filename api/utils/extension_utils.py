@@ -24,10 +24,3 @@ def get_mongo_connection_string():
         print("Local connection string: " + connection)
     
     return connection
-
-def configure_moviepy():
-    key = os.environ.get("IS_THIS_CONTAINER", False)
-    if key:
-        pass
-        #print("ImageMagik updated")
-        #change_settings({"IMAGEMAGICK_BINARY": "/usr/bin/convert-im6.q16"})

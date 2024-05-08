@@ -58,6 +58,10 @@ def generate_temp_folder():
         os.makedirs(temp_filepath)
 
 def check_file_exists(filepath: str):
+    return os.path.exists(filepath)
+
+
+def wait_until_file_exists(filepath: str):
     while(os.path.exists(filepath) is False):
         print("waiting on file")
         time.sleep(5)

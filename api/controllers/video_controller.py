@@ -96,7 +96,8 @@ class VideoUpload(Resource):
         storage.child(video_found["firebase_uri"]).download("", f"./temp/{id}.mp4")
 
         processor.process_video(filename, id, video_found["language"], sub)
-        check_file_exists(f"./temp/{id}_final.mp4")
+        if check_file_exists(f"./temp/{id}_final.mp4") is False:
+            video_controller.abort(400, "Error translating video")
 
         print("Subiendo video a URI: ", video_found["firebase_uri"])
         storage.child(f"translated_videos/{trans_id}.mp4").put(f"./temp/{id}_final.mp4") #TODO Generate translated video
