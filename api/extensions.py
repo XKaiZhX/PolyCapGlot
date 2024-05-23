@@ -5,6 +5,8 @@ from processor.core import video_processor
 import pyrebase
 import json
 
+secret_key = 'Hermes'
+
 db = MongoRepository("mongodb://localhost:27017/")
 api = Api(
     app=None,

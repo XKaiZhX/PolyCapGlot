@@ -1,7 +1,11 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource
+import jwt
+import datetime
 
+from extensions import secret_key
 from services.user_service import UserService
+from utils.controller_utils import token_required, create_token
 from models.user_models import user_model, user_update_username_model, user_password_model, userDTO_public_model
 
 user_service = UserService()
@@ -48,7 +52,21 @@ class Login(Resource):
         Login
         '''
         data = request.json
-        return user_service.check_user_password(data["email"], data["password"])
+        if(user_service.check_user_password(data["email"], data["password"])):
+
+            found = user_service.find_one(email=data["email"])
+            '''
+            token = jwt.encode({
+                'email': found['email'],
+                'username': found['username'],
+                'exp': datetime.datetime.now() + datetime.timedelta(minutes=5)
+                }, secret_key)
+            '''
+            token = create_token(found['email'], found['username'])
+    
+            return jsonify({'token': token})
+        else:
+            return user_controller.abort(403, "Wrong credentials")
 
 @user_controller.route("/<string:email>")
 class User(Resource):

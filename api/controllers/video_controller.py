@@ -4,6 +4,7 @@ from flask_restx import Namespace, Resource
 from extensions import db, processor, storage, config
 from services.user_service import UserService
 from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder, check_file_exists
+from utils.controller_utils import token_required
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
 
 
@@ -36,6 +37,18 @@ class Video(Resource):
         if found is not None:
             return found
         video_controller.abort(404, f"Video with id {id} not found")
+
+@video_controller.route("/user")
+class UserVideos(Resource):
+    @token_required
+    @video_controller.param('x-access-token', 'An access token', 'header', required=True)
+    @video_controller.response(200, "Video found")
+    @video_controller.response(404, "Video not found")
+    def post(self, **kwargs):
+        user = kwargs.get('current_user')
+        expired = kwargs.get('is_expired')
+        print(str(user) + "\nExpired: " + str(expired))
+        return ({"message": "True"})
 
 @video_controller.route("/request")
 class VideoRequest(Resource):
