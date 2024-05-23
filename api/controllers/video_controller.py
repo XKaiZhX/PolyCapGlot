@@ -48,7 +48,24 @@ class UserVideos(Resource):
         user = kwargs.get('current_user')
         expired = kwargs.get('is_expired')
         print(str(user) + "\nExpired: " + str(expired))
-        return ({"message": "True"})
+
+        try:
+            video_list = []
+            if "videos" not in user:
+                raise Exception("user doesnt contain videos")
+            for video_id in user["videos"]:
+                video = db.find_video(video_id)
+                video_list.append({
+                    "title": video["title"],
+                    "language": video["language"],
+                    "firebase_uri": video["firebase_uri"],
+                    "translations" : db.get_translations(video["id"])
+                })
+
+            print("videos: "+ str(video_list))
+            return ({"videos": video_list})
+        except Exception as e:
+            video_controller.abort(403, e)
 
 @video_controller.route("/request")
 class VideoRequest(Resource):

@@ -14,7 +14,7 @@ user_service = UserService()
 dateformat = "%Y-%m-%d %H:%M:%S.%f"
 
 def create_token(email, username):
-    expiration = datetime.datetime.now() + datetime.timedelta(seconds=10)
+    expiration = datetime.datetime.now() + datetime.timedelta(minutes=10)
     print("expiration for token:" + str(expiration))
     token = jwt.encode({"email": email, "username": username, "exp": str(expiration)}, secret_key, algorithm="HS256")
     return token
