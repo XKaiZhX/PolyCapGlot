@@ -63,7 +63,7 @@ class UserVideos(Resource):
                 })
 
             print("videos: "+ str(video_list))
-            return ({"videos": video_list})
+            return (video_list)
         except Exception as e:
             video_controller.abort(403, e)
 

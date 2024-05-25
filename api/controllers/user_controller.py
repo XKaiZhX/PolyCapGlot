@@ -64,7 +64,7 @@ class Login(Resource):
             '''
             token = create_token(found['email'], found['username'])
     
-            return jsonify({'token': token})
+            return jsonify({'email': found["email"], 'username': found["username"], 'token': token})
         else:
             return user_controller.abort(403, "Wrong credentials")
 
