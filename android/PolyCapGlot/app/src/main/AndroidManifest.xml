@@ -30,7 +30,7 @@
         <activity
             android:name=".ui.StartSessionActivity"
             android:exported="true"
-            android:label="@string/title_activity_session"
+            android:label="@string/app_name"
             android:theme="@style/Theme.PolyCapGlot" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
