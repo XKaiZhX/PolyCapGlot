@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PolyCapGlot</string>
+    <string name="title_activity_upload_file">PolyCapGlot</string>
+    <string name="title_activity_session">StartSessionActivity</string>
+
+    <string name="server_ip">http://192.168.1.49:9002/</string>
+    <string name="server_ip_key">server_ip</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_player">PlayerActivity</string>
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124381084935",
+    "project_id": "polycapglot-d87cf",
+    "storage_bucket": "polycapglot-d87cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124381084935:android:49f1bc18823e64189ad9a2",
+        "android_client_info": {
+          "package_name": "com.example.polycapglot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDlYvIGCJw6IIox_VoE5FxyBxGzqbA_1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

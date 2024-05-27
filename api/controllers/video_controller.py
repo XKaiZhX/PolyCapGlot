@@ -4,7 +4,7 @@ from flask_restx import Namespace, Resource
 from extensions import db, processor, storage, config
 from services.user_service import UserService
 from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder, check_file_exists
-from utils.controller_utils import token_required
+from utils.controller_utils import token_required, create_token
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
 
 
@@ -67,45 +67,42 @@ class UserVideos(Resource):
         except Exception as e:
             video_controller.abort(403, e)
 
+
 @video_controller.route("/request")
 class VideoRequest(Resource):
+    @token_required  # Ensure that the token is required for this endpoint
+    @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.expect(prerequest_model)
-    def post(self):
+    def post(self, current_user, **kwargs):
         '''
-        Pre-request donde se devuelve si se puede subir el video o no
+        Pre-request where it is determined if the video can be uploaded or not
         '''
         data = request.json
 
-        if user_service.find_one(data["email"]) is None:
-            video_controller.abort(400, "email uploading not registered")
-
-        generated = generate_video_hash(data["email"], data["title"], data["language"])
+        generated = generate_video_hash(current_user["email"], data["title"], data["language"])
         uri = f"raw_videos/{generated}.mp4"
 
-        proceed = db.preupload_video(data["email"], generated, data["title"], data["language"], uri)
+        proceed = db.preupload_video(current_user["email"], generated, data["title"], data["language"], uri)
 
         if proceed:
-            
-            original = data["language"]
+            return {
+                "token": create_token(current_user["email"], current_user["username"]),
+                "uri": uri,
+                "video_id": proceed["id"]
+            }
+        
+        video_controller.abort(403, "Not able to upload video")
 
-            return (
-                    {
-                        "message": "proceed", 
-                        "firebase" : {
-                            "uri": uri,
-                            #? really needed? TODO: Autentification
-                        }
-                    }
-                    )
-        video_controller.abort(403, "Not able to proceed")
 
 @video_controller.route("/upload")
 class VideoUpload(Resource):
+    @token_required
+    @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.expect(request_model)
-    def post(self):
+    def post(self, current_user, **kwargs):
         data = request.json        
         
-        email = data["email"]
+        email = current_user["email"]
 
         id = data["video_id"]
         filename = id + ".mp4" #Hash de video
@@ -136,5 +133,7 @@ class VideoUpload(Resource):
         #Database insertion
         if db.insert_translation(id, sub, trans_id) is False:
             video_controller.abort(400, "Error saving translation")
+
+        return {"message": "translation uploaded"}
 
 

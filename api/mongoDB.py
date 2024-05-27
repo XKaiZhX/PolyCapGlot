@@ -104,17 +104,19 @@ class MongoRepository():
         proceed = found is None
 
         if proceed:
-            self.videos.insert_one({
+            insert = {
                 "id": id,
                 "title": title,
                 "language": language,
-                "firebase_uri": uri, #! Generate URL from this firebase URI
+                "firebase_uri": uri,
                 "translations": []
-            })
+            }
+            self.videos.insert_one(insert)
             self.users.update_one(
                 {"email": email},
                 {"$push": {"videos": id} }
                 )
+            return insert
 
         return proceed
     
@@ -131,7 +133,7 @@ class MongoRepository():
         self.translated.insert_one({
             "id": trans_id,
             "sub_language": sub,
-            "firebase_uri": uri, #! Generate URL from this firebase URI
+            "firebase_uri": uri,
         })
 
         print
