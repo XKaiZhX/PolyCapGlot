@@ -1,13 +1,14 @@
 from mongoDB import MongoRepository
 from flask_restx import Api
 from processor.core import video_processor
+from utils.extension_utils import get_mongo_connection_string, load_firebase_json
 
 import pyrebase
 import json
 
 secret_key = 'Hermes'
 
-db = MongoRepository("mongodb://localhost:27017/")
+db = MongoRepository(get_mongo_connection_string())
 api = Api(
     app=None,
     version="1.0",
@@ -18,9 +19,7 @@ api = Api(
 )
 
 #Load firebase config from JSON
-json_file = open("./config/firebase.json")
-config = json.load(json_file)
-json_file.close()
+config = load_firebase_json()
 
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
