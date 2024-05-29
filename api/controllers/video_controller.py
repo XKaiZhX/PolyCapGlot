@@ -134,6 +134,6 @@ class VideoUpload(Resource):
         if db.insert_translation(id, sub, trans_id) is False:
             video_controller.abort(400, "Error saving translation")
 
-        return {"message": "translation uploaded"}
+        return {"message": "translation uploaded"}, 200
 
 

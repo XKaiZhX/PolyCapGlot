@@ -31,7 +31,7 @@ export const Login = () => {
       console.log('Inicio de sesión exitoso.');
 
       if (res) {
-        if (token) {
+        if (ValidarToken(token)) {
           goMainPage();
         } else {
           clearTokenAndEmail();

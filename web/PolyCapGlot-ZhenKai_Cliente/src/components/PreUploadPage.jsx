@@ -8,7 +8,7 @@ export const VideoRequestPage = () => {
     const [error, setError] = useState('');
     const [showTokenAlert, setShowTokenAlert] = useState(false);
     const [formDisabled, setFormDisabled] = useState(false);
-    const { requestVideo, email, ValidarToken, token } = useAuth();
+    const { requestVideoFunc, email, ValidarToken, token } = useAuth();
     const navigate = useNavigate();
 
     const supportedLanguages = [
@@ -78,10 +78,10 @@ export const VideoRequestPage = () => {
         };
 
         try {
-            const response = await requestVideo(requestData);
-            if (response.message === 'proceed') {
+            const response = await requestVideoFunc(requestData);
+            if (response.uri) {
                 // Si la solicitud es exitosa, redirigimos a MainPage
-                const uriParts = response.firebase.uri.split('/');
+                const uriParts = response.uri.split('/');
                 const folder = uriParts[0];
                 const fileName = uriParts[1].split('.')[0];
                 const fileExtension = uriParts[1].split('.')[1];

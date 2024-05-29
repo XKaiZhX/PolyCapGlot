@@ -1,6 +1,6 @@
 // AuthContext.jsx
 import { createContext, useState, useContext } from "react";
-import { RegisterRequest, LoginRequest, UpdateUsernameRequest, UpdatePasswordRequest, DeleteUserRequest, requestVideo, uploadVideoRequest, isTokenValid, requestUserVideos, requestUserPerfil } from "../api/auth.js";
+import { RegisterRequest, LoginRequest, UpdateUsernameRequest, UpdatePasswordRequest, DeleteUserRequest, requestVideo, uploadVideoRequest, requestUserVideos, requestUserPerfil } from "../api/auth.js";
 
 export const AuthContext = createContext();
 
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState('');
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
-  const [videosList, setVideosList] = useState('');
+  const [videosList, setVideosList] = useState([]);
 
   const register = async (userData) => {
     try {
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateUsername = async (userData) => {
     try {
-      const res = await UpdateUsernameRequest(userData);
+      const res = await UpdateUsernameRequest(userData, token);
       console.log(res.data);
       setErrors([]);
       return res.data;
@@ -41,11 +41,11 @@ export const AuthProvider = ({ children }) => {
       setErrors(error.response ? error.response.data : ['Error al cambiar username']);
       throw error;
     }
-  }
+  };
 
   const updatePassword = async (userData) => {
     try {
-      const res = await UpdatePasswordRequest(userData);
+      const res = await UpdatePasswordRequest(userData, token);
       console.log(res.data);
       setErrors([]);
       return res.data;
@@ -53,15 +53,15 @@ export const AuthProvider = ({ children }) => {
       setErrors(error.response ? error.response.data : ['Error al cambiar password']);
       throw error;
     }
-  }
+  };
 
   const deleteUser = async (email) => {
     try {
-        const response = await DeleteUserRequest(email)
-        return response.data;
+      const response = await DeleteUserRequest(email, token);
+      return response.data;
     } catch (error) {
-        console.error('Error al eliminar el usuario:', error);
-        throw new Error('Error al eliminar el usuario');
+      console.error('Error al eliminar el usuario:', error);
+      throw new Error('Error al eliminar el usuario');
     }
   };
 
@@ -75,13 +75,6 @@ export const AuthProvider = ({ children }) => {
       setEmail(res.data.email);
       setUser(res.data.username);
 
-      if (!ValidarToken(token)) {
-        throw new Error('Token inválido');
-      } else {
-        setToken(token);
-        setEmail(email);
-      }
-
       return res.data;
     } catch (error) {
       setErrors(error.response ? error.response.data : ['Error al iniciar sesión']);
@@ -90,9 +83,10 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-  const ValidarToken = (token) => {
+  const ValidarToken = async(token) => {
     try {
-      if (isTokenValid(token)) {
+      const response = await requestUserVideos(token);
+      if (response.success) {
         return true;
       } else {
         return false;
@@ -105,27 +99,32 @@ export const AuthProvider = ({ children }) => {
 
   const requestVideoFunc = async (videoData) => {
     try {
-        const response = await requestVideo(videoData);
-        if (response.message === 'proceed') {
-            return response;
-        } else {
-            throw new Error('Error al procesar la solicitud de video');
-        }
+      const response = await requestVideo(videoData, token);
+      if (response.data && response.data.uri) {
+        return response.data;
+      } else {
+        throw new Error('Error al procesar la solicitud de video');
+      }
     } catch (error) {
-        console.error('Error al solicitar el video:', error);
-        throw new Error('Error al solicitar el video');
-    }  
+      console.error('Error al solicitar el video:', error);
+      throw new Error('Error al solicitar el video');
+    }
   };
 
   const uploadVideo = async (videoData) => {
     try {
-      const response = await uploadVideoRequest(videoData);
-      return response.data;
+      const response = await uploadVideoRequest(videoData, token);
+      if (response.data && response.data.success) {
+        return response.data;
+      } else {
+        throw new Error(response.data.message || 'Error desconocido al subir el video');
+      }
     } catch (error) {
       console.error('Error al subir el video:', error);
-      return { success: false, message: 'Error al subir el video' };
+      return { success: false, message: error.message || 'Error al subir el video' };
     }
   };
+  
 
   const clearTokenAndEmail = () => {
     setToken('');
@@ -133,10 +132,10 @@ export const AuthProvider = ({ children }) => {
     setUser('');
   };
 
-  const requestVideosList = async (token) => {
+  const requestVideosList = async () => {
     try {
-      const response = requestUserVideos(token)
-      setVideosList(response.data)
+      const response = await requestUserVideos(token);
+      setVideosList(response.data);
     } catch (error) {
       throw new Error('Error al cargar los videos del usuario.');
     }
@@ -144,8 +143,8 @@ export const AuthProvider = ({ children }) => {
 
   const getUserByEmail = async (email) => {
     try {
-      const response = requestUserPerfil(email);
-      setUser(response.data);
+      const response = await requestUserPerfil(email, token);
+      setUser(response);
     } catch (error) {
       setError('Error al cargar el perfil del usuario.');
     }
@@ -159,7 +158,7 @@ export const AuthProvider = ({ children }) => {
         updateUsername,
         updatePassword,
         deleteUser,
-        requestVideo: requestVideoFunc,
+        requestVideoFunc,
         uploadVideo,
         token,
         email,

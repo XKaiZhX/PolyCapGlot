@@ -5,20 +5,24 @@ import { useAuth } from '../context/AuthContext';
 
 export const Processing = () => {
     const [progress, setProgress] = useState(0);
+    const [error, setError] = useState(null); // Nuevo estado para almacenar el error
     const navigate = useNavigate();
-    const { uploadVideo } = useAuth();
+    const { uploadVideo, email, requestVideosList, videosList, ValidarToken, token } = useAuth();
     const { fileName, language } = useParams();
 
     useEffect(() => {
+        const totalTimeInSeconds = (5 * 60) - 1;
+        const updateInterval = 1000; // Actualizar cada 1 segundo
+        let response = null
+        let interval = null
+
         const simulateAndUpload = async () => {
             try {
                 // Definir la duración total de carga (5 minutos - 1 segundo)
-                const totalTimeInSeconds = (5 * 60) - 1;
-                const updateInterval = 1000; // Actualizar cada 1 segundo
                 const progressIncrement = 99 / (totalTimeInSeconds / (updateInterval / 1000)); // Incremento de progreso por intervalo
 
                 // Simular la carga estableciendo el progreso en incrementos cada 1 segundo
-                const interval = setInterval(() => {
+                interval = setInterval(() => {
                     setProgress(prevProgress => {
                         const newProgress = Math.min(prevProgress + progressIncrement, 99); // Evitar que el progreso supere el 99%
                         return newProgress;
@@ -26,33 +30,16 @@ export const Processing = () => {
                 }, 1000);
 
                 // Enviar la solicitud para cargar el video
-                const response = await uploadVideo({ email: "Local@local.com", video_id: fileName, sub: language });
-
-                // Verificar el estado de carga
-                await checkUploadStatus();
+                response = await uploadVideo({ email: email, video_id: fileName, sub: language });
 
                 // Limpiar intervalo de simulación de carga
                 clearInterval(interval);
 
-                if (response.success) {
-
-                    const uriParts = response.uri.split('/');
-                    const folder = uriParts[0];
-                    const fileName = uriParts[1].split('.')[0];
-                    const fileExtension = uriParts[1].split('.')[1];
-                    // Navegar a la página de video una vez completada la carga
-                    navigate(`/videoplayer/${folder}/${fileName}/${fileExtension}`);
-                }
-                else
-                {
-                    navigate('/preupload');
-                }
-                
+                // Verificar el estado de carga
+                await checkUploadStatus(response);
 
             } catch (error) {
-                console.error('Error al subir el video:', error);
-                // Volver a Main.jsx en caso de error
-                navigate('/preupload');
+                setError('Error al subir el video: ' + error.message); // Establecer el error
             }
         };
 
@@ -71,55 +58,64 @@ export const Processing = () => {
                     additionalTime += 180; // Agregar 3 minutos adicionales (180 segundos)
                     console.log("Adding 3 minutes to progress bar...");
                 }
-
-                if (integerProgress % 10 === 0) { // Cada 10%, verificar si hay respuesta
-                    try {
-                        if (response !== null) { // Si hay respuesta, completar la barra
-                            setProgress(100);
-                            clearInterval(checkInterval); // Detener la verificación
-                            clearInterval(interval); // Limpiar intervalo de simulación de carga
-                            // Navegar a la página de video una vez completada la carga
-                            navigate(`/videoplayer/${fileName}`);
-                            return;
-                        }
-                    } catch (error) {
-                        clearInterval(checkInterval);
-                        clearInterval(interval); // Limpiar intervalo de simulación de carga
-                        console.error('Error al verificar el estado de carga:', error);
-                    }
-                }
-
-                try {
-                    // Suponiendo que tienes una función para verificar el estado de carga
-                    const status = await response;
-                    
-                    if (status === 200) {
-                        clearInterval(checkInterval);
-                        clearInterval(interval); // Limpiar intervalo de simulación de carga
-                        // Navegar a la página de video una vez completada la carga
-                        navigate(`/videoplayer/${fileName}`);
-                    }
-                } catch (error) {
-                    clearInterval(checkInterval);
-                    clearInterval(interval); // Limpiar intervalo de simulación de carga
-                    console.error('Error al verificar el estado de carga:', error);
-                }
             }, updateInterval * 1000);
 
             setTimeout(() => {
                 clearInterval(checkInterval);
                 clearInterval(interval); // Limpiar intervalo de simulación de carga
-                console.error("Tiempo de carga agotado");
+                setError('Tiempo de carga agotado'); // Establecer el error
             }, (totalTimeInSeconds + additionalTime) * 1000); // Considerar el tiempo adicional en el tiempo total
         };
 
         simulateAndUpload();
-    }, [uploadVideo, fileName, language, navigate]);
+    }, []);
+
+
+    useEffect(() => {
+        const verifyUploaded = async () => {
+            try {
+                ValidarToken()
+
+                // Obtener la lista de videos
+                requestVideosList();
+
+                // Obtener el video de la lista
+                const video = videosList.find(video => video.firebase_uri === 'raw_videos/' + fileName + '.mp4');
+
+                if (video) {
+                    // Si el video está en la lista, buscar la traducción
+                    const translation = video.translations.find(trans => trans.sub_language === language);
+                    if (translation) {
+                        const firebaseUri = translation.firebase_uri;
+                        const uriParts = firebaseUri.split('/');
+                        const folder = uriParts[0];
+                        const newFileName = uriParts[1].split('.')[0];
+                        const fileExtension = uriParts[1].split('.')[1];
+
+                        navigate(`/videoplayer/${folder}/${newFileName}/${fileExtension}`);
+                        clearInterval(checkInterval);
+                        setProgress(100);
+                        return;
+                    } else {
+                        throw new Error('Translation not found for the given language.');
+                    }
+                } else {
+                    throw new Error('Video not found.');
+                }
+            } catch (error) {
+                clearInterval(checkInterval);
+                clearInterval(interval); // Limpiar intervalo de simulación de carga
+            }
+        };
+
+        verifyUploaded();
+    }, [ValidarToken, requestVideosList]);
 
     return (
         <div className='d-flex bg-primary align-items-center justify-content-center vh-100'>
             <div className='p-3 rounded bg-white w-50'>
                 <h3 className='text-center mb-4'>Procesando Video</h3>
+                {error && <div className="alert alert-danger" role="alert">{error}</div>} {/* Mostrar error si existe */}
                 <ProgressBar now={progress} label={`${progress}%`} />
             </div>
         </div>

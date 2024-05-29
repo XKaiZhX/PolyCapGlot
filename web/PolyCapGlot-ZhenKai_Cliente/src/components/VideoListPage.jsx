@@ -5,8 +5,7 @@ import { NavbarTools } from './Navbar.jsx'
 import { useNavigate } from 'react-router-dom';
 
 export const VideoList = () => {
-  const { requestVideosList, token, ValidarToken } = useAuth();
-  const [videos, setVideos] = useState([]);
+  const { requestVideosList, token, ValidarToken, videosList } = useAuth();
   const [error, setError] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
@@ -18,8 +17,7 @@ export const VideoList = () => {
           throw new Error('Token inválido');
         }
         
-        const response = await requestVideosList(token);
-        setVideos(response);
+        await requestVideosList(token);
       } catch (error) {
         setError('Error al cargar los videos del usuario.');
         if (error.message === 'Token inválido') {
@@ -29,7 +27,7 @@ export const VideoList = () => {
     };
 
     fetchUserVideos();
-  }, [token, ValidarToken]);
+  }, []);
 
   const handleAlertClose = () => {
     setShowAlert(false); // Cerrar el alerta
@@ -44,14 +42,16 @@ export const VideoList = () => {
           <h1 className='text-center mb-4'>Mis Videos</h1>
           {error && <p className="text-danger">{error}</p>}
           <div className="row">
-            {videos && videos.map((video, index) => ( // Verifica que videos esté definido antes de mapearlo
+            {videosList && videosList.map((video, index) => (
               <div className='col-md-4 mb-4' key={index}>
                 <div className='card'>
                   <div className='card-body'>
                     <h5 className='card-title'>{video.title}</h5>
                     <p className='card-text'>{video.language}</p>
                     <p className='card-text'>{video.firebase_uri}</p>
-                    <p className='card-text'>{video.translations}</p>
+                    <p className='card-text'>{video.translations.map((translation, index) => (
+                      <span key={index}>{translation.sub_language}: {translation.firebase_uri}<br /></span>
+                    ))}</p>
                   </div>
                 </div>
               </div>
@@ -59,7 +59,7 @@ export const VideoList = () => {
           </div>
         </div>
       </div>
-      {showAlert && ( // Mostrar el alerta si showAlert es verdadero
+      {showAlert && (
         <div className="alert alert-danger alert-dismissible fade show position-fixed" role="alert" style={{ top: '10px', right: '10px' }}>
           El token de autenticación es inválido o ha caducado.
           <button type="button" className="btn-close" onClick={handleAlertClose}></button>

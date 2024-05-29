@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { NavbarTools } from './Navbar.jsx';
 
 export const UpdateUsernamePage = () => {
-  const { updateUsername, errors, user, ValidarToken, token } = useAuth();
+  const { updateUsername, errors, user, ValidarToken, token, email } = useAuth();
   const [newUsername, setNewUsername] = useState('');
 
   const [showTokenAlert, setShowTokenAlert] = useState(false);
@@ -23,13 +23,16 @@ export const UpdateUsernamePage = () => {
     };
 
     checkTokenValidity();
-  }, [ValidarToken, navigate]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateUsername({ newUsername });
-      navigate('/perfil'); // O redirigir a la página de perfil actualizada
+      const res = await updateUsername({ "email": email, "username": newUsername });
+      if (res)
+      {
+        navigate('/perfil/' + email); 
+      }
     } catch (error) {
       console.error('Error al actualizar el username:', error);
     }

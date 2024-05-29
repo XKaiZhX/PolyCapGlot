@@ -28,7 +28,7 @@ export const UserPerfil = () => {
     };
 
     loadUserProfile();
-  }, [getUserByEmail, email, ValidarToken, navigate]);
+  }, []);
 
   const handleConfirmDelete = async () => {
     try {

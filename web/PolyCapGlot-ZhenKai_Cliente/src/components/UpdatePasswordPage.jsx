@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { NavbarTools } from './Navbar.jsx';
 
 export const UpdatePasswordPage = () => {
-  const { login, updatePassword, errors, ValidarToken, token } = useAuth();
-  const [email, setEmail] = useState('');
+  const { login, updatePassword, errors, ValidarToken, token, email } = useAuth();
+  const [emails, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,12 +27,12 @@ export const UpdatePasswordPage = () => {
     };
 
     checkTokenValidity();
-}, [ValidarToken, navigate]);
+}, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login({ email, password });
+      await login({ "email": emails, "password": password });
       setIsVerified(true);
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
@@ -42,8 +42,8 @@ export const UpdatePasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updatePassword({ newPassword });
-      navigate('/perfil'); // O redirigir a la página de perfil actualizada
+      await updatePassword({ "email": email, "password": newPassword });
+      navigate('/perfil/' + email); // O redirigir a la página de perfil actualizada
     } catch (error) {
       console.error('Error al actualizar la contraseña:', error);
     }
@@ -69,7 +69,7 @@ export const UpdatePasswordPage = () => {
                   type="email"
                   className="form-control"
                   id="email"
-                  value={email}
+                  value={emails}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={formDisabled}
