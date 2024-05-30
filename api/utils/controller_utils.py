@@ -40,32 +40,33 @@ def decode_token(token):
         print(f"Token decoding error: {e}")
         raise Exception(f"Token decoding error: {e}")
 
-def token_required(f):
-    @wraps(f)
-    def decorated_function(ns: Namespace, *args, **kwargs):
-        token = request.headers.get('x-access-token')
-        msg = "Token is missing!"
-        if not token:
-            ns_log(ns, msg, logging.ERROR)
-            api.abort(403, msg)
-        try:
-            print("before decoding")
-            decoded = decode_token(token)
-            print("after decoding")
-            user_id = decoded["email"]
-            expired = datetime.datetime.now() > datetime.datetime.strptime(decoded["exp"], token_dateformat)
-            current_user = user_service.find_one(email=user_id)
-            if not current_user:
-                msg = "User not found: " + user_id
+def token_required(ns: Namespace):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            token = request.headers.get('x-access-token')
+            msg = "Token is missing!"
+            if not token:
                 ns_log(ns, msg, logging.ERROR)
                 api.abort(403, msg)
-        except Exception as e:
-            msg = "Exception: " + str(e)
-            ns_log(ns, msg, logging.ERROR)
-            api.abort(403, msg)
-        # Pass current_user as a keyword argument
-        return f(*args, current_user=current_user, is_expired=expired, **kwargs)
-    return decorated_function
+            try:
+                print("before decoding")
+                decoded = decode_token(token)
+                print("after decoding")
+                user_id = decoded["email"]
+                current_user = user_service.find_one(email=user_id)
+                if not current_user:
+                    msg = "User not found: " + user_id
+                    ns_log(ns, msg, logging.ERROR)
+                    api.abort(403, msg)
+            except Exception as e:
+                msg = "Exception: " + str(e)
+                ns_log(ns, msg, logging.ERROR)
+                api.abort(403, msg)
+            # Pass current_user as a keyword argument
+            return f(*args, current_user=current_user, **kwargs)
+        return decorated_function
+    return decorator
 
 #Logging
 

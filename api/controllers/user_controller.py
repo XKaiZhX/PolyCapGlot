@@ -73,10 +73,11 @@ class Login(Resource):
 @user_controller.route("/<string:email>")
 class User(Resource):
     @token_required(user_controller)
+    @user_controller.param('x-access-token', 'An access token', 'header', required=True)
     @user_controller.response(200, "User has been deleted")
     @user_controller.response(404, "User not found")
     @user_controller.marshal_with(userDTO_public_model)
-    def delete(self, email):
+    def delete(self, email, **kwargs):
         '''
         Borra a un usuario
         '''
@@ -100,6 +101,7 @@ class User(Resource):
 @user_controller.route("/update/username")
 class UserUpdateUsername(Resource):
     @token_required(user_controller)
+    @user_controller.param('x-access-token', 'An access token', 'header', required=True)
     @user_controller.response(200, "User has been updated")
     @user_controller.response(404, "User not found")
     @user_controller.expect(user_update_username_model)
@@ -116,6 +118,7 @@ class UserUpdateUsername(Resource):
 @user_controller.route("/update/password")
 class UserUpdatePassword(Resource):
     @token_required(user_controller)
+    @user_controller.param('x-access-token', 'An access token', 'header', required=True)
     @user_controller.response(200, "User has been updated")
     @user_controller.response(404, "User not found")
     @user_controller.expect(user_password_model)

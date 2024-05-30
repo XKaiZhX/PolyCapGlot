@@ -5,6 +5,7 @@ import datetime
 
 from extensions import db, storage, config, processor
 from services.user_service import UserService
+from services.video_service import VideoService
 from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder, check_file_exists
 from utils.controller_utils import token_required, create_token, ns_log
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
@@ -12,11 +13,12 @@ from models.video_models import video_model, videoDTO_model, prerequest_model, r
 
 
 user_service = UserService()
+video_service = VideoService()
 video_controller = Namespace("video")
 
 fs = logging.FileHandler("./log/api.log")
 video_controller.logger.addHandler(fs)
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO)
 
 @video_controller.route("/")
 class VideoList(Resource):
@@ -28,21 +30,6 @@ class VideoList(Resource):
         '''
         ns_log(video_controller, "test", logging.CRITICAL)
         return []
-    
-
-
-@video_controller.route("/<string:id>")
-class Video(Resource):
-    @video_controller.response(200, "Video found")
-    @video_controller.response(404, "Video not found")
-    def get(self, id):
-        '''
-        Devuelve un video dado un id en la ruta
-        '''
-        found = None #TODO: USING MONGO
-        if found is not None:
-            return found
-        video_controller.abort(404, f"Video with id {id} not found")
 
 @video_controller.route("/user")
 class UserVideos(Resource):
@@ -52,15 +39,13 @@ class UserVideos(Resource):
     @video_controller.response(404, "Video not found")
     def post(self, **kwargs):
         user = kwargs.get('current_user')
-        expired = kwargs.get('is_expired')
-        print(str(user) + "\nExpired: " + str(expired))
 
         try:
             video_list = []
             if "videos" not in user:
-                raise Exception("user doesnt contain videos")
+                raise Exception("User " + user["email"] + "doesn't contain videos")
             for video_id in user["videos"]:
-                video = db.find_video(video_id)
+                video = video_service.find_video(video_id)
                 video_list.append({
                     "title": video["title"],
                     "language": video["language"],
@@ -68,7 +53,7 @@ class UserVideos(Resource):
                     "translations" : db.get_translations(video["id"])
                 })
 
-            print("videos: "+ str(video_list))
+            ns_log(video_controller, "videos fetched from user: " + user["email"], logging.INFO)
             return (video_list)
         except Exception as e:
             ns_log(video_controller, "videos/user exception: " + e, logging.ERROR)
