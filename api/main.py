@@ -3,6 +3,8 @@ from flask_cors import CORS
 from extensions import api, secret_key
 from controllers.user_controller import user_controller
 from controllers.video_controller import video_controller
+import logging
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secret_key

@@ -1,15 +1,17 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource
-import jwt
-import datetime
+import logging
 
-from extensions import secret_key
 from services.user_service import UserService
 from utils.controller_utils import token_required, create_token
 from models.user_models import user_model, user_update_username_model, user_password_model, userDTO_public_model
 
 user_service = UserService()
 user_controller = Namespace("user")
+
+fs = logging.FileHandler("./log/api.log")
+user_controller.logger.addHandler(fs)
+logging.basicConfig(level=logging.INFO)
 
 @user_controller.route("/")
 class UserList(Resource):

@@ -28,6 +28,6 @@ storage = firebase.storage()
 
 
 print("Start Process")
-processor = video_processor()
 #processor = None
+processor = video_processor()
 print("End Process")

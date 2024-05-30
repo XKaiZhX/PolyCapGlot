@@ -1,27 +1,33 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource
+import logging
+import datetime
 
 from extensions import db, storage, config, processor
 from services.user_service import UserService
 from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder, check_file_exists
-from utils.controller_utils import token_required, create_token
+from utils.controller_utils import token_required, create_token, log
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
+
 
 
 user_service = UserService()
 video_controller = Namespace("video")
 
-original = ''
+fs = logging.FileHandler("./log/api.log")
+video_controller.logger.addHandler(fs)
+logging.basicConfig(level=logging.INFO)
 
 @video_controller.route("/")
 class VideoList(Resource):
     @video_controller.response(200, "Videos found")
     @video_controller.marshal_with(videoDTO_model)
-    def get(self):
+    def get(self):  #! SOLO PARA TESTEO
         '''
         Devuelve todos los DTO de los videos subidos
         '''
-        return [] #! Usar MongoDB
+        log(video_controller, "test", logging.CRITICAL)
+        return []
     
 
 
@@ -124,10 +130,16 @@ class VideoUpload(Resource):
 
         if(processor is not None):
             processor.process_video(filename, id, video_found["language"], sub)
-        check_file_exists(f"./temp/{id}_final.mp4")
+
+        filepath = f"./temp/{id}_final.mp4"
+
+        if check_file_exists(filepath):
+            msg = "non-existent file: " + filepath
+            log(video_controller, msg, logging.CRITICAL)
+            video_controller.abort(400, msg)
 
         print("Subiendo video a URI: ", video_found["firebase_uri"])
-        storage.child(f"translated_videos/{trans_id}.mp4").put(f"./temp/{id}_final.mp4") #TODO Generate translated video
+        storage.child(f"translated_videos/{trans_id}.mp4").put(f"./temp/{id}_final.mp4")
 
         #video_processor.delete_files(filename)
 
@@ -135,6 +147,6 @@ class VideoUpload(Resource):
         if db.insert_translation(id, sub, trans_id) is False:
             video_controller.abort(400, "Error saving translation")
 
-        return {"message": "translation uploaded"}, 200
+        return {"message": "translation uploading"}, 200
 
 

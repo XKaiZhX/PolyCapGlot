@@ -1,6 +1,7 @@
 
 from functools import wraps
 from flask import app, jsonify, request
+from flask_restx import Namespace
 from services.user_service import UserService
 from extensions import api, secret_key
 from jwt import api_jws
@@ -8,6 +9,7 @@ from jwt import api_jws
 import jwt
 import datetime
 import json
+import logging
 
 user_service = UserService()
 
@@ -59,3 +61,9 @@ def token_required(f):
         # Pass current_user as a keyword argument
         return f(*args, current_user=current_user, is_expired=expired, **kwargs)
     return decorated_function
+
+#Logging
+
+def log(ns: Namespace, msg: str, level: int):
+    ns.logger.log(level=level, msg=datetime.datetime.now().strftime("[%d/%b/%Y %H:%M:%S] - ") + msg)
+    
