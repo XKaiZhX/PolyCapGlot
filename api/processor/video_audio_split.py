@@ -1,7 +1,7 @@
 from moviepy.editor import VideoFileClip
 from moviepy.editor import AudioFileClip
 from scipy.io import wavfile
-import noisereduce as nr
+from noisereduce import reduce_noise
 import numpy as np
 
 class split():
@@ -44,7 +44,7 @@ class split():
             self.data = np.reshape(self.data, (2, -1))
 
             # Realizar reducción de ruido (optimizado para voz)
-            self.reduced_noise = nr.reduce_noise(
+            self.reduced_noise = reduce_noise(
                 y=self.data, # Array de datos de audio
                 sr=self.rate, # Tasa de muestreo de los datos de audio
                 stationary=True # Si se asume que el ruido es estacionario (constante) o no

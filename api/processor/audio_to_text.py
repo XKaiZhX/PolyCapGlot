@@ -25,7 +25,7 @@ class toText:
         # Carga el modelo preentrenado para la diarización de hablantes
         self.diarization_pipeline = Pipeline.from_pretrained(
             checkpoint_path="pyannote/speaker-diarization-3.1",  # Ruta al modelo preentrenado para la diarización de hablantes
-            use_auth_token='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',  # Token de autenticación para la descarga del modelo
+            use_auth_token='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',  # Token de autenticación para la descarga del modelo
         )
 
         self.whisper_model = whisper.load_model('medium')
