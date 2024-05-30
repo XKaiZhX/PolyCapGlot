@@ -6,7 +6,7 @@ import datetime
 from extensions import db, storage, config, processor
 from services.user_service import UserService
 from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder, check_file_exists
-from utils.controller_utils import token_required, create_token, log
+from utils.controller_utils import token_required, create_token, ns_log
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
 
 
@@ -16,7 +16,7 @@ video_controller = Namespace("video")
 
 fs = logging.FileHandler("./log/api.log")
 video_controller.logger.addHandler(fs)
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 @video_controller.route("/")
 class VideoList(Resource):
@@ -26,7 +26,7 @@ class VideoList(Resource):
         '''
         Devuelve todos los DTO de los videos subidos
         '''
-        log(video_controller, "test", logging.CRITICAL)
+        ns_log(video_controller, "test", logging.CRITICAL)
         return []
     
 
@@ -46,7 +46,7 @@ class Video(Resource):
 
 @video_controller.route("/user")
 class UserVideos(Resource):
-    @token_required
+    @token_required(video_controller)
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.response(200, "Video found")
     @video_controller.response(404, "Video not found")
@@ -71,12 +71,13 @@ class UserVideos(Resource):
             print("videos: "+ str(video_list))
             return (video_list)
         except Exception as e:
+            ns_log(video_controller, "videos/user exception: " + e, logging.ERROR)
             video_controller.abort(403, e)
 
 
 @video_controller.route("/request")
 class VideoRequest(Resource):
-    @token_required  # Ensure that the token is required for this endpoint
+    @token_required(video_controller)  # Ensure that the token is required for this endpoint
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.expect(prerequest_model)
     def post(self, current_user, **kwargs):
@@ -102,7 +103,7 @@ class VideoRequest(Resource):
 
 @video_controller.route("/upload")
 class VideoUpload(Resource):
-    @token_required
+    @token_required(video_controller)
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.expect(request_model)
     def post(self, current_user, **kwargs):
@@ -135,7 +136,7 @@ class VideoUpload(Resource):
 
         if check_file_exists(filepath):
             msg = "non-existent file: " + filepath
-            log(video_controller, msg, logging.CRITICAL)
+            ns_log(video_controller, msg, logging.CRITICAL)
             video_controller.abort(400, msg)
 
         print("Subiendo video a URI: ", video_found["firebase_uri"])
