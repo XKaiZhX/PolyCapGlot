@@ -150,7 +150,7 @@ class MongoRepository():
         return self.translated.find_one({"id": trans_id})
     
     def get_translations(self, video_id: str):
-        print("MongoRepository - insert_translation:\t" + f"video_id={video_id}")
+        #print("MongoRepository - insert_translation:\t" + f"video_id={video_id}")
 
         found = self.find_video(video_id)
 
@@ -159,7 +159,8 @@ class MongoRepository():
             trans_found = self.find_translation(trans_id)
             trans_list.append({
                 "sub_language": trans_found["sub_language"],
-                "firebase_uri": trans_found["firebase_uri"]
+                "firebase_uri": trans_found["firebase_uri"],
+                "state": trans_found["state"]
             })
 
         return trans_list

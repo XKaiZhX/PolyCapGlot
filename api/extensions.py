@@ -6,7 +6,7 @@ from utils.extension_utils import get_mongo_connection_string, load_firebase_jso
 import pyrebase
 import json
 
-secret_key = 'Hermes'
+#secret_key = 'Hermes'
 
 db = MongoRepository(get_mongo_connection_string())
 api = Api(

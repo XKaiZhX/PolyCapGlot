@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
-from extensions import api, secret_key
+from extensions import api
+from config.app_config import secret_key
 from controllers.user_controller import user_controller
 from controllers.video_controller import video_controller
 import logging

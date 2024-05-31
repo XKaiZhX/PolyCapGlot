@@ -18,10 +18,13 @@ class video_processor:
         return language in self.support_target_languages
 
     #objectos llegado: (self, './tmp/1234567.mp4', 'EN', 'ES')
-    def process_video(self, video_path, id, original_language, target_language):
+    def process_video(self, video_path, folder_path, id, original_language, target_language):
 
         # Extraer el nombre del archivo sin la extensión
         self.file_name = os.path.basename(video_path)  # Obtener el nombre del archivo sin la ruta completa
+       
+        self.folder_path = os.path.join(folder_path, f'{id}_{original_language}_{target_language}/')
+
         #self.file_id = os.path.splitext(self.file_name)[0]  # Quitar la extensión del archivo
 
         # Obtener el ID del video (parte después de la última barra y antes del punto)
@@ -49,15 +52,15 @@ class video_processor:
             # Si todas las comprobaciones pasan
 
             # Verificar y procesar el archivo de audio reducido
-            self.video_file_path = f'./temp/{self.id}.mp4'
+            self.video_file_path = os.path.join(self.folder_path, f'{self.id}.mp4')
             self.check_and_process_file(self.video_file_path, split, self.id, self.video_file_path)
 
             # Verificar y procesar el archivo de audio reducido
-            self.audio_file_path = f'./temp/{self.id}_audio_reduced.wav'
+            self.audio_file_path = os.path.join(self.folder_path, f'{self.id}_audio_reduced.wav')
             self.check_and_process_file(self.audio_file_path, toText, self.id, self.audio_file_path, self.original, self.target)
 
             # Verificar y procesar el archivo de subtítulos
-            self.srt_file_path = f'./temp/{self.id}_subtitle.srt'
+            self.srt_file_path = os.path.join(self.folder_path, f'{self.id}_subtitle.srt')
             self.check_and_process_file(self.srt_file_path, merge, self.id, self.video_file_path, self.srt_file_path, self.target)
 
             print("......Process End......")
@@ -68,7 +71,9 @@ class video_processor:
 
         except Exception as e:
             # Manejo de cualquier otra excepción que no sea ValueError
-            print("¡Error general:", e)
+            print("Critical error!:", e)
+        
+        return os.path.join(self.folder_path, f'{self.id}_final.mp4')
 
     def check_and_process_file(self, file_path, processing_function, *args):
         """

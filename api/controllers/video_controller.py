@@ -3,10 +3,11 @@ from flask_restx import Namespace, Resource
 import logging
 import datetime
 
-from extensions import db, storage, config, processor
+from config.app_config import tmp_folder_path
+from extensions import storage, processor
 from services.user_service import UserService
 from services.video_service import VideoService
-from utils.service_utils import generate_video_hash, generate_translation_hash, generate_password_salt, generate_temp_folder, check_file_exists
+from utils.service_utils import generate_video_hash, generate_translation_hash, generate_temp_folder, check_file_exists
 from utils.controller_utils import token_required, create_token, ns_log
 from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
 
@@ -41,17 +42,11 @@ class UserVideos(Resource):
         user = kwargs.get('current_user')
 
         try:
-            video_list = []
+            
             if "videos" not in user:
                 raise Exception("User " + user["email"] + "doesn't contain videos")
-            for video_id in user["videos"]:
-                video = video_service.find_video(video_id)
-                video_list.append({
-                    "title": video["title"],
-                    "language": video["language"],
-                    "firebase_uri": video["firebase_uri"],
-                    "translations" : db.get_translations(video["id"])
-                })
+            
+            video_list = video_service.get_user_videos(user["videos"])
 
             ns_log(video_controller, "videos fetched from user: " + user["email"], logging.INFO)
             return (video_list)
@@ -74,7 +69,7 @@ class VideoRequest(Resource):
         generated = generate_video_hash(current_user["email"], data["title"], data["language"])
         uri = f"raw_videos/{generated}.mp4"
 
-        proceed = db.preupload_video(current_user["email"], generated, data["title"], data["language"], uri)
+        proceed = video_service.preupload_video(current_user["email"], generated, data["title"], data["language"], uri)
 
         if proceed:
             return {
@@ -93,46 +88,42 @@ class VideoUpload(Resource):
     @video_controller.expect(request_model)
     def post(self, current_user, **kwargs):
         data = request.json        
-        
-        email = current_user["email"]
 
         id = data["video_id"]
         filename = id + ".mp4" #Hash de video
-
         sub = data["sub"] #Idioma del subtitulo
-
-        #TODO: AUTENTIFICATION CHECK AND STUFF
-        #! USER CHECKING NEEDED
-
+        
         trans_id = generate_translation_hash(id, sub)
+        video_found = video_service.find_video(id)
 
-        video_found = db.find_video(id)
+        try:
+            folder_path = generate_temp_folder(id, video_found["language"], sub)
+        except Exception as e:
+            ns_log(video_controller, f"Translation already in process for video: {id} from " + current_user["email"], logging.INFO)
+            video_controller.abort(404, "Translation already in process")
 
-        #TODO: Descargar video de firebase
-        print("Descargando video de URI: ", video_found["firebase_uri"])
-
-        generate_temp_folder()
+        ns_log(video_controller, "Descargando video de URI: " + video_found["firebase_uri"], logging.INFO)
         storage.child(video_found["firebase_uri"]).download("", f"./temp/{id}.mp4")
 
-        if(processor is not None):
-            processor.process_video(filename, id, video_found["language"], sub)
-
         filepath = f"./temp/{id}_final.mp4"
+
+        if(processor is not None):
+            filepath = processor.process_video(filename, folder_path, id, video_found["language"], sub)
 
         if check_file_exists(filepath):
             msg = "non-existent file: " + filepath
             ns_log(video_controller, msg, logging.CRITICAL)
             video_controller.abort(400, msg)
 
-        print("Subiendo video a URI: ", video_found["firebase_uri"])
+        ns_log(video_controller, "Subiendo video a URI: " + video_found["firebase_uri"], logging.INFO)
         storage.child(f"translated_videos/{trans_id}.mp4").put(f"./temp/{id}_final.mp4")
 
         #video_processor.delete_files(filename)
 
         #Database insertion
-        if db.insert_translation(id, sub, trans_id) is False:
+        if video_service.insert_translation(id, sub, trans_id) is False:
             video_controller.abort(400, "Error saving translation")
 
-        return {"message": "translation uploading"}, 200
+        return {"message": "translation uploading"}
 
 

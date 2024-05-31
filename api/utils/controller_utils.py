@@ -3,7 +3,8 @@ from functools import wraps
 from flask import app, jsonify, request
 from flask_restx import Namespace
 from services.user_service import UserService
-from extensions import api, secret_key
+from extensions import api
+from config.app_config import secret_key
 from jwt import api_jws
 
 import jwt
@@ -69,6 +70,9 @@ def token_required(ns: Namespace):
     return decorator
 
 #Logging
-
 def ns_log(ns: Namespace, msg: str, level: int):
     ns.logger.log(level=level, msg=datetime.datetime.now().strftime(log_dateformat) + msg)
+
+#Translation
+def translate_video():
+    pass
