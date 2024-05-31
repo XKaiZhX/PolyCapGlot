@@ -110,7 +110,7 @@ class VideoUpload(Resource):
         if(processor is not None):
             filepath = processor.process_video(filename, folder_path, id, video_found["language"], sub)
 
-        if check_file_exists(filepath):
+        if not check_file_exists(filepath):
             msg = "non-existent file: " + filepath
             ns_log(video_controller, msg, logging.CRITICAL)
             video_controller.abort(400, msg)
