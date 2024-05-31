@@ -24,7 +24,7 @@ class video_processor:
         self.file_name = os.path.basename(video_path)  # Obtener el nombre del archivo sin la ruta completa
        
         self.folder_path = folder_path
-
+        print("CORE FOLDER PATH: " + self.folder_path)
         #self.file_id = os.path.splitext(self.file_name)[0]  # Quitar la extensión del archivo
 
         # Obtener el ID del video (parte después de la última barra y antes del punto)
@@ -53,14 +53,17 @@ class video_processor:
 
             # Verificar y procesar el archivo de audio reducido
             self.video_file_path = os.path.join(self.folder_path, f'{self.id}.mp4')
+            print("CORE VIDEO FILE PATH: " + self.video_file_path)
             self.check_and_process_file(self.video_file_path, split, self.id, self.video_file_path)
 
             # Verificar y procesar el archivo de audio reducido
             self.audio_file_path = os.path.join(self.folder_path, f'{self.id}_audio_reduced.wav')
+            print("CORE AUDIO FILE PATH: " + self.audio_file_path)
             self.check_and_process_file(self.audio_file_path, toText, self.id, self.audio_file_path, self.original, self.target)
 
             # Verificar y procesar el archivo de subtítulos
             self.srt_file_path = os.path.join(self.folder_path, f'{self.id}_subtitle.srt')
+            print("CORE STR FILE PATH: " + self.srt_file_path)
             self.check_and_process_file(self.srt_file_path, merge, self.id, self.video_file_path, self.srt_file_path, self.target)
 
             print("......Process End......")
