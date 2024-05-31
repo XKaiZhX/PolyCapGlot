@@ -23,7 +23,7 @@ class video_processor:
         # Extraer el nombre del archivo sin la extensión
         self.file_name = os.path.basename(video_path)  # Obtener el nombre del archivo sin la ruta completa
        
-        self.folder_path = os.path.join(folder_path, f'{id}_{original_language}_{target_language}/')
+        self.folder_path = folder_path
 
         #self.file_id = os.path.splitext(self.file_name)[0]  # Quitar la extensión del archivo
 

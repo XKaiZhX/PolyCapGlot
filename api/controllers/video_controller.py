@@ -108,6 +108,7 @@ class VideoUpload(Resource):
         filepath = f"{folder_path}/{id}.mp4"
 
         if(processor is not None):
+            print("processing")
             filepath = processor.process_video(filename, folder_path, id, video_found["language"], sub)
 
         if not check_file_exists(filepath):
