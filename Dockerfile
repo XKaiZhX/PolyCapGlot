@@ -42,10 +42,10 @@ RUN rm -fr /delete-me-files
 
 #Actualiza set inicial de pip
 #TODO: Añadir paquetes al requirements.txt
-RUN pip install --upgrade pip &&\
-    pip install --upgrade setuptools &&\
-    pip install torchvision &&\
-    pip install -U openai-whisper
+#RUN pip install --upgrade pip &&\
+#    pip install --upgrade setuptools &&\
+#    pip install torchvision &&\
+#    pip install -U openai-whisper
 
 # Clona el repositorio desde GitHub
 RUN git clone https://github.com/XKaiZhX/PolyCapGlot.git /PolyCapGlot

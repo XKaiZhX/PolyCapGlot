@@ -105,7 +105,7 @@ class VideoUpload(Resource):
         ns_log(video_controller, "Descargando video de URI: " + video_found["firebase_uri"], logging.INFO)
         storage.child(video_found["firebase_uri"]).download("", f"{folder_path}/{id}.mp4")
 
-        filepath = f"./temp/{id}_final.mp4"
+        filepath = f"{folder_path}/{id}.mp4"
 
         if(processor is not None):
             filepath = processor.process_video(filename, folder_path, id, video_found["language"], sub)
