@@ -3,7 +3,8 @@ import pysrt
 from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
 
 class merge():
-    def __init__(self, id, video, subtitulo, target_language):
+    def __init__(self, path, id, video, subtitulo, target_language):
+        self.path = path
         self.id = id
         self.video = video
         self.subtitulo = subtitulo
@@ -80,7 +81,7 @@ class merge():
             self.final_video = CompositeVideoClip([self.video_editor] + self.subtitulos)
 
             # Define la ruta y el nombre del archivo de salida
-            self.output_file = os.path.join(f'./temp/{self.id}_final.mp4')
+            self.output_file = os.path.join(f'{self.path}/{self.id}_final.mp4')
 
             # Guarda el video resultante
             self.final_video.write_videofile(self.output_file)

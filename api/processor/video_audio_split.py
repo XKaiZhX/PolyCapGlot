@@ -6,9 +6,10 @@ import numpy as np
 
 class split():
 
-    def __init__(self, id, video):
+    def __init__(self, path, id, video):
         self.id = id
         self.video = video
+        self.path = path
 
         self.separar()
 
@@ -25,7 +26,7 @@ class split():
 
             #Guardar parte audio como fichero
             #Puede ser de formato wav tambien 'audio.wav', si quiere ser de formato mp3, './files/audio.mp3', codec='mp3'
-            self.audio_editor.write_audiofile(f'./temp/{self.id}_audio.wav')
+            self.audio_editor.write_audiofile(f'{self.path}/{self.id}_audio.wav')
             
             #Cerrar proceso
             self.video_editor.close()
@@ -39,7 +40,7 @@ class split():
 
         try:
             #Cargar los datos de audio del archivo guardado
-            self.rate, self.data = wavfile.read(f'./temp/{self.id}_audio.wav')
+            self.rate, self.data = wavfile.read(f'{self.path}/{self.id}_audio.wav')
             self.orig_shape = self.data.shape
             self.data = np.reshape(self.data, (2, -1))
 
@@ -51,6 +52,6 @@ class split():
             )
 
             # Escribir los datos de audio reducidos de ruido en un nuevo archivo
-            wavfile.write(f'./temp/{self.id}_audio_reduced.wav', self.rate, self.reduced_noise.reshape(self.orig_shape))
+            wavfile.write(f'{self.path}/{self.id}_audio_reduced.wav', self.rate, self.reduced_noise.reshape(self.orig_shape))
         except Exception as e:
             print("Error occurred during audio reducing:", str(e))

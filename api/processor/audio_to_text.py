@@ -17,7 +17,8 @@ from processor.translate_subtitle import toSub  # Importa la clase toSub del mó
 class toText:
     SAMPLE_RATE = 16000 # Frecuencia de muestreo de audio predeterminada
 
-    def __init__(self, id, audio, original_language, target_language):
+    def __init__(self, path, id, audio, original_language, target_language):
+        self.path = path
         self.id = id
         self.audio = audio
         self.original = original_language
@@ -37,7 +38,7 @@ class toText:
 
     def transcribe_chunks(self):
         try:
-            output_dir = "./temp/"  # Directorio de salida para archivos temporales
+            output_dir = self.path  # Directorio de salida para archivos temporales
             os.makedirs(output_dir, exist_ok=True)  # Crea el directorio si no existe
 
             audio_segment = AudioSegment.from_file(self.audio)  # Carga el archivo de audio
