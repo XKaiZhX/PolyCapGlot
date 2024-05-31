@@ -103,7 +103,7 @@ class VideoUpload(Resource):
             video_controller.abort(404, "Translation already in process")
 
         ns_log(video_controller, "Descargando video de URI: " + video_found["firebase_uri"], logging.INFO)
-        storage.child(video_found["firebase_uri"]).download("", f"./temp/{id}.mp4")
+        storage.child(video_found["firebase_uri"]).download("", f"{folder_path}/{id}.mp4")
 
         filepath = f"./temp/{id}_final.mp4"
 

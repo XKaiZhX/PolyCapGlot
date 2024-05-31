@@ -54,7 +54,7 @@ def generate_password_hash(password: str, salt: str):
 
 def generate_temp_folder(video_id: str, og_lang: str, target_lang: str):
     
-    folder_path = os.path.join(tmp_folder_path, f'{id}_{og_lang}_{target_lang}')
+    folder_path = os.path.join(tmp_folder_path, f'{video_id}_{og_lang}_{target_lang}')
     if not os.path.exists(tmp_folder_path):
         os.mkdir(tmp_folder_path)
 
