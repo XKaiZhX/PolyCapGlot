@@ -116,7 +116,7 @@ class VideoUpload(Resource):
             video_controller.abort(400, msg)
 
         ns_log(video_controller, "Subiendo video a URI: " + video_found["firebase_uri"], logging.INFO)
-        storage.child(f"translated_videos/{trans_id}.mp4").put(f"./temp/{id}_final.mp4")
+        storage.child(f"translated_videos/{trans_id}.mp4").put(filepath)
 
         #video_processor.delete_files(filename)
 
