@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 export const Processing = () => {
     const [progress, setProgress] = useState(0);
     const [error, setError] = useState(null); // Nuevo estado para almacenar el error
+    const [response, setResponse] = useState(null); // Estado para almacenar la respuesta
     const navigate = useNavigate();
     const { uploadVideo, email, requestVideosList, videosList, ValidarToken, token } = useAuth();
     const { fileName, language } = useParams();
@@ -13,8 +14,7 @@ export const Processing = () => {
     useEffect(() => {
         const totalTimeInSeconds = (5 * 60) - 1;
         const updateInterval = 1000; // Actualizar cada 1 segundo
-        let response = null
-        let interval = null
+        let interval = null;
 
         const simulateAndUpload = async () => {
             try {
@@ -30,7 +30,8 @@ export const Processing = () => {
                 }, 1000);
 
                 // Enviar la solicitud para cargar el video
-                response = await uploadVideo({ email: email, video_id: fileName, sub: language });
+                const response = await uploadVideo({ email: email, video_id: fileName, sub: language });
+                setResponse(response); // Establecer la respuesta en el estado
 
                 // Limpiar intervalo de simulación de carga
                 clearInterval(interval);
@@ -43,7 +44,7 @@ export const Processing = () => {
             }
         };
 
-        const checkUploadStatus = async () => {
+        const checkUploadStatus = async (response) => {
             let additionalTime = 0; // Tiempo adicional a agregar en segundos
 
             const checkInterval = setInterval(async () => {
@@ -70,46 +71,46 @@ export const Processing = () => {
         simulateAndUpload();
     }, []);
 
+    // useEffect(() => {
+    //     const verifyUploaded = async () => {
+    //         try {
+    //             ValidarToken();
 
-    useEffect(() => {
-        const verifyUploaded = async () => {
-            try {
-                ValidarToken()
+    //             // Obtener la lista de videos
+    //             await requestVideosList();
 
-                // Obtener la lista de videos
-                requestVideosList();
+    //             // Obtener el video de la lista
+    //             const video = videosList.find(video => video.firebase_uri === 'raw_videos/' + fileName + '.mp4');
 
-                // Obtener el video de la lista
-                const video = videosList.find(video => video.firebase_uri === 'raw_videos/' + fileName + '.mp4');
+    //             if (video) {
+    //                 // Si el video está en la lista, buscar la traducción
+    //                 const translation = video.translations.find(trans => trans.sub_language === language);
+    //                 if (translation) {
+    //                     const firebaseUri = translation.firebase_uri;
+    //                     const uriParts = firebaseUri.split('/');
+    //                     const folder = uriParts[0];
+    //                     const newFileName = uriParts[1].split('.')[0];
+    //                     const fileExtension = uriParts[1].split('.')[1];
 
-                if (video) {
-                    // Si el video está en la lista, buscar la traducción
-                    const translation = video.translations.find(trans => trans.sub_language === language);
-                    if (translation) {
-                        const firebaseUri = translation.firebase_uri;
-                        const uriParts = firebaseUri.split('/');
-                        const folder = uriParts[0];
-                        const newFileName = uriParts[1].split('.')[0];
-                        const fileExtension = uriParts[1].split('.')[1];
+    //                     navigate(`/videoplayer/${folder}/${newFileName}/${fileExtension}`);
+    //                     setProgress(100);
+    //                     return;
+    //                 } else {
+    //                     throw new Error('Translation not found for the given language.');
+    //                 }
+    //             } else {
+    //                 throw new Error('Video not found.');
+    //             }
+    //         } catch (error) {
+    //             setError(error.message);
+    //         }
+    //     };
 
-                        navigate(`/videoplayer/${folder}/${newFileName}/${fileExtension}`);
-                        clearInterval(checkInterval);
-                        setProgress(100);
-                        return;
-                    } else {
-                        throw new Error('Translation not found for the given language.');
-                    }
-                } else {
-                    throw new Error('Video not found.');
-                }
-            } catch (error) {
-                clearInterval(checkInterval);
-                clearInterval(interval); // Limpiar intervalo de simulación de carga
-            }
-        };
+    //     if (response != null) {
+    //         verifyUploaded();
+    //     }
 
-        verifyUploaded();
-    }, [ValidarToken, requestVideosList]);
+    // }, [ValidarToken, requestVideosList, response, fileName, language, navigate, videosList]);
 
     return (
         <div className='d-flex bg-primary align-items-center justify-content-center vh-100'>

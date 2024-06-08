@@ -1,0 +1,387 @@
+[
+    {
+        "text": "It's gonna go.",
+        "texto_traducido": "Se va a ir.",
+        "start": 0.8800000000000032,
+        "end": 1.96,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "It's gonna go.",
+        "texto_traducido": "Se va a ir.",
+        "start": 0.900000000000003,
+        "end": 1.98,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Ha! Hello adventurer!",
+        "texto_traducido": "\u00a1Ha! \u00a1Hola aventurero!",
+        "start": 3.900000000000003,
+        "end": 5.46,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Ha! Hello adventurer!",
+        "texto_traducido": "\u00a1Ha! \u00a1Hola aventurero!",
+        "start": 3.900000000000003,
+        "end": 5.46,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "And welcome to my shop!",
+        "texto_traducido": "\u00a1Y bienvenido a mi tienda!",
+        "start": 5.68,
+        "end": 6.74,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "And welcome to my shop!",
+        "texto_traducido": "\u00a1Y bienvenido a mi tienda!",
+        "start": 5.68,
+        "end": 6.68,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Doing health questions.",
+        "texto_traducido": "Hacer preguntas sobre salud.",
+        "start": 6.96,
+        "end": 7.58,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Doing health potions.",
+        "texto_traducido": "Haciendo pociones de salud.",
+        "start": 6.98,
+        "end": 7.62,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Right away!",
+        "texto_traducido": "\u00a1Ahora mismo!",
+        "start": 8.08,
+        "end": 8.56,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Right away!",
+        "texto_traducido": "\u00a1Ahora mismo!",
+        "start": 8.08,
+        "end": 8.56,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Hold on, I'm just gonna have a health question.",
+        "texto_traducido": "Espera, voy a hacer una pregunta de salud.",
+        "start": 10.78,
+        "end": 12.08,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Hold on, I'm just gonna have a health potion.",
+        "texto_traducido": "Espera, voy a tomar una poci\u00f3n de salud.",
+        "start": 10.8,
+        "end": 12.1,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Yes.",
+        "texto_traducido": "S\u00ed.",
+        "start": 12.72,
+        "end": 12.86,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Yes.",
+        "texto_traducido": "S\u00ed.",
+        "start": 12.8,
+        "end": 12.82,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Um.",
+        "texto_traducido": "Um.",
+        "start": 21.280000000000005,
+        "end": 21.76,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Um.",
+        "texto_traducido": "Um.",
+        "start": 21.280000000000005,
+        "end": 21.76,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Um.",
+        "texto_traducido": "Um.",
+        "start": 21.280000000000005,
+        "end": 21.76,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Ah.",
+        "texto_traducido": "Ah.",
+        "start": 23.6,
+        "end": 23.84,
+        "speaker": "SPEAKER_02"
+    },
+    {
+        "text": "Ah.",
+        "texto_traducido": "Ah.",
+        "start": 23.6,
+        "end": 23.84,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "What do you mean?",
+        "texto_traducido": "\u00bfA qu\u00e9 te refieres?",
+        "start": 24.24,
+        "end": 26.04,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "What do you mean?",
+        "texto_traducido": "\u00bfA qu\u00e9 te refieres?",
+        "start": 24.26,
+        "end": 26.04,
+        "speaker": "SPEAKER_02"
+    },
+    {
+        "text": "What do you mean?",
+        "texto_traducido": "\u00bfA qu\u00e9 te refieres?",
+        "start": 24.26,
+        "end": 26.04,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "I was not having space in my inventory.",
+        "texto_traducido": "No ten\u00eda espacio en mi inventario.",
+        "start": 26.54,
+        "end": 28.02,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "I was having space in my inventory.",
+        "texto_traducido": "Ten\u00eda espacio en mi inventario.",
+        "start": 26.54,
+        "end": 28.02,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Just eat it.",
+        "texto_traducido": "C\u00f3metelo.",
+        "start": 30.059999999999995,
+        "end": 31.18,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "No, no, I already drank the potion.",
+        "texto_traducido": "No, no, ya beb\u00ed la poci\u00f3n.",
+        "start": 31.5,
+        "end": 32.42,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "I just don't have the energy to put the glass vial.",
+        "texto_traducido": "Simplemente no tengo la energ\u00eda para poner la ampolla de vidrio.",
+        "start": 32.56,
+        "end": 34.0,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Yeah, I know.",
+        "texto_traducido": "S\u00ed, lo s\u00e9.",
+        "start": 34.32,
+        "end": 34.86,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Just eat it.",
+        "texto_traducido": "C\u00f3metelo.",
+        "start": 36.0,
+        "end": 36.46,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "What do you mean eat it?",
+        "texto_traducido": "\u00bfQu\u00e9 quieres decir con com\u00e9rtelo?",
+        "start": 36.76,
+        "end": 37.54,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Just eat the vial like a normal person.",
+        "texto_traducido": "C\u00f3mete la ampolla como una persona normal.",
+        "start": 38.3,
+        "end": 41.18,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Like, eat the glass vial.",
+        "texto_traducido": "Como, comer el frasco de vidrio.",
+        "start": 41.52,
+        "end": 43.34,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Rowan, I don't understand where you're getting lost in the sentence.",
+        "texto_traducido": "Rowan, no entiendo d\u00f3nde te pierdes en la frase.",
+        "start": 44.48,
+        "end": 47.46,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Just eat the vial like a normal person.",
+        "texto_traducido": "C\u00f3mete la ampolla como una persona normal.",
+        "start": 47.78,
+        "end": 52.08,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Okay, Ben. I don't think you quite understand what I'm saying.",
+        "texto_traducido": "Vale, Ben. No creo que entiendas lo que estoy diciendo.",
+        "start": 52.12,
+        "end": 55.24,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "I've already drunk the potion.",
+        "texto_traducido": "Ya he bebido la poci\u00f3n.",
+        "start": 55.6,
+        "end": 58.0,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "I'm trying to figure out where to put the empty glass vial.",
+        "texto_traducido": "Estoy tratando de averiguar d\u00f3nde poner el frasco de vidrio vac\u00edo.",
+        "start": 58.0,
+        "end": 63.64,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "In your big stupid mouth, Rowan.",
+        "texto_traducido": "En tu gran boca est\u00fapida, Rowan.",
+        "start": 63.68,
+        "end": 67.08,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "It's not...",
+        "texto_traducido": "No es...",
+        "start": 67.16,
+        "end": 68.06,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "Here, look. I'll show you.",
+        "texto_traducido": "Aqu\u00ed, mira. Te mostrar\u00e9.",
+        "start": 68.06,
+        "end": 70.06,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "See?",
+        "texto_traducido": "\u00bfLo veis?",
+        "start": 70.82,
+        "end": 71.16,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Health potion.",
+        "texto_traducido": "Poci\u00f3n de salud.",
+        "start": 71.5,
+        "end": 72.32,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Now, watch.",
+        "texto_traducido": "Ahora, mira.",
+        "start": 72.94,
+        "end": 73.92,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Oh!",
+        "texto_traducido": "\u00a1Oh!",
+        "start": 76.18,
+        "end": 76.88,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Oh!",
+        "texto_traducido": "\u00a1Oh!",
+        "start": 76.18,
+        "end": 76.88,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "What the...",
+        "texto_traducido": "Lo que...",
+        "start": 77.18,
+        "end": 80.0,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "Oh!",
+        "texto_traducido": "\u00a1Oh!",
+        "start": 81.47999999999999,
+        "end": 82.32,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "",
+        "texto_traducido": null,
+        "start": 83.08,
+        "end": 83.08,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "I...",
+        "texto_traducido": "I...",
+        "start": 84.64,
+        "end": 85.32,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "See?",
+        "texto_traducido": "\u00bfLo veis?",
+        "start": 91.63999999999999,
+        "end": 92.44,
+        "speaker": "SPEAKER_01"
+    },
+    {
+        "text": "See?",
+        "texto_traducido": "\u00bfLo veis?",
+        "start": 91.63999999999999,
+        "end": 92.44,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "",
+        "texto_traducido": null,
+        "start": 92.44,
+        "end": 92.44,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Yeah!",
+        "texto_traducido": "\u00a1S\u00ed!",
+        "start": 100.36,
+        "end": 101.16,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Morning!",
+        "texto_traducido": "\u00a1Buenos d\u00edas!",
+        "start": 101.6,
+        "end": 102.3,
+        "speaker": "SPEAKER_00"
+    },
+    {
+        "text": "Nice to even fish it, ain't it?",
+        "texto_traducido": "Es bueno incluso pescarlo, \u00bfno?",
+        "start": 103.74,
+        "end": 104.98,
+        "speaker": "SPEAKER_00"
+    }
+]

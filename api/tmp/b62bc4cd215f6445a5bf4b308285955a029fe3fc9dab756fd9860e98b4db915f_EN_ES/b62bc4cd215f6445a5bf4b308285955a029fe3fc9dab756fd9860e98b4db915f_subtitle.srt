@@ -1,0 +1,220 @@
+1
+00:00:00,000 --> 00:00:01,000
+SPEAKER_00: Se va a ir.
+
+2
+00:00:01,000 --> 00:00:01,000
+SPEAKER_00: Se va a ir.
+
+3
+00:00:01,000 --> 00:00:05,000
+SPEAKER_00: ¡Ha! ¡Hola aventurero!
+
+4
+00:00:05,000 --> 00:00:05,000
+SPEAKER_00: ¡Ha! ¡Hola aventurero!
+
+5
+00:00:05,000 --> 00:00:06,000
+SPEAKER_00: ¡Y bienvenido a mi tienda!
+
+6
+00:00:06,000 --> 00:00:06,000
+SPEAKER_00: ¡Y bienvenido a mi tienda!
+
+7
+00:00:06,000 --> 00:00:07,000
+SPEAKER_00: Hacer preguntas sobre salud.
+
+8
+00:00:07,000 --> 00:00:07,000
+SPEAKER_00: Haciendo pociones de salud.
+
+9
+00:00:07,000 --> 00:00:08,000
+SPEAKER_00: ¡Ahora mismo!
+
+10
+00:00:08,000 --> 00:00:08,000
+SPEAKER_00: ¡Ahora mismo!
+
+11
+00:00:08,000 --> 00:00:12,000
+SPEAKER_00: Espera, voy a hacer una pregunta de salud.
+
+12
+00:00:12,000 --> 00:00:12,000
+SPEAKER_00: Espera, voy a tomar una poción de salud.
+
+13
+00:00:12,000 --> 00:00:12,000
+SPEAKER_00: Sí.
+
+14
+00:00:12,000 --> 00:00:12,000
+SPEAKER_00: Sí.
+
+15
+00:00:12,000 --> 00:00:21,000
+SPEAKER_00: Um.
+
+16
+00:00:21,000 --> 00:00:21,000
+SPEAKER_00: Um.
+
+17
+00:00:21,000 --> 00:00:21,000
+SPEAKER_00: Um.
+
+18
+00:00:21,000 --> 00:00:23,000
+SPEAKER_02: Ah.
+
+19
+00:00:23,000 --> 00:00:23,000
+SPEAKER_00: Ah.
+
+20
+00:00:23,000 --> 00:00:26,000
+SPEAKER_00: ¿A qué te refieres?
+
+21
+00:00:26,000 --> 00:00:26,000
+SPEAKER_02: ¿A qué te refieres?
+
+22
+00:00:26,000 --> 00:00:26,000
+SPEAKER_00: ¿A qué te refieres?
+
+23
+00:00:26,000 --> 00:00:28,000
+SPEAKER_00: No tenía espacio en mi inventario.
+
+24
+00:00:28,000 --> 00:00:28,000
+SPEAKER_00: Tenía espacio en mi inventario.
+
+25
+00:00:28,000 --> 00:00:31,000
+SPEAKER_00: Cómetelo.
+
+26
+00:00:31,000 --> 00:00:32,000
+SPEAKER_00: No, no, ya bebí la poción.
+
+27
+00:00:32,000 --> 00:00:34,000
+SPEAKER_00: Simplemente no tengo la energía para poner la ampolla de vidrio.
+
+28
+00:00:34,000 --> 00:00:34,000
+SPEAKER_00: Sí, lo sé.
+
+29
+00:00:34,000 --> 00:00:36,000
+SPEAKER_00: Cómetelo.
+
+30
+00:00:36,000 --> 00:00:37,000
+SPEAKER_00: ¿Qué quieres decir con comértelo?
+
+31
+00:00:37,000 --> 00:00:41,000
+SPEAKER_00: Cómete la ampolla como una persona normal.
+
+32
+00:00:41,000 --> 00:00:43,000
+SPEAKER_00: Como, comer el frasco de vidrio.
+
+33
+00:00:43,000 --> 00:00:47,000
+SPEAKER_00: Rowan, no entiendo dónde te pierdes en la frase.
+
+34
+00:00:47,000 --> 00:00:52,000
+SPEAKER_00: Cómete la ampolla como una persona normal.
+
+35
+00:00:52,000 --> 00:00:55,000
+SPEAKER_01: Vale, Ben. No creo que entiendas lo que estoy diciendo.
+
+36
+00:00:55,000 --> 00:00:58,000
+SPEAKER_01: Ya he bebido la poción.
+
+37
+00:00:58,000 --> 00:01:03,000
+SPEAKER_01: Estoy tratando de averiguar dónde poner el frasco de vidrio vacío.
+
+38
+00:01:03,000 --> 00:01:07,000
+SPEAKER_01: En tu gran boca estúpida, Rowan.
+
+39
+00:01:07,000 --> 00:01:08,000
+SPEAKER_01: No es...
+
+40
+00:01:08,000 --> 00:01:10,000
+SPEAKER_01: Aquí, mira. Te mostraré.
+
+41
+00:01:10,000 --> 00:01:11,000
+SPEAKER_00: ¿Lo veis?
+
+42
+00:01:11,000 --> 00:01:12,000
+SPEAKER_00: Poción de salud.
+
+43
+00:01:12,000 --> 00:01:13,000
+SPEAKER_00: Ahora, mira.
+
+44
+00:01:13,000 --> 00:01:16,000
+SPEAKER_00: ¡Oh!
+
+45
+00:01:16,000 --> 00:01:16,000
+SPEAKER_01: ¡Oh!
+
+46
+00:01:16,000 --> 00:01:20,000
+SPEAKER_01: Lo que...
+
+47
+00:01:20,000 --> 00:01:22,000
+SPEAKER_01: ¡Oh!
+
+48
+00:01:22,000 --> 00:01:23,000
+SPEAKER_01: None
+
+49
+00:01:23,000 --> 00:01:25,000
+SPEAKER_01: I...
+
+50
+00:01:25,000 --> 00:01:32,000
+SPEAKER_01: ¿Lo veis?
+
+51
+00:01:32,000 --> 00:01:32,000
+SPEAKER_00: ¿Lo veis?
+
+52
+00:01:32,000 --> 00:01:32,000
+SPEAKER_00: None
+
+53
+00:01:32,000 --> 00:01:41,000
+SPEAKER_00: ¡Sí!
+
+54
+00:01:41,000 --> 00:01:42,000
+SPEAKER_00: ¡Buenos días!
+
+55
+00:01:42,000 --> 00:01:44,000
+SPEAKER_00: Es bueno incluso pescarlo, ¿no?
+

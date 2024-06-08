@@ -54,15 +54,14 @@ class toText:
 
                 chunk_start_times = [0]  # Lista para almacenar los tiempos de inicio de los trozos
 
-                
                 for silent_range in silent_ranges:
                     start_time, end_time = silent_range
                     # Convertir a segundos y agregar al inicio del siguiente chunk
                     chunk_start_times.append(end_time / 1000)
-                
+
                 # Convertir los tiempos de inicio de los chunks en milisegundos para make_chunks
                 chunk_start_times_ms = [int(time * 1000) for time in chunk_start_times]
-                
+
                 # Crear chunks basados en los tiempos de inicio calculados
                 chunks = []
                 for i in range(len(chunk_start_times_ms) - 1):
@@ -100,12 +99,14 @@ class toText:
 
                 all_segments = []
 
-                # Combina los resultados de los trozos transcritos
-                for index in sorted(futures.keys()):  # Iterate over sorted chunk indices
+                for index in sorted(futures.keys()):
                     future = futures[index]
                     result = future.result()
-                    
-                    all_segments.extend(result["segments"])
+                    if "segments" in result:
+                        all_segments.extend(result["segments"])
+                    else:
+                        print("No Hay resultado aqui")
+                        
 
                 # Ordena los segmentos según el tiempo de inicio
                 all_segments.sort(key=lambda x: x["start"])
@@ -133,6 +134,7 @@ class toText:
             self.sub.toSubtitle()
 
     def transcribe(self, audio_path, accumulated_time):
+        self.resultado = {}
         try:
             self.resultado = self.whisper_model.transcribe(audio_path, word_timestamps=True)
 
