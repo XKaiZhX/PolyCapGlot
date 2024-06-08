@@ -54,17 +54,19 @@ class video_processor:
             # Verificar y procesar el archivo de audio reducido
             self.video_file_path = os.path.join(self.folder_path, f'{self.id}.mp4')
             print("CORE VIDEO FILE PATH: " + self.video_file_path)
-            self.check_and_process_file(self.video_file_path, split, self.id, self.video_file_path)
-
-            # Verificar y procesar el archivo de audio reducido
-            self.audio_file_path = os.path.join(self.folder_path, f'{self.id}_audio_reduced.wav')
-            print("CORE AUDIO FILE PATH: " + self.audio_file_path)
-            self.check_and_process_file(self.audio_file_path, toText, self.id, self.audio_file_path, self.original, self.target)
-
-            # Verificar y procesar el archivo de subtítulos
-            self.srt_file_path = os.path.join(self.folder_path, f'{self.id}_subtitle.srt')
-            print("CORE STR FILE PATH: " + self.srt_file_path)
-            self.check_and_process_file(self.srt_file_path, merge, self.id, self.video_file_path, self.srt_file_path, self.target)
+            if self.check_and_process_file(self.video_file_path, split, self.folder_path, self.id, self.video_file_path):
+                # Verificar y procesar el archivo de audio reducido
+                self.audio_file_path = os.path.join(self.folder_path, f'{self.id}_audio_reduced.wav')
+                print("CORE AUDIO FILE PATH: " + self.audio_file_path)
+                if self.check_and_process_file(self.audio_file_path, toText, self.folder_path, self.id, self.audio_file_path, self.original, self.target):
+                    # Verificar y procesar el archivo de subtítulos
+                    self.srt_file_path = os.path.join(self.folder_path, f'{self.id}_subtitle.srt')
+                    print("CORE STR FILE PATH: " + self.srt_file_path)
+                    self.check_and_process_file(self.srt_file_path, merge, self.folder_path, self.id, self.video_file_path, self.srt_file_path, self.target)
+                else:
+                    return False
+            else:
+                return False
 
             print("......Process End......")
 
@@ -78,12 +80,15 @@ class video_processor:
         
         return os.path.join(self.folder_path, f'{self.id}_final.mp4')
 
-    def check_and_process_file(self, file_path, processing_function, *args):
-        """
-        Verifica la existencia del archivo en la ruta especificada.
-        Si el archivo existe, llama a la función de procesamiento con los argumentos dados.
-        """
-        if os.path.exists(file_path):
-            processing_function(self.folder_path, *args)
-        else:
-            print(f"The file '{file_path}' does not exist.")
+    def check_and_process_file(self, file_path, process_class, *args):
+        if not os.path.exists(file_path):
+            print(f"File {file_path} not found.")
+            return False
+        
+        # Verificar y procesar el archivo
+        instance = process_class(*args)
+        if not instance.completed:
+            print(f"Failed to process {file_path}.")
+            return False
+
+        return True

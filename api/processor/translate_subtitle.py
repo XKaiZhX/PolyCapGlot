@@ -4,10 +4,12 @@ import deepl
 
 class toSub:
     def __init__(self, id, original_language, target_language):
+        self.completed = False
         self.id = id
         self.original = original_language
         self.target = target_language
         self.lista = []
+        self.json_file = ''
 
     def format_time(self, seconds):
         try:
@@ -21,13 +23,10 @@ class toSub:
 
     def traducir(self, cadena):
         try:
-            # Carga la clave de autenticación desde el archivo de configuración
             with open("./config/deepl.json") as apikey_file:
                 tmp = json.load(apikey_file)
-                print("apikey_file: " + tmp["key"])
                 self.auth_key = tmp["key"]
 
-            # Traduce el texto utilizando la API de DeepL
             self.textos_original = cadena
             self.translator = deepl.Translator(self.auth_key)
             self.textos_traducido = self.translator.translate_text(
@@ -39,7 +38,6 @@ class toSub:
 
     def toJson(self, datos):
         try:
-            # Traduce el texto y lo agrega a la lista de datos
             self.datos = datos
             self.texto_traducido = self.traducir(self.datos["text"])
 
@@ -54,7 +52,6 @@ class toSub:
             self.lista.append(self.newDatos)
             self.lista.sort(key=lambda x: x['start'])
 
-            # Guarda la lista de datos en un archivo JSON
             self.json_file = f'./tmp/{self.id}_{self.original}_{self.target}/{self.id}_datos.json'
             os.makedirs(os.path.dirname(self.json_file), exist_ok=True)
             with open(self.json_file, 'w') as f:
@@ -65,11 +62,13 @@ class toSub:
 
     def toSubtitle(self):
         try:
-            # Carga los datos del archivo JSON
+            if not self.json_file:
+                print("Error: No json_file available")
+                return
+
             with open(self.json_file, 'r') as archivo:
                 self.dato = json.load(archivo)
 
-            # Crea un archivo de subtítulos en formato SRT
             srt_file = f'./tmp/{self.id}_{self.original}_{self.target}/{self.id}_subtitle.srt'
             with open(srt_file, 'w') as sub:
                 index = 1
@@ -78,11 +77,14 @@ class toSub:
                         start_time = palabra['start']
                     end_time = palabra['end']
 
-                    # Escribe cada subtítulo en el archivo SRT
                     sub.write(f"{index}\n{self.format_time(start_time)} --> {self.format_time(end_time)}\n{palabra['speaker']}: {palabra['texto_traducido']}\n\n")
 
                     start_time = palabra['end']
                     index += 1
             print(f"Subtitles written to {srt_file}")
+            self.completed = True
         except Exception as e:
             print("Error:", e)
+            self.completed = False
+
+        return self.completed
