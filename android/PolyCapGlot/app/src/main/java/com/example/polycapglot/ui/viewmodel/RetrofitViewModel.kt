@@ -18,9 +18,9 @@ class RetrofitViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 Log.i("RETROFIT", "Sending request to http://192.168.1.49:9002/android")
-                val res = apiService.testRequest()
-                if(res.isNotEmpty())
-                    response.value = res
+                //val res = apiService.testRequest()
+                //if(res.isNotEmpty())
+                //    response.value = res
             } catch (e: Exception) {
                 Log.i("RETROFIT", "Unknown error: " + e.message)
             }

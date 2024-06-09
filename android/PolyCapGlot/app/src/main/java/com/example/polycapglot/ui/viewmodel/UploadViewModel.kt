@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.polycapglot.services.retrofit.ApiService
 import com.example.polycapglot.services.retrofit.RetrofitInstance
 import com.example.polycapglot.services.retrofit.models.UploadRequestData
 import com.example.polycapglot.services.retrofit.models.VideoRequestData
@@ -16,8 +15,6 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class UploadViewModel : ViewModel() {
 
@@ -43,7 +40,7 @@ class UploadViewModel : ViewModel() {
             try {
                 val requestData = VideoRequestData(title = title, language = originalLanguage)
                 val response = withContext(Dispatchers.IO) {
-                    retrofit.api.videoRequest(token, requestData)
+                    retrofit.api.uploadVideoPrerequest(token, requestData)
                 }
 
                 if (response.isSuccessful) {
@@ -74,7 +71,7 @@ class UploadViewModel : ViewModel() {
             try {
                 val requestData = UploadRequestData(videoId, sub)
                 val response = withContext(Dispatchers.IO) {
-                    retrofit.api.uploadVideo(token, requestData)
+                    retrofit.api.uploadVideoRequest(token, requestData)
                 }
 
                 if (response.isSuccessful) {

@@ -4,20 +4,14 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.polycapglot.services.retrofit.RetrofitInstance
 import com.example.polycapglot.services.retrofit.models.LoginData
 import com.example.polycapglot.services.retrofit.models.LoginResponse
 import com.example.polycapglot.services.retrofit.models.RegisterData
 import com.example.polycapglot.services.retrofit.models.UserDataDTO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 class StartSessionViewModel: ViewModel() {
     private val apiService = RetrofitInstance().api
-    val response: MutableState<String> = mutableStateOf("")
 
     suspend fun login(email: String, password: String): LoginResponse?{
         var final: LoginResponse? = null
@@ -25,7 +19,7 @@ class StartSessionViewModel: ViewModel() {
         val data = LoginData(email, password)
         Log.i("LOGIN", "Login with: ${data}")
         try {
-            val res = apiService.login(data);
+            val res = apiService.loginRequest(data);
             Log.i("LOGIN", "Value received is: ${res.body()}")
             if (res.isSuccessful) {
                 final = res.body()
@@ -43,12 +37,19 @@ class StartSessionViewModel: ViewModel() {
         var final: UserDataDTO? = null
 
         val data = RegisterData(username, email, password)
-        Log.i("REGISTER", "Register with: ${data}")
-        val res = apiService.registerRequest(data);
-        if (res.isSuccessful){
-            final = res.body()
+
+        try {
+            val res = apiService.registerRequest(data);
+            Log.i("REGISTER", "Value received is: ${res.body()}")
+            if (res.isSuccessful) {
+                final = res.body()
+            } else {
+                Log.i("REGISTER", "Error: " + res.message())
+            }
+        } catch (e: Exception){
+            //TODO: Show user when servers are down
+            Log.i("REGISTER", "Exception: " + e.message)
         }
-        Log.i("REGISTER", "Value received is: ${res.body()}")
         return final
     }
 }

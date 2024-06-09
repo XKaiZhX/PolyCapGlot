@@ -3,13 +3,13 @@ from flask_restx import Namespace, Resource
 import logging
 import datetime
 
-from config.app_config import tmp_folder_path
+#from config.app_config import tmp_folder_path
 from extensions import storage, processor
 from services.user_service import UserService
 from services.video_service import VideoService
 from utils.service_utils import generate_video_hash, generate_translation_hash, generate_temp_folder, check_file_exists
 from utils.controller_utils import token_required, create_token, ns_log
-from models.video_models import video_model, videoDTO_model, prerequest_model, request_model
+from models.video_models import video_model, translation_model, videoDTO_model, prerequest_model, request_model
 
 
 
@@ -31,6 +31,21 @@ class VideoList(Resource):
         '''
         ns_log(video_controller, "test", logging.CRITICAL)
         return []
+    
+    @token_required(video_controller)
+    @video_controller.param('x-access-token', 'An access token', 'header', required=True)
+    @video_controller.expect(video_model)
+    def delete(self, **kwargs):
+        user = kwargs.get('current_user')
+        data = request.json
+
+        if video_service.delete_video(data["id"], user["email"]) is False:
+            ns_log(video_controller, "Failed to delete video " + data["id"], logging.INFO)
+            return False
+
+        return True
+
+
 
 @video_controller.route("/user")
 class UserVideos(Resource):
@@ -40,19 +55,16 @@ class UserVideos(Resource):
     @video_controller.response(404, "Video not found")
     def post(self, **kwargs):
         user = kwargs.get('current_user')
-
-        try:
             
-            if "videos" not in user:
-                raise Exception("User " + user["email"] + "doesn't contain videos")
-            
-            video_list = video_service.get_user_videos(user["videos"])
+        if "videos" not in user:
+            return []
+        
+        video_list = video_service.get_user_videos(user["videos"])
 
-            ns_log(video_controller, "videos fetched from user: " + user["email"], logging.INFO)
-            return (video_list)
-        except Exception as e:
-            ns_log(video_controller, "videos/user exception: " + e, logging.ERROR)
-            video_controller.abort(403, e)
+        ns_log(video_controller, "videos fetched from user: " + user["email"], logging.INFO)
+        return (video_list)
+            
+            
 
 
 @video_controller.route("/request")
@@ -114,6 +126,7 @@ class VideoUpload(Resource):
         if not check_file_exists(filepath):
             msg = "non-existent file: " + filepath
             ns_log(video_controller, msg, logging.CRITICAL)
+            video_service.delete_trans(trans_id, id)
             video_controller.abort(400, msg)
 
         ns_log(video_controller, "Subiendo video a URI: " + video_found["firebase_uri"], logging.INFO)
@@ -127,4 +140,16 @@ class VideoUpload(Resource):
 
         return {"message": "translation uploading"}
 
+@video_controller.route("/translation")
+class VideoTranslation(Resource):
+    @token_required(video_controller)
+    @video_controller.param('x-access-token', 'An access token', 'header', required=True)
+    @video_controller.expect(translation_model)
+    def delete(self):
+        data = request.json
 
+        if video_service.delete_video(data["id"]) is False:
+            ns_log(video_controller, "Failed to delete video " + data["id"], logging.INFO)
+            video_controller.abort("Failed to delete video")
+
+        return True

@@ -1,5 +1,8 @@
 from pymongo import MongoClient
 import time
+
+from utils.firebase_utils import delete_file
+
 class MongoRepository():
     def __init__(self, host):
         print("Intentando conectarse a MongoDB en", host)
@@ -73,11 +76,6 @@ class MongoRepository():
             {"$set": {"password": password}}
         ).matched_count == 1;
 
-    def delete_user(self, email: str):
-        found = self.users.find_one_and_delete({"email": email})
-
-        return found
-
     def find_users(self):
         return list(self.users.find())
 
@@ -92,7 +90,42 @@ class MongoRepository():
 
         return found
     
+    def delete_user(self, email:str):
+        user_found = self.find_user(email)
+        if user_found is None:
+            return False
+        
+        for video_id in user_found["videos"]:
+            result = self.delete_video(video_id, email)
+            if result == False:
+                return False
+        
+        self.users.delete_one({"email": email})
+
+        return True
     #* Video
+
+    def delete_video(self, id, email):
+        found = self.find_video(id)
+        if found is None:
+            return False
+        
+        for translation_id in found["translations"]:
+            result = self.delete_translation(translation_id, found["id"])
+            if result == False:
+                return False
+        
+        delete_file(found["firebase_uri"])
+        result = self.videos.delete_one({"id": id})
+
+        if result.deleted_count > 0:
+            self.users.update_one(
+                {"email": email},
+                {"$pull": {"videos": id}}
+            )
+            return True
+
+        return False
 
     def find_video(self, id):
         return self.videos.find_one({"id": id})
@@ -134,6 +167,7 @@ class MongoRepository():
             "id": trans_id,
             "sub_language": sub,
             "firebase_uri": uri,
+            "status": 0
         })
 
         print
@@ -158,9 +192,33 @@ class MongoRepository():
         for trans_id in found["translations"]:
             trans_found = self.find_translation(trans_id)
             trans_list.append({
+                "found"
                 "sub_language": trans_found["sub_language"],
                 "firebase_uri": trans_found["firebase_uri"],
-                "state": trans_found["state"]
+                "status": trans_found["status"]
             })
 
         return trans_list
+    
+    def delete_translation(self, id, video_id):
+        found = self.find_translation(id)
+
+        if found is None:
+            return False
+        
+        if found["status"] == 0:
+            return False
+        
+        if found["status"] == 1:
+            delete_file(found["firebase_uri"])
+
+        result = self.translated.delete_one({"id": id})
+
+        if result.deleted_count > 0:
+            self.videos.update_one(
+                {"id": video_id},
+                {"$pull": {"translations": id}}
+            )
+            return True
+
+        return False

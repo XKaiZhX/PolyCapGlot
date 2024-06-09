@@ -14,6 +14,12 @@ class AbstractVideoService(metaclass=ABCMeta):
     def get_user_videos(self, videos):
         pass
 
+    def delete_video(self, id: str, email: str):
+        pass
+
+    def delete_trans(self, id: str, email: str):
+        pass
+
 class VideoService(AbstractVideoService):
     def preupload_video(self, email: str, id: str, title: str, language: str, uri: str):
         return db.preupload_video(email, id, title, language, uri)
@@ -23,6 +29,12 @@ class VideoService(AbstractVideoService):
     
     def insert_translation(self, id: str, sub: str, trans_id):
         return db.insert_translation(id, sub, trans_id)
+
+    def delete_video(self, id: str, email: str):
+        return db.delete_video(self, id, email)
+
+    def delete_trans(self, trans_id: str, video_id: str):
+        return db.delete_translation(self, trans_id, video_id)
 
     def get_user_videos(self, videos):
         list = []

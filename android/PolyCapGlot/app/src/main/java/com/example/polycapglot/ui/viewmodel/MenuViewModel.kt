@@ -6,14 +6,14 @@ import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.arthenica.mobileffmpeg.Config
 import com.arthenica.mobileffmpeg.FFmpeg
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.FutureTarget
 import com.example.polycapglot.services.retrofit.RetrofitInstance
+import com.example.polycapglot.ui.viewmodel.models.Translation
+import com.example.polycapglot.ui.viewmodel.models.Video
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.ktx.Firebase
@@ -32,21 +32,6 @@ class MenuViewModel(
 
     private val retrofitInstance = RetrofitInstance()
     val storage = Firebase.storage
-
-    // Translation data class
-    data class Translation(
-        val sub_language: String,
-        val firebase_uri: String
-    )
-
-    // Video data class
-    data class Video(
-        val title: String,
-        val language: String,
-        val firebase_uri: String,
-        val translations: List<Translation>
-    )
-
     var videos = mutableStateOf<List<Video>>(emptyList())
         private set
 
@@ -57,7 +42,7 @@ class MenuViewModel(
     suspend fun requestVideos(){
         val list = try {
             // Call the Retrofit API to request videos
-            val response = retrofitInstance.api.requestVideos(token)
+            val response = retrofitInstance.api.videosRequest(token)
             if (response.isSuccessful) {
                 Log.i("VIDEO_REQ", "res: " + response.body().toString())
                 response.body() ?: emptyList()
@@ -75,6 +60,14 @@ class MenuViewModel(
         videos.value = list
     }
 
+    fun deleteTranslation(translation: Translation) {
+        Log.i("DELETE", "Translation deleted: ${translation.sub_language}")
+    }
+
+    fun deleteVideo(video: Video) {
+        Log.i("DELETE", "Video deleted: ${video.title}")
+    }
+
     fun requestVideosMock() {
         // TODO: Implement this function to request videos
         val list: MutableList<Video> = mutableListOf(
@@ -85,19 +78,23 @@ class MenuViewModel(
                 listOf(
                     Translation(
                         "EN-US",
-                        "translated_videos/f3807e1e02cae3a996d8a792d5559fa868232ff79e02f7fc00a03780b28325ca.mp4"
+                        "translated_videos/f3807e1e02cae3a996d8a792d5559fa868232ff79e02f7fc00a03780b28325ca.mp4",
+                        1
                     ),
                     Translation(
                         "FR",
-                        "translated_videos/1a3f78d45d33560951d64e508569c4f1bdb1b3dd7aa6b1dafd2a8f17b5d80521.mp4"
+                        "translated_videos/1a3f78d45d33560951d64e508569c4f1bdb1b3dd7aa6b1dafd2a8f17b5d80521.mp4",
+                        1
                     ),
                     Translation(
                         "PT-PT",
-                        "translated_videos/90667fa1b6355c503d6405823060f8e06e82c57b4ded19e7de7c4c836fbc29b2.mp4"
+                        "translated_videos/90667fa1b6355c503d6405823060f8e06e82c57b4ded19e7de7c4c836fbc29b2.mp4",
+                        1
                     ),
                     Translation(
                         "RO",
-                        "translated_videos/8b1667866d0a42da15d2578e353f0193d59d5ddb3c7d373f285caf991c0d5243.mp4"
+                        "translated_videos/8b1667866d0a42da15d2578e353f0193d59d5ddb3c7d373f285caf991c0d5243.mp4",
+                        1
                     ),
                 )
             )
@@ -139,24 +136,6 @@ class MenuViewModel(
             Log.i("DOWNLOAD_LINK", link)
         }
     }
-
-    fun getDownloadLink(videoUri: String, callback: (String?) -> Unit) {
-        val storageRef = storage.reference.child(videoUri)
-        val task = storageRef.downloadUrl
-
-        task.addOnCompleteListener { result ->
-            if (result.isSuccessful) {
-                val uri = result.result
-                callback(uri.toString())
-                Log.i("DOWNLOAD_LINK", uri.toString())
-            } else {
-                callback(null)
-                Log.e("DOWNLOAD_LINK", "Error getting download URL", result.exception)
-            }
-        }
-    }
-
-
     fun generateThumbnails(videoUrls: List<String>) {
         viewModelScope.launch {
             thumbnails.value = generateThumbnailsInternal(videoUrls)
