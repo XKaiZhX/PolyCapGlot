@@ -81,9 +81,9 @@ class User(Resource):
         '''
         Borra a un usuario
         '''
-        found = user_service.delete(email)
-        if found is not None:
-            return found
+        res = user_service.delete(email)
+        if res == True:
+            return res
         user_controller.abort(404, "User not found")
 
     @user_controller.response(200, "User found")

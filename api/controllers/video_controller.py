@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource, reqparse
 import logging
 import datetime
 
@@ -34,13 +34,17 @@ class VideoList(Resource):
     
     @token_required(video_controller)
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
-    @video_controller.expect(video_model)
+    @video_controller.param('video-id', 'Video to be deleted', 'header', required=True)
     def delete(self, **kwargs):
         user = kwargs.get('current_user')
-        data = request.json
+        headers = request.headers
+        video_id = headers.get("video-id")
 
-        if video_service.delete_video(data["id"], user["email"]) is False:
-            ns_log(video_controller, "Failed to delete video " + data["id"], logging.INFO)
+        print("deleting " + str(request.headers.get("video-id")))
+
+        result = video_service.delete_video(video_id, user["email"])
+        if result is False:
+            ns_log(video_controller, "Failed to delete video " + str(video_id), logging.INFO)
             return False
 
         return True
@@ -108,6 +112,14 @@ class VideoUpload(Resource):
         trans_id = generate_translation_hash(id, sub)
         video_found = video_service.find_video(id)
 
+        trans_found = video_service.find_translation(trans_id)
+
+        if trans_found is not None:
+            video_controller.abort(400, "Translation already exists")
+
+        if video_found is None:
+            video_controller.abort(404, "Video not found")
+
         try:
             folder_path = generate_temp_folder(id, video_found["language"], sub)
         except Exception as e:
@@ -144,12 +156,18 @@ class VideoUpload(Resource):
 class VideoTranslation(Resource):
     @token_required(video_controller)
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
-    @video_controller.expect(translation_model)
-    def delete(self):
-        data = request.json
+    @video_controller.param('video_id', 'video_id needed to confirm sender knows their relationship', 'header', required=True)
+    @video_controller.param('trans_id', 'translation to be deleted', 'header', required=True)
+    def delete(self, **kwargs):
 
-        if video_service.delete_video(data["id"]) is False:
-            ns_log(video_controller, "Failed to delete video " + data["id"], logging.INFO)
-            video_controller.abort("Failed to delete video")
+        headers = request.headers
+
+        trans_id = headers.get("trans_id")
+        video_id = headers.get("video_id")
+
+        result = video_service.delete_trans(trans_id, video_id)
+        if result is False:
+            print("failed")
+            return False
 
         return True

@@ -192,7 +192,7 @@ class MongoRepository():
         for trans_id in found["translations"]:
             trans_found = self.find_translation(trans_id)
             trans_list.append({
-                "found"
+                "id": trans_found["id"],
                 "sub_language": trans_found["sub_language"],
                 "firebase_uri": trans_found["firebase_uri"],
                 "status": trans_found["status"]

@@ -6,22 +6,16 @@ video_model = api.model(
     name="Video",
     model={
         "video_id": fields.String(required=True, description="Id del video"),
-        "url": fields.String(required=True, description="URL del video"),
+        "firebase_uri": fields.String(required=True, description="URL del video"),
         "title": fields.String(required=True, description="Título del video"),
         "language": fields.String(required=True, description="Idioma del video")
     }
 )
 
-translation_model = api.model(
-    name="Translation",
-    model={
-        "trans_id": fields.String(required=True, description="Id de la traduccion"),
-        "video_id": fields.String(required=True, description="Id del video"),
-        "url": fields.String(required=True, description="URL del video"),
-        "language": fields.String(required=True, description="Idioma del video"),
-        "status": fields.Integer(required=True, description="Estado de la traduccion, es 0 si está en proceso, 1 si ha terminado, -1 si ha fallado")
-    }
-)
+translation_model = api.model('TranslationDetails', {
+    'trans_id': fields.String(required=True, description='Translation ID'),
+    'video_id': fields.String(required=True, description='Video ID')
+})
 
 videoDTO_model = api.model(
     name="VideoDTO",
