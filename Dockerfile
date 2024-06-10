@@ -4,8 +4,8 @@
     #docker network create polycapglot_net
     #docker run --name pcg_mongo --network polycapglot_net -p 27017:27017 mongo
 
-    #docker run --name api --network polycapglot_net -p 9002:9002 -v path/to/local/firebase.json:/PolyCapGlot/api/config/firebase.json -v path/to/local/deepl.json:/PolyCapGlot/api/config/deepl.json docker_polycapglot
-    #Andrew: docker run --name api --network polycapglot_net -p 9002:9002 -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/firebase.json:/PolyCapGlot/api/config/firebase.json -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/deepl.json:/PolyCapGlot/api/config/deepl.json docker_polycapglot
+    #docker run --name api --network polycapglot_net -p 9002:9002 -v path/to/local/firebase.json:/PolyCapGlot/api/config/firebase.json -v path/to/local/deepl.json:/PolyCapGlot/api/config/deepl.json -v path/to/local/firebase_service.json:/PolyCapGlot/api/config/firebase_service.json docker_polycapglot
+    #Andrew: docker run --name api --network polycapglot_net -p 9002:9002 -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/firebase.json:/PolyCapGlot/api/config/firebase.json -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/deepl.json:/PolyCapGlot/api/config/deepl.json -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/firebase_service.json:/PolyCapGlot/api/config/firebase_service.json docker_polycapglot
 
     #Para iniciar un api ya existente:
         #docker start api
@@ -40,13 +40,6 @@ RUN cp *.ttf *.TTF /usr/share/fonts/
 WORKDIR /
 RUN rm -fr /delete-me-files
 
-#Actualiza set inicial de pip
-#TODO: Añadir paquetes al requirements.txt
-#RUN pip install --upgrade pip &&\
-#    pip install --upgrade setuptools &&\
-#    pip install torchvision &&\
-#    pip install -U openai-whisper
-
 # Clona el repositorio desde GitHub
 RUN git clone https://github.com/XKaiZhX/PolyCapGlot.git /PolyCapGlot
 
@@ -58,7 +51,7 @@ RUN git checkout Andrew3
 # Instala las dependencias de Python del GitHub
 RUN pip install -r requirements.txt
 
-#Cambios en configuracion de ImageMagick para que no explote
+#Cambios en configuracion de ImageMagick para que MoviePy funcione
 RUN sed -i 's#<!-- <policy domain="cache" name="shared-secret" value="passphrase" stealth="true"/>#<!-- <policy domain="cache" name="shared-secret" value="passphrase" stealth="true"/> -->#' /etc/ImageMagick-6/policy.xml
 RUN sed -i 's#<!-- in order to avoid to get image with password text -->#<!-- in order to avoid to get image with password text --><!--#' /etc/ImageMagick-6/policy.xml
 RUN sed -i 's#<!-- disable ghostscript format types -->#--><!-- disable ghostscript format types -->#' /etc/ImageMagick-6/policy.xml

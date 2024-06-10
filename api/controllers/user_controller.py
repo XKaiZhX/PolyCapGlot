@@ -36,15 +36,18 @@ class UserList(Resource):
             return data
         user_controller.abort(400, "Email already exist")
 
-@user_controller.route("/<string:username>")
-class UserUsernameList(Resource):
-    @user_controller.response(200, "Showing users found")
-    @user_controller.marshal_with(userDTO_public_model)
-    def get(self, username):
+    @token_required(user_controller)
+    @user_controller.param('x-access-token', 'An access token', 'header', required=True)
+    @user_controller.response(200, "User has been deleted")
+    @user_controller.response(404, "User not found")
+    def delete(self, current_user, **kwargs):
         '''
-        Devuelve todos los usuarios con el username
+        Borra a un usuario
         '''
-        return user_service.find_by_username(username)
+        res = user_service.delete(current_user["email"])
+        if res == True:
+            return res
+        user_controller.abort(404, "User not found")
 
 @user_controller.route("/login")
 class Login(Resource):
@@ -57,13 +60,6 @@ class Login(Resource):
         if(user_service.check_user_password(data["email"], data["password"])):
 
             found = user_service.find_one(email=data["email"])
-            '''
-            token = jwt.encode({
-                'email': found['email'],
-                'username': found['username'],
-                'exp': datetime.datetime.now() + datetime.timedelta(minutes=5)
-                }, secret_key)
-            '''
             token = create_token(found['email'], found['username'])
     
             return jsonify({'email': found["email"], 'username': found["username"], 'token': token})
@@ -72,20 +68,6 @@ class Login(Resource):
 
 @user_controller.route("/<string:email>")
 class User(Resource):
-    @token_required(user_controller)
-    @user_controller.param('x-access-token', 'An access token', 'header', required=True)
-    @user_controller.response(200, "User has been deleted")
-    @user_controller.response(404, "User not found")
-    @user_controller.marshal_with(userDTO_public_model)
-    def delete(self, email, **kwargs):
-        '''
-        Borra a un usuario
-        '''
-        res = user_service.delete(email)
-        if res == True:
-            return res
-        user_controller.abort(404, "User not found")
-
     @user_controller.response(200, "User found")
     @user_controller.response(404, "User not found")
     @user_controller.marshal_with(userDTO_public_model)
@@ -105,7 +87,7 @@ class UserUpdateUsername(Resource):
     @user_controller.response(200, "User has been updated")
     @user_controller.response(404, "User not found")
     @user_controller.expect(user_update_username_model)
-    def put(self):
+    def put(self, **kwargs):
         '''
         Actualiza el username del usuario
         '''
@@ -122,7 +104,7 @@ class UserUpdatePassword(Resource):
     @user_controller.response(200, "User has been updated")
     @user_controller.response(404, "User not found")
     @user_controller.expect(user_password_model)
-    def put(self):
+    def put(self, **kwargs):
         '''
         Actualiza el password del usuario
         '''

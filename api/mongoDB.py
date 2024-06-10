@@ -13,46 +13,6 @@ class MongoRepository():
         self.users = self.bbdd["users"]
         self.videos = self.bbdd["videos"]
         self.translated = self.bbdd["translated"]
-        self.counters = self.bbdd["counters"]
-
-        self.initialize_counters()
-    
-    def initialize_counters(self):
-        ''' No hace falta un id de usuario, se usa EMAIL
-        u_counter = self.counters.find_one({"_id": "user_counter"})
-        if u_counter is None:
-            self.counters.insert_one({
-                "_id": "user_counter",
-                "value": 0
-                })
-        else:
-            print("MongoDB:\tuser_counter found starting by ", u_counter["value"])
-        '''
-
-        v_counter = self.counters.find_one({"_id": "video_counter"})
-        if v_counter is None:
-            self.counters.insert_one({
-                "_id": "video_counter",
-                "value": 0
-                })
-        else:
-            print("MongoDB:\tvideo_counter found starting by ", v_counter["value"])
-    
-    '''
-    def next_user_id(self):
-        counter = self.counters.find_one_and_update(
-            {"_id": "user_counter"},
-            {"$inc" : { "value" : 1 }}
-        )
-        return counter["value"]
-    '''
-
-    def next_video_id(self):
-        counter = self.counters.find_one_and_update(
-            {"_id": "video_counter"},
-            {"$inc" : { "value" : 1 }}
-        )
-        return counter["value"]
 
     #* User
 
@@ -61,7 +21,8 @@ class MongoRepository():
             "username": username,
             "email": email,
             "password": password,
-            "salt": salt
+            "salt": salt,
+            "videos": []
         })
         
     def update_user_username(self, email, username):
