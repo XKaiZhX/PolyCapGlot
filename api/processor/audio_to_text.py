@@ -72,6 +72,8 @@ class toText:
                         chunk_start_times.append(end_time / 1000)
                     
                     chunk_start_times.append(audio_duration)
+
+                    print(chunk_start_times)
                 
                     chunk_start_times_ms = [int(time * 1000) for time in chunk_start_times]
                     chunks = []
@@ -94,13 +96,16 @@ class toText:
                                 chunk.export(temp_file, format="wav")
 
                                 futures[index] = executor.submit(self.transcribe, temp_file, chunk_start_times[index])
+
                                 self.processed_chunks.add(index)
 
                     all_segments = []
                     for index in sorted(futures.keys()):
+                        print(index)
                         future = futures[index]
                         result = future.result()
                         all_segments.extend(result["segments"])
+                        print(result["segments"])
 
                     all_segments.sort(key=lambda x: x["start"])
                     output_data = [{
@@ -169,10 +174,17 @@ class toText:
 
                 for words_info in resultado['segments']:
                     text = words_info["text"]
-                    start = words_info["start"] + accumulated_time
-                    end = words_info["end"] + accumulated_time
+                    start = words_info["start"]
+                    end = words_info["end"]
+                    
+                    print(start_time)
+                    print(start)
+                    print(end_time)
+                    print(end)
 
                     if start_time <= start <= end_time or start_time <= end <= end_time:
+                        start += accumulated_time
+                        end += accumulated_time
                         final.append({'text': text.strip(), 'start': start, 'end': end, 'speaker': speaker})
 
             for dato in final:
@@ -192,8 +204,6 @@ class toText:
                 end = seg['end'] + accumulated_time
                 self.sub.toJson({'text': seg['text'], 'start': start, 'end': end, 'speaker': 'UNKNOW'})
             self.completed = False
-
-            self.semaphore.release()
 
             return {"text": resultado.get("text", ""), "segments": resultado['segments'], "accumulated_time": accumulated_time}
             
