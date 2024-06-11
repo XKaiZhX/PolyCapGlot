@@ -24,7 +24,6 @@ class toText:
         self.audio = audio
         self.original = original_language
         self.target = target_language
-        self.semaphore = threading.Semaphore(1)
 
         self.diarization_pipeline = Pipeline.from_pretrained(
             checkpoint_path="pyannote/speaker-diarization-3.1",
@@ -94,8 +93,6 @@ class toText:
                                 temp_file = os.path.join(output_dir, chunk_name)
                                 chunk.export(temp_file, format="wav")
 
-                                self.semaphore.acquire()
-
                                 futures[index] = executor.submit(self.transcribe, temp_file, chunk_start_times[index])
                                 self.processed_chunks.add(index)
 
@@ -131,7 +128,8 @@ class toText:
 
     def transcribe(self, audio_path, accumulated_time):
         try:
-            resultado = self.whisper_model.transcribe(audio_path, language=self.original, word_timestamps=True)
+            self.whisper_model_chunk = whisper.load_model('medium')
+            resultado = self.whisper_model_chunk.transcribe(audio_path, language=self.original, word_timestamps=True)
             waveform, sample_rate = torchaudio.load(audio_path)
 
             if sample_rate != self.SAMPLE_RATE:
@@ -179,8 +177,6 @@ class toText:
 
             for dato in final:
                 self.sub.toJson(dato)
-
-            self.semaphore.release()
 
             return {
                 "text": resultado["text"],
