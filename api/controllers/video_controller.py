@@ -1,3 +1,4 @@
+import shutil
 from threading import Thread
 from flask import request
 from flask_restx import Namespace, Resource, reqparse
@@ -10,7 +11,8 @@ from utils.service_utils import (
     generate_video_hash, 
     generate_translation_hash, 
     generate_temp_folder, 
-    check_file_exists
+    check_file_exists,
+    delete_folder
 )
 from utils.controller_utils import token_required, create_token, ns_log
 from models.video_models import (
@@ -112,62 +114,7 @@ class VideoRequest(Resource):
             }
         
         video_controller.abort(403, "Not able to upload video")
-'''
-@video_controller.route("/upload")
-class VideoUpload(Resource):
-    @token_required(video_controller)
-    @video_controller.param('x-access-token', 'An access token', 'header', required=True)
-    @video_controller.expect(request_model)
-    def post(self, current_user, **kwargs):
-        ''
-        Sube un video a traducir
-        ''
-        data = request.json        
 
-        video_id = data["video_id"]
-        filename = video_id + ".mp4"  # Hash de video
-        sub = data["sub"]  # Idioma del subtitulo
-        
-        trans_id = generate_translation_hash(video_id, sub)
-        video_found = video_service.find_video(video_id)
-        trans_found = video_service.find_translation(trans_id)
-
-        if trans_found is not None:
-            video_controller.abort(400, "Translation already exists")
-
-        if video_found is None:
-            video_controller.abort(404, "Video not found")
-
-        try:
-            folder_path = generate_temp_folder(video_id, video_found["language"], sub)
-        except Exception as e:
-            ns_log(video_controller, f"Translation already in process for video: {video_id} from " + current_user["email"], logging.INFO)
-            video_controller.abort(404, "Translation already in process")
-
-        ns_log(video_controller, "Descargando video de URI: " + video_found["firebase_uri"], logging.INFO)
-        storage.child(video_found["firebase_uri"]).download("", f"{folder_path}/{video_id}.mp4")
-
-        filepath = f"{folder_path}/{video_id}.mp4"
-
-        if processor is not None:
-            print("processing")
-            filepath = processor.process_video(filename, folder_path, video_id, video_found["language"], sub)
-
-        if not check_file_exists(filepath):
-            msg = "non-existent file: " + filepath
-            ns_log(video_controller, msg, logging.CRITICAL)
-            video_service.delete_trans(trans_id, video_id)
-            video_controller.abort(400, msg)
-
-        ns_log(video_controller, "Subiendo video a URI: " + video_found["firebase_uri"], logging.INFO)
-        storage.child(f"translated_videos/{trans_id}.mp4").put(filepath)
-
-        # Inserción en la base de datos
-        if not video_service.insert_translation(video_id, sub, trans_id):
-            video_controller.abort(400, "Error saving translation")
-
-        return {"message": "translation uploading"}
-'''
 @video_controller.route("/upload")
 class VideoUpload(Resource):
     @token_required(video_controller)
@@ -202,7 +149,7 @@ class VideoUpload(Resource):
                 folder_path = generate_temp_folder(video_id, video_found["language"], sub)
             except Exception as e:
                 ns_log(video_controller, f"Translation already in process for video: {video_id} from " + current_user["email"], logging.INFO)
-                video_service.delete_trans(trans_id, video_id)
+                #video_service.delete_trans(trans_id, video_id)
                 return
 
             ns_log(video_controller, "Descargando video de URI: " + video_found["firebase_uri"], logging.INFO)
@@ -218,14 +165,20 @@ class VideoUpload(Resource):
                 msg = "non-existent file: " + filepath
                 ns_log(video_controller, msg, logging.CRITICAL)
                 video_service.update_translation_status(trans_id, -1)
-                return
+            else:
+                ns_log(video_controller, "Subiendo video a URI: " + video_found["firebase_uri"], logging.INFO)
+                storage.child(f"translated_videos/{trans_id}.mp4").put(filepath)
 
-            ns_log(video_controller, "Subiendo video a URI: " + video_found["firebase_uri"], logging.INFO)
-            storage.child(f"translated_videos/{trans_id}.mp4").put(filepath)
-
-            # Actualización en la base de datos indicando que la traducción está completa
-            if not video_service.update_translation_status(trans_id, 1):
-                ns_log(video_controller, "Error updating translation status in DB", logging.CRITICAL)
+                # Actualización en la base de datos indicando que la traducción está completa
+                if not video_service.update_translation_status(trans_id, 1):
+                    ns_log(video_controller, "Error updating translation status in DB", logging.CRITICAL)
+            
+             # Borrar la carpeta temporal
+            try:
+                delete_folder(folder_path)
+                ns_log(video_controller, f"Deleted temporary folder: {folder_path}", logging.INFO)
+            except Exception as e:
+                ns_log(video_controller, f"Error deleting temporary folder: {folder_path}", logging.CRITICAL)
 
         # Iniciar el hilo para la descarga y procesamiento del video
         thread = Thread(target=download_and_process_video)

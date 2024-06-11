@@ -68,22 +68,25 @@ class MongoRepository:
         # Elimina un video y sus traducciones dado su id y el email del usuario propietario
         found = self.find_video(id)
         if found is None:
+            print("failed to delete, not found: " + id)
             return False
 
         for translation_id in found["translations"]:
             if not self.delete_translation(translation_id, found["id"]):
+                print("failed to delete, inner translation: " + translation_id)
                 return False
 
         delete_file(found["firebase_uri"])
         result = self.videos.delete_one({"id": id})
 
         if result.deleted_count > 0:
+            print("video deleted: " + id)
             self.users.update_one(
                 {"email": email},
                 {"$pull": {"videos": id}}
             )
             return True
-
+        print("failed to delete: " + id)
         return False
 
     def find_video(self, id):
@@ -172,7 +175,12 @@ class MongoRepository:
         # Elimina una traducción dada su id y el id del video
         found = self.find_translation(id)
 
-        if found is None or found["status"] == 0:
+        if found is None:
+            print("failed to delete, not found: " + id)
+            return False
+        
+        if found["status"] == 0:
+            print("failed to delete, in process: " + id)
             return False
 
         if found["status"] == 1:
@@ -181,12 +189,14 @@ class MongoRepository:
         result = self.translated.delete_one({"id": id})
 
         if result.deleted_count > 0:
+            print("translation deleted: " + id)
             self.videos.update_one(
                 {"id": video_id},
                 {"$pull": {"translations": id}}
             )
             return True
-
+        
+        print("failed to delete: " + id)
         return False
 
 '''

@@ -56,7 +56,18 @@ def check_file_exists(filepath: str):
     """Verifica si un archivo existe en el sistema de archivos."""
     return os.path.exists(filepath)
 
-
+def delete_folder(folder_path):
+    """
+    Elimina un directorio y todo su contenido de forma recursiva.
+    
+    :param folder_path: Ruta del directorio a eliminar.
+    """
+    for root, dirs, files in os.walk(folder_path, topdown=False):
+        for name in files:
+            os.remove(os.path.join(root, name))
+        for name in dirs:
+            os.rmdir(os.path.join(root, name))
+    os.rmdir(folder_path)
 '''
 from hashlib import sha256
 import os

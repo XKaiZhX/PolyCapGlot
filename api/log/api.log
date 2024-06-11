@@ -26191,3 +26191,71 @@
 [11/Jun/2024 21:10:10] -  videos fetched from user: andrew@gmail.com
 [11/Jun/2024 21:10:24] -  videos fetched from user: andrew@gmail.com
 [11/Jun/2024 21:10:34] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:17:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:17:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:17:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:17:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:17:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:17:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:17:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:17:34] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:18:09] -  Descargando video de URI: raw_videos/1622708744bb5a9d971475b135fa54230949535bf0972079e40c345fed765610.mp4
+[11/Jun/2024 21:18:17] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:18:24] -  non-existent file: ./tmp/1622708744bb5a9d971475b135fa54230949535bf0972079e40c345fed765610_ES_EN-US\1622708744bb5a9d971475b135fa54230949535bf0972079e40c345fed765610_final.mp4
+[11/Jun/2024 21:19:02] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:23:40] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:23:47] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:24:04] -  Descargando video de URI: raw_videos/42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1.mp4
+[11/Jun/2024 21:24:21] -  non-existent file: ./tmp/42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1_ES_AR\42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1_final.mp4
+[11/Jun/2024 21:24:21] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:24:30] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:25:34] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:25:39] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:25:53] -  Translation already in process for video: 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1 from andrew@gmail.com
+[11/Jun/2024 21:26:04] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:26:25] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:28:13] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:16] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:17] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:18] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:19] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:20] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:21] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:22] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:23] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:24] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:28:25] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:28:30] -  Failed to delete video 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1
+[11/Jun/2024 21:28:30] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:28:38] -  Failed to delete video 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1
+[11/Jun/2024 21:28:38] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:28:43] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:28:55] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:29:38] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:29:41] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:29:42] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:30:06] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:30:18] -  Failed to delete video 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1
+[11/Jun/2024 21:30:18] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:32:46] -  Failed to delete video 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1
+[11/Jun/2024 21:32:46] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:37:18] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:37:32] -  Failed to delete video 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1
+[11/Jun/2024 21:37:32] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:42:35] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:42:39] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:42:41] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:42:46] -  Failed to delete video 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1
+[11/Jun/2024 21:42:46] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:45:51] -  Failed to delete video 42c94bc882d7d9570f841108bc4c45f80298f9f2d78d337316ec9444435649b1
+[11/Jun/2024 21:45:51] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:46:40] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:47:47] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:48:10] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:49:00] -  Descargando video de URI: raw_videos/bf5bc309104d909dd5d13b7766fd9d6cc9502a862ee80054575aa8b1315da6b6.mp4
+[11/Jun/2024 21:49:18] -  non-existent file: ./tmp/bf5bc309104d909dd5d13b7766fd9d6cc9502a862ee80054575aa8b1315da6b6_EN_AR\bf5bc309104d909dd5d13b7766fd9d6cc9502a862ee80054575aa8b1315da6b6_final.mp4
+[11/Jun/2024 21:49:18] -  Deleted temporary folder: ./tmp/bf5bc309104d909dd5d13b7766fd9d6cc9502a862ee80054575aa8b1315da6b6_EN_AR
+[11/Jun/2024 21:49:19] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:50:02] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:50:09] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:50:16] -  videos fetched from user: andrew@gmail.com

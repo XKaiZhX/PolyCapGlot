@@ -79,11 +79,6 @@ def ns_log(ns: Namespace, msg: str, level: int):
     """Registra mensajes de log para un namespace dado."""
     ns.logger.log(level=level, msg=f"{datetime.datetime.now().strftime(LOG_DATEFORMAT)} {msg}")
 
-# Función de traducción de video (placeholder)
-def translate_video():
-    """Función de traducción de video (a implementar)."""
-    pass
-
 
 '''
 from functools import wraps
