@@ -156,9 +156,11 @@ class MongoRepository:
 
     def delete_translation(self, id, video_id):
         # Elimina una traducción dada su id y el id del video
+        print("trans_id" + id)
         found = self.find_translation(id)
 
         if found is None or found["status"] == 0:
+            print("None or 0")
             return False
 
         if found["status"] == 1:

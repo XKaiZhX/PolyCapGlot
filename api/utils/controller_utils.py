@@ -4,6 +4,7 @@ from flask_restx import Namespace
 from services.user_service import UserService
 from extensions import api
 from config.app_config import secret_key
+from jwt import api_jws
 import jwt
 import datetime
 import json
@@ -30,7 +31,7 @@ def decode_token(token):
     """Decodifica un token JWT y maneja errores comunes."""
     try:
         print("Payload: not decoded")
-        payload = json.loads(jwt.decode(token, secret_key, algorithms=["HS256"]).decode("utf-8"))
+        payload = json.loads(api_jws.decode(token, secret_key, algorithms=["HS256"]).decode("utf-8"))
         print(f"Payload: {payload}")
         if datetime.datetime.now() > datetime.datetime.strptime(payload["exp"], TOKEN_DATEFORMAT):
             raise jwt.ExpiredSignatureError

@@ -1,20 +1,26 @@
 #El contenedor DEBE correr con estos comandos para comunicarse con el contenedor Mongo:
-    #docker build -t docker_polycapglot /path/to/Dockerfile --no-cache
 
+    #1
     #docker network create polycapglot_net
+
+    #2
     #docker run --name pcg_mongo --network polycapglot_net -p 27017:27017 mongo
 
+    #3
     #docker run --name api --network polycapglot_net -p 9002:9002 -v path/to/local/firebase.json:/PolyCapGlot/api/config/firebase.json -v path/to/local/deepl.json:/PolyCapGlot/api/config/deepl.json -v path/to/local/firebase_service.json:/PolyCapGlot/api/config/firebase_service.json docker_polycapglot
     #Andrew: docker run --name api --network polycapglot_net -p 9002:9002 -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/firebase.json:/PolyCapGlot/api/config/firebase.json -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/deepl.json:/PolyCapGlot/api/config/deepl.json -v C:\Users\NitroPC\Desktop\PolyCapGlot\Prototype\API\github/api/config/firebase_service.json:/PolyCapGlot/api/config/firebase_service.json docker_polycapglot
 
-    #Para iniciar un api ya existente:
-        #docker start api
-    
-    #Para ejecutar un comando:
-        #docker exec api sh -c "ls"
+#Para buildear una imagen desde un Dockerfile:
+    #docker build -t docker_polycapglot /path/to/Dockerfile --no-cache
 
-    #Para ejecutar un comando con interaccion de usuario:
-        #docker exec -it api nvim /etc/ImageMagick-6/policy.xml
+#Para iniciar un api ya existente:
+    #docker start api
+
+#Para ejecutar un comando:
+    #docker exec api sh -c "ls"
+
+#Para ejecutar un comando con interaccion de usuario:
+    #docker exec -it api nvim /etc/ImageMagick-6/policy.xml
 
 # Usa la imagen base de Python 3.9
 FROM python:3.9

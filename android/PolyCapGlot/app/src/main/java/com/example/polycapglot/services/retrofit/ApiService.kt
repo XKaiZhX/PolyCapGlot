@@ -50,8 +50,8 @@ interface ApiService {
     @DELETE("/video/translation")
     suspend fun deleteTranslation(
         @Header("x-access-token") token: String,
-        @Header("trans_id") transId: String,
-        @Header("video_id") videoId: String,
+        @Header("trans-id") transId: String,
+        @Header("video-id") videoId: String,
     ): Response<Boolean>
 
     @DELETE("user/")

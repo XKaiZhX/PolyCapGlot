@@ -44,11 +44,11 @@ class VideoList(Resource):
     @token_required(video_controller)
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.param('video-id', 'Video to be deleted', 'header', required=True)
-    def delete(self, **kwargs):
+    def delete(self, current_user, **kwargs):
         '''
         Borra un video
         '''
-        user = kwargs.get('current_user')
+        user = current_user
         headers = request.headers
         video_id = headers.get("video-id")
 
@@ -69,11 +69,11 @@ class UserVideos(Resource):
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.response(200, "Video found")
     @video_controller.response(404, "Video not found")
-    def post(self, **kwargs):
+    def post(self, current_user, **kwargs):
         '''
         Devuelve los videos del usuario actual
         '''
-        user = kwargs.get('current_user')
+        user = current_user
         
         # Si el usuario no tiene videos, devolver una lista vacía
         if "videos" not in user:
@@ -171,17 +171,18 @@ class VideoUpload(Resource):
 class VideoTranslation(Resource):
     @token_required(video_controller)
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
-    @video_controller.param('video_id', 'video_id needed to confirm sender knows their relationship', 'header', required=True)
-    @video_controller.param('trans_id', 'translation to be deleted', 'header', required=True)
+    @video_controller.param('video-id', 'video_id needed to confirm sender knows their relationship', 'header', required=True)
+    @video_controller.param('trans-id', 'translation to be deleted', 'header', required=True)
     def delete(self, **kwargs):
         '''
         Borra una traducción de un video
         '''
         headers = request.headers
 
-        trans_id = headers.get("trans_id")
-        video_id = headers.get("video_id")
+        trans_id = headers.get("trans-id")
+        video_id = headers.get("video-id")
 
+        print(str(video_id) + "$ - " + str(trans_id) + "$")
         result = video_service.delete_trans(trans_id, video_id)
         if not result:
             print("failed")

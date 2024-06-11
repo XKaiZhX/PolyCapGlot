@@ -26150,3 +26150,24 @@
 [11/Jun/2024 01:00:02] - User not found: test@test.com
 [11/Jun/2024 01:00:02] - Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
 [11/Jun/2024 01:00:43] - videos fetched from user: b@b.com
+[11/Jun/2024 20:18:32] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:18:36] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:19:02] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:19:05] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:19:06] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:19:09] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:21:13] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:21:29] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 20:23:03] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:24:50] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:24:52] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:25:18] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:25:29] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:36:28] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:36:49] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:37:04] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:37:41] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:38:05] -  Descargando video de URI: raw_videos/194bbfa7773b49212cfbfc40d177525eaef6aa9a0d3fe71e30ec8555542149ed.mp4
+[11/Jun/2024 20:39:08] -  non-existent file: ./tmp/194bbfa7773b49212cfbfc40d177525eaef6aa9a0d3fe71e30ec8555542149ed_ES_EN-GB\194bbfa7773b49212cfbfc40d177525eaef6aa9a0d3fe71e30ec8555542149ed_final.mp4
+[11/Jun/2024 20:39:44] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 20:39:54] -  videos fetched from user: andrew@gmail.com
