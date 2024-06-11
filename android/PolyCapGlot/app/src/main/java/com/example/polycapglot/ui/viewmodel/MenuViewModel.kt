@@ -14,6 +14,7 @@ import com.bumptech.glide.request.FutureTarget
 import com.example.polycapglot.services.retrofit.RetrofitInstance
 import com.example.polycapglot.services.retrofit.models.UpdatePasswordRequestData
 import com.example.polycapglot.services.retrofit.models.UpdateUsernameRequestData
+import com.example.polycapglot.services.retrofit.models.UploadRequestData
 import com.example.polycapglot.ui.viewmodel.models.Translation
 import com.example.polycapglot.ui.viewmodel.models.Video
 import com.google.android.gms.tasks.Task
@@ -62,6 +63,15 @@ class MenuViewModel(
         videos.value = list
     }
 
+    suspend fun addTranslation(videoId: String, translationLanguage: String): Boolean {
+        return try {
+            val uploadRequestData = UploadRequestData(videoId, translationLanguage)
+            val res = retrofitInstance.api.uploadVideoRequest(token, uploadRequestData)
+            res.isSuccessful // Retorna true si la solicitud fue exitosa
+        } catch (e: Exception) {
+            false // Retorna false si hay una excepción
+        }
+    }
     suspend fun updateUsername(newUsername: String): Boolean {
         return try {
             val response = retrofitInstance.api.updateUsername(

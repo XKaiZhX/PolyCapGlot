@@ -2,6 +2,7 @@ package com.example.polycapglot.ui.screen
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -51,6 +52,7 @@ import com.example.polycapglot.ui.viewmodel.models.Video
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun HomeScreen(vm: MenuViewModel) {
@@ -115,6 +117,8 @@ fun VideoCard(
     vm: MenuViewModel,
     onClick: (String) -> Unit
 ) {
+    val context = LocalContext.current
+
     var expanded by remember { mutableStateOf(false) }
     var moreOptionsExpanded by remember { mutableStateOf(false) }
     var selectedTranslation by remember { mutableStateOf<Translation?>(null) }
@@ -249,12 +253,22 @@ fun VideoCard(
                 "PT-PT", "RO", "RU", "SK", "SL", "SV", "TR", "UK", "ZH"
             ),
             onDismiss = { isAddTranslationDialogShown = false },
-            onTranslationSelected = { language ->
+            videoId = video.id,
+            onTranslationSelected = { id, language ->
                 // Perform action when translation is selected
                 isAddTranslationDialogShown = false
                 // Call the function to add translation with the selected language
                 // You might need to pass the selected language to the ViewModel to handle the addition
-                // vm.addTranslation(video, language)
+                CoroutineScope(Dispatchers.Main).launch {
+                    val success = withContext(Dispatchers.IO) {
+                        vm.addTranslation(id, language)
+                    }
+                    if (success) {
+                        Toast.makeText(context, "Translation in process", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Request failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         )
     }
@@ -264,7 +278,8 @@ fun VideoCard(
 fun AddTranslationDialog(
     translations: List<String>,
     onDismiss: () -> Unit,
-    onTranslationSelected: (String) -> Unit
+    videoId: String,
+    onTranslationSelected: (String, String) -> Unit
 ) {
     Dialog(onDismissRequest = { onDismiss() }) {
         Surface(
@@ -281,7 +296,7 @@ fun AddTranslationDialog(
                 LazyColumn(){
                     items(translations){
                         TextButton(
-                            onClick = { onTranslationSelected(it) },
+                            onClick = { onTranslationSelected(videoId, it) },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(text = it)

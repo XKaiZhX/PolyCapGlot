@@ -184,7 +184,7 @@ class VideoUpload(Resource):
         thread = Thread(target=download_and_process_video)
         thread.start()
 
-        return {"message": "translation uploading"}
+        return
 
 @video_controller.route("/translation")
 class VideoTranslation(Resource):

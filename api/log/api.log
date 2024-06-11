@@ -26259,3 +26259,41 @@
 [11/Jun/2024 21:50:02] -  videos fetched from user: andrew@gmail.com
 [11/Jun/2024 21:50:09] -  videos fetched from user: andrew@gmail.com
 [11/Jun/2024 21:50:16] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 23:51:23] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 23:52:00] -  Descargando video de URI: raw_videos/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1.mp4
+[11/Jun/2024 23:52:08] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 23:52:21] -  non-existent file: ./tmp/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_ES_HU\ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_final.mp4
+[11/Jun/2024 23:52:21] -  Deleted temporary folder: ./tmp/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_ES_HU
+[11/Jun/2024 23:53:04] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 23:53:09] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 23:53:23] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 23:53:31] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:06:09] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:06:36] -  Descargando video de URI: raw_videos/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1.mp4
+[12/Jun/2024 00:06:51] -  non-existent file: ./tmp/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_ES_HU\ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_final.mp4
+[12/Jun/2024 00:06:51] -  Deleted temporary folder: ./tmp/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_ES_HU
+[12/Jun/2024 00:07:16] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:07:20] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:07:27] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:07:30] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:07:51] -  Descargando video de URI: raw_videos/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1.mp4
+[12/Jun/2024 00:08:04] -  non-existent file: ./tmp/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_ES_IT\ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_final.mp4
+[12/Jun/2024 00:08:04] -  Deleted temporary folder: ./tmp/ec0e6bc7e77258cf13178c159f077bcebc8b91b3f6db49d4212c3eeec32afaa1_ES_IT
+[12/Jun/2024 00:09:34] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:12:16] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:12:24] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:12:33] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:12:36] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:15:09] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:15:33] -  Descargando video de URI: raw_videos/2648fb39c2f1d4830b81523d5fcd0deb320ff092b1f831c3ffc15b477c046342.mp4
+[12/Jun/2024 00:15:33] -  Subiendo video a URI: raw_videos/2648fb39c2f1d4830b81523d5fcd0deb320ff092b1f831c3ffc15b477c046342.mp4
+[12/Jun/2024 00:15:34] -  Deleted temporary folder: ./tmp/2648fb39c2f1d4830b81523d5fcd0deb320ff092b1f831c3ffc15b477c046342_ES_AR
+[12/Jun/2024 00:15:37] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:15:43] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:16:52] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:16:55] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:16:58] -  videos fetched from user: test@test.com
+[12/Jun/2024 00:17:05] -  User not found: test@test.com
+[12/Jun/2024 00:17:05] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 00:22:39] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 00:22:43] -  videos fetched from user: andrew@gmail.com

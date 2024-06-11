@@ -39,7 +39,7 @@ interface ApiService {
     suspend fun uploadVideoRequest(
         @Header("x-access-token") token: String,
         @Body request: UploadRequestData
-    ): Response<UploadResponseData>
+    ): Response<Void>
 
     @DELETE("/video/")
     suspend fun deleteVideo(

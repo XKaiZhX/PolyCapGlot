@@ -75,13 +75,7 @@ class UploadViewModel : ViewModel() {
                 }
 
                 if (response.isSuccessful) {
-                    response.body()?.let { responseData ->
-                        Log.d("UploadViewModel", "Upload response: ${responseData.message}")
-                        onSuccess()
-                    } ?: run {
-                        Log.e("UploadViewModel", "Upload response body is null")
-                        onError(Exception("Upload response body is null"))
-                    }
+                    onSuccess()
                 } else {
                     Log.e("UploadViewModel", "Upload request failed with status: ${response.code()}")
                     onError(Exception("Upload request failed with status: ${response.code()}"))
