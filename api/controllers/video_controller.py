@@ -174,11 +174,11 @@ class VideoUpload(Resource):
                     ns_log(video_controller, "Error updating translation status in DB", logging.CRITICAL)
             
              # Borrar la carpeta temporal
-            try:
-                delete_folder(folder_path)
-                ns_log(video_controller, f"Deleted temporary folder: {folder_path}", logging.INFO)
-            except Exception as e:
-                ns_log(video_controller, f"Error deleting temporary folder: {folder_path}", logging.CRITICAL)
+            #try:
+                #delete_folder(folder_path)
+                #ns_log(video_controller, f"Deleted temporary folder: {folder_path}", logging.INFO)
+            #except Exception as e:
+                #ns_log(video_controller, f"Error deleting temporary folder: {folder_path}", logging.CRITICAL)
 
         # Iniciar el hilo para la descarga y procesamiento del video
         thread = Thread(target=download_and_process_video)

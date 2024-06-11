@@ -18,7 +18,7 @@ LOG_DATEFORMAT = "[%d/%b/%Y %H:%M:%S] - "
 # Funciones para el manejo de tokens
 def create_token(email, username):
     """Crea un token JWT con expiración de 10 minutos."""
-    expiration = datetime.datetime.now() + datetime.timedelta(minutes=10)
+    expiration = datetime.datetime.now() + datetime.timedelta(hours=1)
     print(f"Expiration for token: {expiration}")
     token = jwt.encode(
         {"email": email, "username": username, "exp": str(expiration)},

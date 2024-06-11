@@ -1,3 +1,4 @@
 api/config/firebase.json
 api/config/firebase_service.json
-api/temp
+api/config/deepl.json
+api/tmp

@@ -4,6 +4,15 @@ from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
 
 class merge():
     def __init__(self, path, id, video, subtitulo, target_language):
+        """
+        Clase para fusionar un video con subtítulos.
+
+        :param path: Ruta de salida para el archivo de video fusionado.
+        :param id: Identificador único para el archivo de video.
+        :param video: Ruta del archivo de video original.
+        :param subtitulo: Ruta del archivo de subtítulos (SRT).
+        :param target_language: Código del idioma objetivo para la codificación de subtítulos.
+        """
         self.completed = False
         self.path = path
         self.id = id
@@ -11,10 +20,15 @@ class merge():
         self.subtitulo = subtitulo
         self.target = target_language
 
-        self.juntar()
+        self.merge_video_with_subtitles()
 
     def set_encoding(self, target):
-        language_encoding = 'utf-8'
+        """
+        Configura la codificación del archivo de subtítulos según el idioma objetivo.
+
+        :param target: Código del idioma objetivo.
+        :return: Codificación correspondiente.
+        """
         encoding_map = {
             'ZH': 'hzgb',
             'AR': 'cp720',
@@ -53,37 +67,57 @@ class merge():
         }
         return encoding_map.get(target, 'utf-8')
 
-    def juntar(self):
+    def merge_video_with_subtitles(self):
+        """
+        Fusiona el video con los subtítulos y guarda el archivo resultante.
+        """
         try:
-            self.video_editor = VideoFileClip(self.video)
-            self.language_code = self.set_encoding(self.target)
-            self.srt_editor = pysrt.open(self.subtitulo, encoding=self.language_code)
-            self.subtitulos = self.create_subtitle_clips(self.srt_editor, self.video_editor.size)
-            self.final_video = CompositeVideoClip([self.video_editor] + self.subtitulos)
-            self.output_file = os.path.join(f'{self.path}/{self.id}_final.mp4')
-            self.final_video.write_videofile(self.output_file)
+            video_clip = VideoFileClip(self.video)
+            encoding = self.set_encoding(self.target)
+            subtitles = pysrt.open(self.subtitulo, encoding=encoding)
+            subtitle_clips = self.create_subtitle_clips(subtitles, video_clip.size)
+            final_video = CompositeVideoClip([video_clip] + subtitle_clips)
+            output_file = os.path.join(self.path, f'{self.id}_final.mp4')
+            os.makedirs(self.path, exist_ok=True)
+            final_video.write_videofile(output_file)
             self.completed = True
         except Exception as e:
-            print("Error al juntar el video con los subtítulos:", e)
+            print(f"Error al juntar el video con los subtítulos: {e}")
             self.completed = False
 
     def time_to_seconds(self, time_obj):
-        return time_obj.hours * 3600 + time_obj.minutes * 60 + time_obj.seconds + time_obj.milliseconds / 1000
+        """
+        Convierte un objeto de tiempo en segundos.
+
+        :param time_obj: Objeto de tiempo (pysrt.SubRipTime).
+        :return: Tiempo en segundos.
+        """
+        return (time_obj.hours * 3600 + time_obj.minutes * 60 +
+                time_obj.seconds + time_obj.milliseconds / 1000)
 
     def create_subtitle_clips(self, subtitles, videosize, fontsize=24, font='Arial', color='yellow'):
-        self.subtitle_clips = []
+        """
+        Crea clips de subtítulos para superponer en el video.
+
+        :param subtitles: Lista de subtítulos (pysrt.SubRipFile).
+        :param videosize: Tamaño del video (ancho, alto).
+        :param fontsize: Tamaño de la fuente de los subtítulos.
+        :param font: Nombre de la fuente de los subtítulos.
+        :param color: Color de la fuente de los subtítulos.
+        :return: Lista de clips de subtítulos (moviepy.editor.TextClip).
+        """
+        subtitle_clips = []
+        video_width, video_height = videosize
+
         for subtitle in subtitles:
-            self.start_time = self.time_to_seconds(subtitle.start)
-            self.end_time = self.time_to_seconds(subtitle.end)
-            self.duration = self.end_time - self.start_time
-            self.video_width, self.video_height = videosize
+            start_time = self.time_to_seconds(subtitle.start)
+            end_time = self.time_to_seconds(subtitle.end)
+            duration = end_time - start_time
 
             text_clip = TextClip(subtitle.text, fontsize=fontsize, font=font, color=color, bg_color='black',
-                                 size=(self.video_width * 3 / 4, None), method='caption').set_start(self.start_time).set_duration(self.duration)
+                                 size=(video_width * 3 / 4, None), method='caption').set_start(start_time).set_duration(duration)
 
-            subtitle_x_position = 'center'
-            subtitle_y_position = self.video_height * 4 / 5
-            text_position = (subtitle_x_position, subtitle_y_position)
-
-            self.subtitle_clips.append(text_clip.set_position(text_position))
-        return self.subtitle_clips
+            text_clip = text_clip.set_position(('center', video_height * 4 / 5))
+            subtitle_clips.append(text_clip)
+        
+        return subtitle_clips

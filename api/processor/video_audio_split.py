@@ -11,52 +11,41 @@ class split():
         self.id = id
         self.video = video
         self.path = path
-
         self.separar()
 
-    def separar(self): 
-
+    def separar(self):
         try:
             print("......Separating video and audio......")
-
-            #cargar video
-            self.video_editor = VideoFileClip(self.video)
-
-            #separar parte audio
-            self.audio_editor = self.video_editor.audio
-
-            #Guardar parte audio como fichero
-            #Puede ser de formato wav tambien 'audio.wav', si quiere ser de formato mp3, './files/audio.mp3', codec='mp3'
-            self.audio_editor.write_audiofile(f'{self.path}/{self.id}_audio.wav')
-            
-            #Cerrar proceso
-            self.video_editor.close()
-            self.audio_editor.close()
-
+            # Cargar video
+            video_editor = VideoFileClip(self.video)
+            # Separar parte audio
+            audio_editor = video_editor.audio
+            # Guardar parte audio como fichero
+            audio_editor.write_audiofile(f'{self.path}/{self.id}_audio.wav')
+            # Cerrar recursos
+            video_editor.close()
+            audio_editor.close()
+            # Reducir ruido
             self.reducir_ruido()
             self.completed = True
         except Exception as e:
             print("Error occurred during audio splitting:", str(e))
             self.completed = False
 
-        return self.completed
-
     def reducir_ruido(self):
-
         try:
-            #Cargar los datos de audio del archivo guardado
-            self.rate, self.data = wavfile.read(f'{self.path}/{self.id}_audio.wav')
-            self.orig_shape = self.data.shape
-            self.data = np.reshape(self.data, (2, -1))
-
-            # Realizar reducción de ruido (optimizado para voz)
-            self.reduced_noise = reduce_noise(
-                y=self.data, # Array de datos de audio
-                sr=self.rate, # Tasa de muestreo de los datos de audio
-                stationary=True # Si se asume que el ruido es estacionario (constante) o no
+            print("......Reducing noise......")
+            # Cargar los datos de audio del archivo guardado
+            rate, data = wavfile.read(f'{self.path}/{self.id}_audio.wav')
+            orig_shape = data.shape
+            data = np.reshape(data, (2, -1))
+            # Realizar reducción de ruido
+            reduced_noise = reduce_noise(
+                y=data,
+                sr=rate,
+                stationary=True
             )
-
             # Escribir los datos de audio reducidos de ruido en un nuevo archivo
-            wavfile.write(f'{self.path}/{self.id}_audio_reduced.wav', self.rate, self.reduced_noise.reshape(self.orig_shape))
+            wavfile.write(f'{self.path}/{self.id}_audio_reduced.wav', rate, reduced_noise.reshape(orig_shape))
         except Exception as e:
-            print("Error occurred during audio reducing:", str(e))
+            print("Error occurred during noise reduction:", str(e))

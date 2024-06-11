@@ -26297,3 +26297,41 @@
 [12/Jun/2024 00:17:05] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
 [12/Jun/2024 00:22:39] -  videos fetched from user: andrew@gmail.com
 [12/Jun/2024 00:22:43] -  videos fetched from user: andrew@gmail.com
+[12/Jun/2024 01:04:29] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:04:37] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:05:23] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:05:37] -  Descargando video de URI: raw_videos/cc068dab21fc699dc56fdc3ef0363e13dcd6f1f5c0f52c8cfe76ce4ee263c8ec.mp4
+[12/Jun/2024 01:05:38] -  Subiendo video a URI: raw_videos/cc068dab21fc699dc56fdc3ef0363e13dcd6f1f5c0f52c8cfe76ce4ee263c8ec.mp4
+[12/Jun/2024 01:05:38] -  Deleted temporary folder: ./tmp/cc068dab21fc699dc56fdc3ef0363e13dcd6f1f5c0f52c8cfe76ce4ee263c8ec_ES_EN-GB
+[12/Jun/2024 01:05:59] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:06:08] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:06:22] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:06:30] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:06:35] -  Descargando video de URI: raw_videos/cc068dab21fc699dc56fdc3ef0363e13dcd6f1f5c0f52c8cfe76ce4ee263c8ec.mp4
+[12/Jun/2024 01:06:36] -  Subiendo video a URI: raw_videos/cc068dab21fc699dc56fdc3ef0363e13dcd6f1f5c0f52c8cfe76ce4ee263c8ec.mp4
+[12/Jun/2024 01:06:36] -  Deleted temporary folder: ./tmp/cc068dab21fc699dc56fdc3ef0363e13dcd6f1f5c0f52c8cfe76ce4ee263c8ec_ES_HU
+[12/Jun/2024 01:07:04] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:07:39] -  Descargando video de URI: raw_videos/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192.mp4
+[12/Jun/2024 01:11:26] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:11:32] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:11:52] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:11:57] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:12:08] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:12:13] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:13:33] -  Descargando video de URI: raw_videos/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192.mp4
+[12/Jun/2024 01:13:55] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:14:04] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:17:39] -  non-existent file: ./tmp/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192_ES_HU\c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192_final.mp4
+[12/Jun/2024 01:17:39] -  Deleted temporary folder: ./tmp/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192_ES_HU
+[12/Jun/2024 01:18:30] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:18:34] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:18:49] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:18:50] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:19:10] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:22:09] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:22:12] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:23:27] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:24:58] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:24:59] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:25:28] -  Descargando video de URI: raw_videos/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192.mp4
+[12/Jun/2024 01:29:36] -  non-existent file: ./tmp/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192_ES_EN-US\c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192_final.mp4
