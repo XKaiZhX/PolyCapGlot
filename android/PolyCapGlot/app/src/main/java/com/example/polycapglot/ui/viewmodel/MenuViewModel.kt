@@ -12,6 +12,8 @@ import com.arthenica.mobileffmpeg.FFmpeg
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.FutureTarget
 import com.example.polycapglot.services.retrofit.RetrofitInstance
+import com.example.polycapglot.services.retrofit.models.UpdatePasswordRequestData
+import com.example.polycapglot.services.retrofit.models.UpdateUsernameRequestData
 import com.example.polycapglot.ui.viewmodel.models.Translation
 import com.example.polycapglot.ui.viewmodel.models.Video
 import com.google.android.gms.tasks.Task
@@ -24,9 +26,9 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 class MenuViewModel(
-    private val username: String,
+    var username: String,
     private val email: String,
-    val token: String,
+    var token: String,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -60,38 +62,123 @@ class MenuViewModel(
         videos.value = list
     }
 
-    fun deleteTranslation(translation: Translation) {
-        Log.i("DELETE", "Translation deleted: ${translation.sub_language}")
+    suspend fun updateUsername(newUsername: String): Boolean {
+        return try {
+            val response = retrofitInstance.api.updateUsername(
+                token,
+                UpdateUsernameRequestData(email, newUsername)
+            )
+            if (response.isSuccessful) {
+                username = newUsername
+                true
+            } else {
+                Log.e("UPDATE_USERNAME", "Failed to update username: ${response.errorBody()}")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("UPDATE_USERNAME", "Error updating username: ${e.message}")
+            false
+        }
     }
 
-    fun deleteVideo(video: Video) {
-        Log.i("DELETE", "Video deleted: ${video.title}")
+    suspend fun updatePassword(newPassword: String): Boolean {
+        return try {
+            val response = retrofitInstance.api.updatePassword(
+                token,
+                UpdatePasswordRequestData(email, newPassword)
+            )
+            if (response.isSuccessful) {
+                true
+            } else {
+                Log.e("UPDATE_PASSWORD", "Failed to update password: ${response.errorBody()}")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("UPDATE_PASSWORD", "Error updating password: ${e.message}")
+            false
+        }
     }
+
+    suspend fun deleteCurrentUser(): Boolean {
+        return try {
+            val response = retrofitInstance.api.deleteUser(token)
+            if (response.isSuccessful) {
+                response.body() ?: false
+            } else {
+                Log.e("DELETE_USER", "Failed to delete user: ${response.code()}")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("DELETE_USER", "Error deleting user: ${e.message}")
+            false
+        }
+    }
+
+    suspend fun deleteTranslation(video: Video, translation: Translation) {
+        try {
+            val response = retrofitInstance.api.deleteTranslation(token, translation.id, video.id)
+            if (response.isSuccessful) {
+                val deleted = response.body() ?: false
+                if (deleted) {
+                    Log.i("DELETE", "Translation deleted: ${translation.sub_language}")
+                } else {
+                    Log.e("DELETE", "Failed to delete translation: ${translation.sub_language}")
+                }
+            } else {
+                Log.e("DELETE", "Failed to delete translation: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("DELETE", "Error deleting translation: ${e.message}")
+        }
+    }
+
+    suspend fun deleteVideo(video: Video): Boolean {
+        return try {
+            val response = retrofitInstance.api.deleteVideo(token, video.id)
+            if (response.isSuccessful) {
+                Log.i("DELETE", "Video deleted: ${video.id}")
+                requestVideos()
+                true
+            } else {
+                Log.e("DELETE", "Failed to delete video ${video.id}: ${response.code()}")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("DELETE", "Error deleting video: ${e.message}")
+            false
+        }
+    }
+
+
 
     fun requestVideosMock() {
-        // TODO: Implement this function to request videos
         val list: MutableList<Video> = mutableListOf(
             Video(
+                "89e9ef8b4bf33ac8b2db9d8d4dc110cad363adec28019db0b2a5ad6a21a04f60",
                 "Test",
                 "ES",
                 "raw_videos/89e9ef8b4bf33ac8b2db9d8d4dc110cad363adec28019db0b2a5ad6a21a04f60.mp4",
                 listOf(
                     Translation(
+                        "f3807e1e02cae3a996d8a792d5559fa868232ff79e02f7fc00a03780b28325ca",
                         "EN-US",
                         "translated_videos/f3807e1e02cae3a996d8a792d5559fa868232ff79e02f7fc00a03780b28325ca.mp4",
                         1
                     ),
                     Translation(
+                        "1a3f78d45d33560951d64e508569c4f1bdb1b3dd7aa6b1dafd2a8f17b5d80521",
                         "FR",
                         "translated_videos/1a3f78d45d33560951d64e508569c4f1bdb1b3dd7aa6b1dafd2a8f17b5d80521.mp4",
                         1
                     ),
                     Translation(
+                        "90667fa1b6355c503d6405823060f8e06e82c57b4ded19e7de7c4c836fbc29b2",
                         "PT-PT",
                         "translated_videos/90667fa1b6355c503d6405823060f8e06e82c57b4ded19e7de7c4c836fbc29b2.mp4",
                         1
                     ),
                     Translation(
+                        "8b1667866d0a42da15d2578e353f0193d59d5ddb3c7d373f285caf991c0d5243",
                         "RO",
                         "translated_videos/8b1667866d0a42da15d2578e353f0193d59d5ddb3c7d373f285caf991c0d5243.mp4",
                         1

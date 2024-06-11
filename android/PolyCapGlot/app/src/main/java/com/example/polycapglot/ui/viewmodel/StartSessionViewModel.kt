@@ -22,6 +22,7 @@ class StartSessionViewModel: ViewModel() {
             val res = apiService.loginRequest(data);
             Log.i("LOGIN", "Value received is: ${res.body()}")
             if (res.isSuccessful) {
+                Log.i("LOGIN", "Success")
                 final = res.body()
             } else {
                 Log.i("LOGIN", "Error: " + res.message())

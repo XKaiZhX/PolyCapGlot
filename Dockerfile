@@ -28,7 +28,9 @@ RUN apt-get update && \
     apt-get install -y wget &&\
     apt-get install -y imagemagick &&\
     apt-get install -y libmagick++-dev &&\
-    apt-get install -y build-essential
+    apt-get install -y build-essential &&\
+    apt-get install -y npm &&\
+    apt-get install -y nodejs
 
 #Descargar fuentes (para Arial)
 RUN mkdir /delete-me-fonts

@@ -3,7 +3,6 @@ package com.example.polycapglot.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.JsonToken
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -40,9 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import com.example.polycapglot.R
-import com.example.polycapglot.services.retrofit.models.LoginData
 import com.example.polycapglot.services.retrofit.models.LoginResponse
 import com.example.polycapglot.services.retrofit.models.UserDataDTO
+import com.example.polycapglot.ui.screen.LoginScreen
+import com.example.polycapglot.ui.screen.RegisterScreen
 import com.example.polycapglot.ui.theme.PolyCapGlotTheme
 import com.example.polycapglot.ui.viewmodel.StartSessionViewModel
 import kotlinx.coroutines.launch
@@ -113,171 +113,9 @@ fun isValidEmail(email: String): Boolean {
     return !email.matches(regex = Regex("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$"))
 }
 
-@Composable
-fun Login(vm: StartSessionViewModel) {
 
-    var context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
 
-    var rememberMe by remember { mutableStateOf(false) }
 
-    var error by remember { mutableStateOf(false) }
-
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    Column(
-        Modifier.fillMaxHeight(0.6f),
-        Arrangement.SpaceEvenly,
-        Alignment.CenterHorizontally
-    ) {
-
-        Text(text = "Login", fontSize = 26.sp)
-
-        Row(
-            Modifier.fillMaxWidth(0.7f),
-            Arrangement.Start,
-            Alignment.CenterVertically
-        ) {
-            Checkbox(checked = rememberMe, onCheckedChange = { rememberMe = it })
-            Text(text = "Remember me?")
-        }
-
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(text = "email") }
-        )
-
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text(text = "password") },
-            visualTransformation = VisualTransformation { TransformedText(
-                AnnotatedString("*".repeat(it.length)),
-                OffsetMapping.Identity
-            ) }
-        )
-
-        if (error) {
-            Text(text = "Wrong credentials")
-        }
-
-        Button(onClick = {
-            coroutineScope.launch {
-                error = loginFunction(context, vm, email, password)
-                Log.i("LOGIN_F", "error value: " + error)
-            }
-        }) {
-            Text(text = "Login")
-        }
-    }
-}
-
-@Composable
-fun Register(vm: StartSessionViewModel) {
-
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
-    var confirmPasswordError by remember { mutableStateOf("") }
-    var emailError by remember { mutableStateOf("") } // Add a state variable for the email error message
-
-    Column(
-        Modifier.fillMaxHeight(0.6f),
-        Arrangement.SpaceEvenly,
-        Alignment.CenterHorizontally
-    ) {
-
-        Text(text = "Register", fontSize = 26.sp)
-
-        TextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text(text = "Username") }
-        )
-
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(text = "Email") },
-            isError = emailError.isNotEmpty(), // Highlight the TextField if there's an error
-        )
-
-        if (emailError.isNotEmpty()) {
-            Text(
-                text = emailError,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text(text = "Password") },
-            isError = confirmPasswordError.isNotEmpty(), // Highlight the TextField if there's an error
-            visualTransformation = VisualTransformation { TransformedText(
-                AnnotatedString("*".repeat(it.length)),
-                OffsetMapping.Identity
-            ) }
-        )
-
-        TextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
-            label = { Text(text = "Confirm Password") },
-            isError = confirmPasswordError.isNotEmpty(), // Highlight the TextField if there's an error
-            visualTransformation = VisualTransformation { TransformedText(
-                AnnotatedString("*".repeat(it.length)),
-                OffsetMapping.Identity
-            ) }
-        )
-
-        if (confirmPasswordError.isNotEmpty()) {
-            Text(
-                text = confirmPasswordError,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-
-        Button(onClick = {
-            // Validate email
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                emailError = "Invalid email address" // Set error message if email is invalid
-            } else {
-                emailError = "" // Clear email error if valid
-            }
-
-            // Validate password confirmation
-            if (password != confirmPassword) {
-                confirmPasswordError = "Passwords do not match" // Set error message if passwords do not match
-            } else {
-                confirmPasswordError = "" // Clear error message if passwords match
-            }
-
-            // If there are no errors, proceed with registration
-            if (emailError.isEmpty() && confirmPasswordError.isEmpty()) {
-                coroutineScope.launch {
-                    registerFunction(context, vm, username, email, password) {
-                        // On successful registration, navigate to LoginScreen and show toast
-                        Toast.makeText(context, "Register successful", Toast.LENGTH_SHORT).show()
-                        context.startActivity(Intent(context, StartSessionActivity::class.java))
-                    }
-                }
-            }
-        }) {
-            Text(text = "Register")
-        }
-    }
-}
 
 @Composable
 fun StartSession(vm: StartSessionViewModel) {
@@ -293,9 +131,9 @@ fun StartSession(vm: StartSessionViewModel) {
         Text(text = stringResource(id = R.string.app_name), fontSize = 40.sp)
 
         if (operation)
-            Login(vm)
+            LoginScreen(vm)
         else
-            Register(vm)
+            RegisterScreen(vm)
 
         Text(
             text = if (operation) "Don't have an account?" else "Already have an account?",
