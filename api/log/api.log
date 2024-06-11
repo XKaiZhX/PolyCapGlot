@@ -26124,3 +26124,177 @@
 [09/Jun/2024 18:37:46] - videos fetched from user: a@a.com
 [09/Jun/2024 18:39:15] - Descargando video de URI: raw_videos/428583f835ae4ba429e294655a3db5d49fc923450a429fcd78d8dfeef2fd5ff2.mp4
 [09/Jun/2024 18:40:21] - non-existent file: ./tmp/428583f835ae4ba429e294655a3db5d49fc923450a429fcd78d8dfeef2fd5ff2_ES_EN-US\428583f835ae4ba429e294655a3db5d49fc923450a429fcd78d8dfeef2fd5ff2_final.mp4
+[09/Jun/2024 19:14:44] - Token is missing!
+[09/Jun/2024 19:15:00] - Descargando video de URI: raw_videos/ca9e8b04e5ef49487b2e9406ed6903a49f344b8fb7751fb6b2b86a7fb5cd736d.mp4
+[09/Jun/2024 19:15:00] - Translation already in process for video: ca9e8b04e5ef49487b2e9406ed6903a49f344b8fb7751fb6b2b86a7fb5cd736d from Local@local.com
+[09/Jun/2024 19:18:44] - Subiendo video a URI: raw_videos/ca9e8b04e5ef49487b2e9406ed6903a49f344b8fb7751fb6b2b86a7fb5cd736d.mp4
+[09/Jun/2024 19:19:29] - Token is missing!
+[09/Jun/2024 19:19:29] - videos fetched from user: Local@local.com
+[09/Jun/2024 19:19:29] - videos fetched from user: Local@local.com
+[09/Jun/2024 19:19:56] - Translation already in process for video: f3a04514fde310258e10755276bfb69c349a4220d53f63c978b271bf9d1f8f4a from Local@local.com
+[09/Jun/2024 19:19:56] - Descargando video de URI: raw_videos/f3a04514fde310258e10755276bfb69c349a4220d53f63c978b271bf9d1f8f4a.mp4
+[09/Jun/2024 19:23:25] - Subiendo video a URI: raw_videos/f3a04514fde310258e10755276bfb69c349a4220d53f63c978b271bf9d1f8f4a.mp4
+[09/Jun/2024 19:26:31] - Token is missing!
+[09/Jun/2024 19:26:31] - videos fetched from user: Local@local.com
+[09/Jun/2024 19:26:31] - Token is missing!
+[09/Jun/2024 19:26:31] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:19:45] - Token is missing!
+[10/Jun/2024 03:20:10] - Descargando video de URI: raw_videos/7645d3d07775f3730037a8cc23da3d874c3f603f9f44630bfa1c95354070a684.mp4
+[10/Jun/2024 03:20:10] - Translation already in process for video: 7645d3d07775f3730037a8cc23da3d874c3f603f9f44630bfa1c95354070a684 from Local@local.com
+[10/Jun/2024 03:20:30] - Token is missing!
+[10/Jun/2024 03:20:30] - Token is missing!
+[10/Jun/2024 03:25:50] - Token is missing!
+[10/Jun/2024 03:25:50] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:25:50] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:26:08] - Descargando video de URI: raw_videos/6bbee7fded43e73d5ae8676a972e42c7b6ec3643fb491047b7409833990e2245.mp4
+[10/Jun/2024 03:26:08] - Translation already in process for video: 6bbee7fded43e73d5ae8676a972e42c7b6ec3643fb491047b7409833990e2245 from Local@local.com
+[10/Jun/2024 03:28:37] - Subiendo video a URI: raw_videos/6bbee7fded43e73d5ae8676a972e42c7b6ec3643fb491047b7409833990e2245.mp4
+[10/Jun/2024 03:33:57] - Token is missing!
+[10/Jun/2024 03:33:57] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:33:57] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:34:12] - Translation already in process for video: 3e54279a1a92113ec47318a111720a1a547ac7ad4e0e2cf9598f1b2a8ac852cd from Local@local.com
+[10/Jun/2024 03:34:12] - Descargando video de URI: raw_videos/3e54279a1a92113ec47318a111720a1a547ac7ad4e0e2cf9598f1b2a8ac852cd.mp4
+[10/Jun/2024 03:39:05] - Token is missing!
+[10/Jun/2024 03:39:05] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:39:05] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:39:29] - Descargando video de URI: raw_videos/04ead4a396c78abc74d2c754a08fee984f3464295298a65e1aee3a03539e3281.mp4
+[10/Jun/2024 03:39:29] - Translation already in process for video: 04ead4a396c78abc74d2c754a08fee984f3464295298a65e1aee3a03539e3281 from Local@local.com
+[10/Jun/2024 03:41:14] - Token is missing!
+[10/Jun/2024 03:41:14] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:41:14] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:41:35] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:41:35] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:41:59] - Descargando video de URI: raw_videos/a74907087e59b83603f08190a7612d39b6aa49e7e6a803c0b1918958af6ffcf5.mp4
+[10/Jun/2024 03:41:59] - Translation already in process for video: a74907087e59b83603f08190a7612d39b6aa49e7e6a803c0b1918958af6ffcf5 from Local@local.com
+[10/Jun/2024 03:43:56] - Token is missing!
+[10/Jun/2024 03:43:56] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:43:56] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:44:12] - Descargando video de URI: raw_videos/77fd70c2adc27c36871a8371b4dcf9b136a663e34e53299c5b68df896b2bc9a3.mp4
+[10/Jun/2024 03:44:12] - Translation already in process for video: 77fd70c2adc27c36871a8371b4dcf9b136a663e34e53299c5b68df896b2bc9a3 from Local@local.com
+[10/Jun/2024 03:45:48] - Token is missing!
+[10/Jun/2024 03:45:48] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:45:48] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:46:12] - Descargando video de URI: raw_videos/be64fc3cfb4059fe5bd2ff96399962253469645cf513c6113a2cc8c2006527ef.mp4
+[10/Jun/2024 03:46:12] - Translation already in process for video: be64fc3cfb4059fe5bd2ff96399962253469645cf513c6113a2cc8c2006527ef from Local@local.com
+[10/Jun/2024 03:48:22] - Token is missing!
+[10/Jun/2024 03:48:22] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:48:22] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:48:35] - Descargando video de URI: raw_videos/c919de5e834f7e5fcbe1dbd90e68f1840aa95798a1617a2084a6c43ef91f151f.mp4
+[10/Jun/2024 03:48:35] - Translation already in process for video: c919de5e834f7e5fcbe1dbd90e68f1840aa95798a1617a2084a6c43ef91f151f from Local@local.com
+[10/Jun/2024 03:49:34] - non-existent file: ./tmp/c919de5e834f7e5fcbe1dbd90e68f1840aa95798a1617a2084a6c43ef91f151f_EN_ES\c919de5e834f7e5fcbe1dbd90e68f1840aa95798a1617a2084a6c43ef91f151f_final.mp4
+[10/Jun/2024 03:51:20] - Token is missing!
+[10/Jun/2024 03:51:20] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:51:20] - videos fetched from user: Local@local.com
+[10/Jun/2024 03:51:31] - Descargando video de URI: raw_videos/65e80ca990f86c395073cc2c44faa0921a2ac337bef9fc2e1d207e09daf09616.mp4
+[10/Jun/2024 03:51:31] - Translation already in process for video: 65e80ca990f86c395073cc2c44faa0921a2ac337bef9fc2e1d207e09daf09616 from Local@local.com
+[10/Jun/2024 04:00:40] - Token is missing!
+[10/Jun/2024 04:00:40] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:00:40] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:00:53] - Descargando video de URI: raw_videos/36533fa8c67cb31c06a591c4b6685aaf421a4f533a0a949755c8a10397ed7e2c.mp4
+[10/Jun/2024 04:00:53] - Translation already in process for video: 36533fa8c67cb31c06a591c4b6685aaf421a4f533a0a949755c8a10397ed7e2c from Local@local.com
+[10/Jun/2024 04:04:11] - Subiendo video a URI: raw_videos/36533fa8c67cb31c06a591c4b6685aaf421a4f533a0a949755c8a10397ed7e2c.mp4
+[10/Jun/2024 04:05:41] - Token is missing!
+[10/Jun/2024 04:05:41] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:05:41] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:05:52] - Descargando video de URI: raw_videos/b7df5c4bdc6795a272ad3bf59de958ad4bdc618aacd2b4962f82a7fa29bb98af.mp4
+[10/Jun/2024 04:05:52] - Translation already in process for video: b7df5c4bdc6795a272ad3bf59de958ad4bdc618aacd2b4962f82a7fa29bb98af from Local@local.com
+[10/Jun/2024 04:10:46] - Token is missing!
+[10/Jun/2024 04:10:46] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:10:46] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:10:57] - Descargando video de URI: raw_videos/90405f02039091111bc2907680e25f166334fec58c336db60b8e02ec3192a06d.mp4
+[10/Jun/2024 04:10:57] - Translation already in process for video: 90405f02039091111bc2907680e25f166334fec58c336db60b8e02ec3192a06d from Local@local.com
+[10/Jun/2024 04:12:39] - non-existent file: ./tmp/90405f02039091111bc2907680e25f166334fec58c336db60b8e02ec3192a06d_EN_ES\90405f02039091111bc2907680e25f166334fec58c336db60b8e02ec3192a06d_final.mp4
+[10/Jun/2024 04:14:33] - Token is missing!
+[10/Jun/2024 04:14:33] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:14:33] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:14:43] - Descargando video de URI: raw_videos/950272fabf7d2d91e124ff91d3a7d2cf4437cd6469bc6aeca0264475688b4594.mp4
+[10/Jun/2024 04:14:43] - Translation already in process for video: 950272fabf7d2d91e124ff91d3a7d2cf4437cd6469bc6aeca0264475688b4594 from Local@local.com
+[10/Jun/2024 04:17:17] - Subiendo video a URI: raw_videos/950272fabf7d2d91e124ff91d3a7d2cf4437cd6469bc6aeca0264475688b4594.mp4
+[10/Jun/2024 04:19:22] - Token is missing!
+[10/Jun/2024 04:19:22] - Token is missing!
+[10/Jun/2024 04:19:24] - Token is missing!
+[10/Jun/2024 04:19:24] - Token is missing!
+[10/Jun/2024 04:32:08] - Token is missing!
+[10/Jun/2024 04:32:08] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:32:08] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:32:22] - Translation already in process for video: eda4db1fb1665c5bb4c1721f9c4dc6bb67f53735771835a553c7034cfc2ced97 from Local@local.com
+[10/Jun/2024 04:32:22] - Descargando video de URI: raw_videos/eda4db1fb1665c5bb4c1721f9c4dc6bb67f53735771835a553c7034cfc2ced97.mp4
+[10/Jun/2024 04:35:34] - Subiendo video a URI: raw_videos/eda4db1fb1665c5bb4c1721f9c4dc6bb67f53735771835a553c7034cfc2ced97.mp4
+[10/Jun/2024 04:38:22] - Token is missing!
+[10/Jun/2024 04:38:22] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:38:22] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:38:41] - Descargando video de URI: raw_videos/3b470e066ecb8400e6ef32d3c0c82d8a4cb9b84ce3a298379a613cac2072224c.mp4
+[10/Jun/2024 04:38:41] - Translation already in process for video: 3b470e066ecb8400e6ef32d3c0c82d8a4cb9b84ce3a298379a613cac2072224c from Local@local.com
+[10/Jun/2024 04:41:59] - Subiendo video a URI: raw_videos/3b470e066ecb8400e6ef32d3c0c82d8a4cb9b84ce3a298379a613cac2072224c.mp4
+[10/Jun/2024 04:45:24] - Token is missing!
+[10/Jun/2024 04:45:24] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:45:24] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:45:38] - Descargando video de URI: raw_videos/eefe674494f25ecafd7a38bcf8554a3a0ee1cad94de1d0a01b91d60e040963a6.mp4
+[10/Jun/2024 04:45:38] - Translation already in process for video: eefe674494f25ecafd7a38bcf8554a3a0ee1cad94de1d0a01b91d60e040963a6 from Local@local.com
+[10/Jun/2024 04:48:57] - Subiendo video a URI: raw_videos/eefe674494f25ecafd7a38bcf8554a3a0ee1cad94de1d0a01b91d60e040963a6.mp4
+[10/Jun/2024 04:50:35] - Token is missing!
+[10/Jun/2024 04:50:35] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:50:35] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:50:49] - Descargando video de URI: raw_videos/71d6b8f4d23c1d840f228e5ba383a09f3ee7d69dcdad402b243b88a66449eba6.mp4
+[10/Jun/2024 04:50:49] - Translation already in process for video: 71d6b8f4d23c1d840f228e5ba383a09f3ee7d69dcdad402b243b88a66449eba6 from Local@local.com
+[10/Jun/2024 04:56:36] - Token is missing!
+[10/Jun/2024 04:56:36] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:56:36] - videos fetched from user: Local@local.com
+[10/Jun/2024 04:56:52] - Descargando video de URI: raw_videos/e4f48a857f2af3a7b7c97ad6a6b702291626b69d8845408c4f28f8f4c418b55a.mp4
+[10/Jun/2024 04:56:52] - Translation already in process for video: e4f48a857f2af3a7b7c97ad6a6b702291626b69d8845408c4f28f8f4c418b55a from Local@local.com
+[10/Jun/2024 05:01:40] - Subiendo video a URI: raw_videos/e4f48a857f2af3a7b7c97ad6a6b702291626b69d8845408c4f28f8f4c418b55a.mp4
+[10/Jun/2024 05:06:17] - Token is missing!
+[10/Jun/2024 05:06:17] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:06:17] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:06:29] - Translation already in process for video: 892f2ed4dd362856d6f73ba49fd205dd53a02677d495beedd0e6e486b54b4525 from Local@local.com
+[10/Jun/2024 05:06:29] - Descargando video de URI: raw_videos/892f2ed4dd362856d6f73ba49fd205dd53a02677d495beedd0e6e486b54b4525.mp4
+[10/Jun/2024 05:12:39] - Subiendo video a URI: raw_videos/892f2ed4dd362856d6f73ba49fd205dd53a02677d495beedd0e6e486b54b4525.mp4
+[10/Jun/2024 05:17:21] - Token is missing!
+[10/Jun/2024 05:17:21] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:17:21] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:17:34] - Descargando video de URI: raw_videos/45c01b9b743ca0d508539a5e8339f0f94d5b8e61019d0c1964513c8d0d1dbd13.mp4
+[10/Jun/2024 05:17:34] - Translation already in process for video: 45c01b9b743ca0d508539a5e8339f0f94d5b8e61019d0c1964513c8d0d1dbd13 from Local@local.com
+[10/Jun/2024 05:24:37] - Subiendo video a URI: raw_videos/45c01b9b743ca0d508539a5e8339f0f94d5b8e61019d0c1964513c8d0d1dbd13.mp4
+[10/Jun/2024 05:32:34] - Token is missing!
+[10/Jun/2024 05:32:34] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:32:34] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:32:52] - Descargando video de URI: raw_videos/19e4355b09cd8393263fce04f7f4d13d36c13fbfdcab7ee8574115088b230cd7.mp4
+[10/Jun/2024 05:32:52] - Translation already in process for video: 19e4355b09cd8393263fce04f7f4d13d36c13fbfdcab7ee8574115088b230cd7 from Local@local.com
+[10/Jun/2024 05:36:15] - Subiendo video a URI: raw_videos/19e4355b09cd8393263fce04f7f4d13d36c13fbfdcab7ee8574115088b230cd7.mp4
+[10/Jun/2024 05:43:06] - Token is missing!
+[10/Jun/2024 05:43:06] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:43:06] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:43:22] - Descargando video de URI: raw_videos/17796eb3d528cb949a37ff9d5973667f7094673a192baaef14332da9cc31233f.mp4
+[10/Jun/2024 05:43:22] - Translation already in process for video: 17796eb3d528cb949a37ff9d5973667f7094673a192baaef14332da9cc31233f from Local@local.com
+[10/Jun/2024 05:50:13] - Subiendo video a URI: raw_videos/17796eb3d528cb949a37ff9d5973667f7094673a192baaef14332da9cc31233f.mp4
+[10/Jun/2024 05:52:56] - Token is missing!
+[10/Jun/2024 05:52:56] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:52:56] - videos fetched from user: Local@local.com
+[10/Jun/2024 05:53:08] - Descargando video de URI: raw_videos/90de270259bdbf8d9852d17887758cd40c6dfdc9df901809897f03a3e0d65591.mp4
+[10/Jun/2024 05:53:08] - Translation already in process for video: 90de270259bdbf8d9852d17887758cd40c6dfdc9df901809897f03a3e0d65591 from Local@local.com
+[10/Jun/2024 05:59:55] - Subiendo video a URI: raw_videos/90de270259bdbf8d9852d17887758cd40c6dfdc9df901809897f03a3e0d65591.mp4
+[10/Jun/2024 06:06:40] - Token is missing!
+[10/Jun/2024 06:06:40] - videos fetched from user: Local@local.com
+[10/Jun/2024 06:06:40] - videos fetched from user: Local@local.com
+[10/Jun/2024 06:06:51] - Descargando video de URI: raw_videos/c158fe465f8098a65f09f165a7f6d64b4bfe05a8306ec95e2bac535fd3ec7d86.mp4
+[10/Jun/2024 06:06:51] - Translation already in process for video: c158fe465f8098a65f09f165a7f6d64b4bfe05a8306ec95e2bac535fd3ec7d86 from Local@local.com
+[10/Jun/2024 06:13:05] - Subiendo video a URI: raw_videos/c158fe465f8098a65f09f165a7f6d64b4bfe05a8306ec95e2bac535fd3ec7d86.mp4
+[11/Jun/2024 19:22:33] - Token is missing!
+[11/Jun/2024 19:22:51] - Descargando video de URI: raw_videos/c11671365219ad45ab09528a7f45a0583ca807043540cd52bf980495d015bcfe.mp4
+[11/Jun/2024 19:22:51] - Translation already in process for video: c11671365219ad45ab09528a7f45a0583ca807043540cd52bf980495d015bcfe from Local@local.com
+[11/Jun/2024 19:31:57] - Subiendo video a URI: raw_videos/c11671365219ad45ab09528a7f45a0583ca807043540cd52bf980495d015bcfe.mp4
+[11/Jun/2024 19:39:31] - Token is missing!
+[11/Jun/2024 19:39:31] - videos fetched from user: Local@local.com
+[11/Jun/2024 19:39:31] - videos fetched from user: Local@local.com
+[11/Jun/2024 19:39:42] - Descargando video de URI: raw_videos/c07592c0d0930ce6ddfd4254a1203c28cf2dedfe9eeebbd6be0bd31282f3ffcc.mp4
+[11/Jun/2024 19:39:42] - Translation already in process for video: c07592c0d0930ce6ddfd4254a1203c28cf2dedfe9eeebbd6be0bd31282f3ffcc from Local@local.com
+[11/Jun/2024 19:48:13] - Token is missing!
+[11/Jun/2024 19:48:13] - videos fetched from user: Local@local.com
+[11/Jun/2024 19:48:13] - videos fetched from user: Local@local.com
+[11/Jun/2024 19:48:25] - Descargando video de URI: raw_videos/f65b79594cb621863bf8a8f51bef99220d064cbf09b319d3e720ef7d15216fa9.mp4
+[11/Jun/2024 19:48:25] - Translation already in process for video: f65b79594cb621863bf8a8f51bef99220d064cbf09b319d3e720ef7d15216fa9 from Local@local.com
+[11/Jun/2024 19:56:38] - Token is missing!
+[11/Jun/2024 19:56:38] - videos fetched from user: Local@local.com
+[11/Jun/2024 19:56:38] - videos fetched from user: Local@local.com
+[11/Jun/2024 19:56:48] - Descargando video de URI: raw_videos/a232d22244885f56e4c50ee559d092dacf2a02a5747dc0af1a219586442e5ec4.mp4
+[11/Jun/2024 19:56:48] - Translation already in process for video: a232d22244885f56e4c50ee559d092dacf2a02a5747dc0af1a219586442e5ec4 from Local@local.com
