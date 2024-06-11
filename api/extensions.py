@@ -2,31 +2,41 @@ from mongoDB import MongoRepository
 from flask_restx import Api
 from processor.core import video_processor
 from utils.extension_utils import get_mongo_connection_string, load_firebase_json
-
 import pyrebase
-import json
 
-#secret_key = 'Hermes'
+# Inicializa la conexión a la base de datos MongoDB
+def initialize_db():
+    connection_string = get_mongo_connection_string()
+    return MongoRepository(connection_string)
 
-db = MongoRepository(get_mongo_connection_string())
-api = Api(
-    app=None,
-    version="1.0",
-    title="PolyCapGlot API",
-    description="API usada para manejar el acces o a videos y usuarios",
-    doc="/docs/api-docs",
-    default_swagger_filename="/docs/swagger"
-)
+# Configura y devuelve la instancia de la API de Flask-RESTX
+def initialize_api():
+    return Api(
+        app=None,
+        version="1.0",
+        title="PolyCapGlot API",
+        description="API usada para manejar el acceso a videos y usuarios",
+        doc="/docs/api-docs",
+        default_swagger_filename="/docs/swagger"
+    )
 
-#Load firebase config from JSON
-config = load_firebase_json()
+# Carga la configuración de Firebase desde un archivo JSON y la inicializa
+def initialize_firebase():
+    config = load_firebase_json()
+    firebase_app = pyrebase.initialize_app(config)
+    storage = firebase_app.storage()
+    return firebase_app, storage
 
-firebase = pyrebase.initialize_app(config)
-storage = firebase.storage()
+# Inicializar la base de datos
+db = initialize_db()
 
-#deepl in this case
+# Inicializar la API
+api = initialize_api()
 
+# Inicializar Firebase
+firebase, storage = initialize_firebase()
 
+# Inicializar el procesador de videos
 print("Start Process")
 processor = None
 processor = video_processor()

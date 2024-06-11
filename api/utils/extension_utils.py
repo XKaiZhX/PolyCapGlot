@@ -1,3 +1,30 @@
+import os
+import json
+
+def load_firebase_json():
+    """Carga la configuración de Firebase desde un archivo JSON."""
+    config_path = "./config/firebase.json"
+    if not os.path.exists(config_path):
+        raise Exception("Firebase config json not found")
+    
+    with open(config_path, "r") as json_file:
+        firebase_config = json.load(json_file)
+    
+    return firebase_config
+
+def get_mongo_connection_string():
+    """Obtiene la cadena de conexión para MongoDB."""
+    default_connection = "mongodb://localhost:27017/"
+    container_connection = "mongodb://pcg_mongo:27017/"
+    
+    if os.environ.get("IS_THIS_CONTAINER", False):
+        print(f"Container connection string: {container_connection}")
+        return container_connection
+    else:
+        print(f"Local connection string: {default_connection}")
+        return default_connection
+
+'''
 from moviepy.config import change_settings
 import os
 import json
@@ -24,3 +51,4 @@ def get_mongo_connection_string():
         print("Local connection string: " + connection)
     
     return connection
+'''
