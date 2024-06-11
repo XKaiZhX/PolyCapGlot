@@ -72,8 +72,6 @@ class toText:
                         chunk_start_times.append(end_time / 1000)
                     
                     chunk_start_times.append(audio_duration)
-
-                    print(chunk_start_times)
                 
                     chunk_start_times_ms = [int(time * 1000) for time in chunk_start_times]
                     chunks = []
@@ -137,6 +135,10 @@ class toText:
             resultado = self.whisper_model_chunk.transcribe(audio_path, language=self.original, word_timestamps=True)
             waveform, sample_rate = torchaudio.load(audio_path)
 
+            print("---Resultado Whisper---")
+            print(resultado)
+            print("------")
+
             if sample_rate != self.SAMPLE_RATE:
                 waveform = F.resample(waveform, sample_rate, self.SAMPLE_RATE)
                 sample_rate = self.SAMPLE_RATE
@@ -176,16 +178,15 @@ class toText:
                     text = words_info["text"]
                     start = words_info["start"]
                     end = words_info["end"]
-                    
-                    print(start_time)
-                    print(start)
-                    print(end_time)
-                    print(end)
 
                     if start_time <= start <= end_time or start_time <= end <= end_time:
                         start += accumulated_time
                         end += accumulated_time
                         final.append({'text': text.strip(), 'start': start, 'end': end, 'speaker': speaker})
+
+            print("---Resultado Textos Final---")
+            print(final)
+            print("------")
 
             for dato in final:
                 self.sub.toJson(dato)
