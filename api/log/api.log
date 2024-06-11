@@ -26171,3 +26171,23 @@
 [11/Jun/2024 20:39:08] -  non-existent file: ./tmp/194bbfa7773b49212cfbfc40d177525eaef6aa9a0d3fe71e30ec8555542149ed_ES_EN-GB\194bbfa7773b49212cfbfc40d177525eaef6aa9a0d3fe71e30ec8555542149ed_final.mp4
 [11/Jun/2024 20:39:44] -  videos fetched from user: andrew@gmail.com
 [11/Jun/2024 20:39:54] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:03:10] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:03:10] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:03:10] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[11/Jun/2024 21:03:28] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:04:24] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:04:28] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:04:47] -  Descargando video de URI: raw_videos/cd1f09755952b77d5ad13457d01fadf5913dccbe962604c477ba35c86d480f3c.mp4
+[11/Jun/2024 21:04:54] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:05:45] -  non-existent file: ./tmp/cd1f09755952b77d5ad13457d01fadf5913dccbe962604c477ba35c86d480f3c_ES_EN-US\cd1f09755952b77d5ad13457d01fadf5913dccbe962604c477ba35c86d480f3c_final.mp4
+[11/Jun/2024 21:06:21] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:06:25] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:07:10] -  Descargando video de URI: raw_videos/1a007af4441b3f5ff4855324dca7ffa588d3925b72e88f62d3a6d845e979b04b.mp4
+[11/Jun/2024 21:07:24] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:08:23] -  non-existent file: ./tmp/1a007af4441b3f5ff4855324dca7ffa588d3925b72e88f62d3a6d845e979b04b_EN_AR\1a007af4441b3f5ff4855324dca7ffa588d3925b72e88f62d3a6d845e979b04b_final.mp4
+[11/Jun/2024 21:09:33] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:09:42] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:10:02] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:10:10] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:10:24] -  videos fetched from user: andrew@gmail.com
+[11/Jun/2024 21:10:34] -  videos fetched from user: andrew@gmail.com

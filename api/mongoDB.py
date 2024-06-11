@@ -154,13 +154,25 @@ class MongoRepository:
             for trans_found in [self.find_translation(trans_id)]
         ]
 
+    def update_translation_status_done(self, id:str):
+        res = self.translated.update_one(
+            {"id": id},
+            {"$set": {"status" : 1}}
+        )
+        return res.modified_count > 0
+
+    def update_translation_status_error(self, id):
+        res = self.translated.update_one(
+            {"id": id},
+            {"$set": {"status" : -1}}
+        )
+        return res.modified_count > 0
+
     def delete_translation(self, id, video_id):
         # Elimina una traducción dada su id y el id del video
-        print("trans_id" + id)
         found = self.find_translation(id)
 
         if found is None or found["status"] == 0:
-            print("None or 0")
             return False
 
         if found["status"] == 1:

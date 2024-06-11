@@ -1,3 +1,4 @@
+from threading import Thread
 from flask import request
 from flask_restx import Namespace, Resource, reqparse
 import logging
@@ -111,16 +112,16 @@ class VideoRequest(Resource):
             }
         
         video_controller.abort(403, "Not able to upload video")
-
+'''
 @video_controller.route("/upload")
 class VideoUpload(Resource):
     @token_required(video_controller)
     @video_controller.param('x-access-token', 'An access token', 'header', required=True)
     @video_controller.expect(request_model)
     def post(self, current_user, **kwargs):
-        '''
+        ''
         Sube un video a traducir
-        '''
+        ''
         data = request.json        
 
         video_id = data["video_id"]
@@ -166,6 +167,71 @@ class VideoUpload(Resource):
             video_controller.abort(400, "Error saving translation")
 
         return {"message": "translation uploading"}
+'''
+@video_controller.route("/upload")
+class VideoUpload(Resource):
+    @token_required(video_controller)
+    @video_controller.param('x-access-token', 'An access token', 'header', required=True)
+    @video_controller.expect(request_model)
+    def post(self, current_user, **kwargs):
+        '''
+        Sube un video a traducir
+        '''
+        data = request.json        
+
+        video_id = data["video_id"]
+        filename = video_id + ".mp4"  # Nombre del archivo de video
+        sub = data["sub"]  # Idioma del subtitulo
+        
+        trans_id = generate_translation_hash(video_id, sub)
+        video_found = video_service.find_video(video_id)
+        trans_found = video_service.find_translation(trans_id)
+
+        if trans_found is not None:
+            video_controller.abort(400, "Translation already exists")
+
+        if video_found is None:
+            video_controller.abort(404, "Video not found")
+
+        # Inserción en la base de datos indicando que la traducción está en proceso
+        if not video_service.insert_translation(video_id, sub, trans_id):
+            video_controller.abort(400, "Error initiating translation process")
+
+        def download_and_process_video():
+            try:
+                folder_path = generate_temp_folder(video_id, video_found["language"], sub)
+            except Exception as e:
+                ns_log(video_controller, f"Translation already in process for video: {video_id} from " + current_user["email"], logging.INFO)
+                video_service.delete_trans(trans_id, video_id)
+                return
+
+            ns_log(video_controller, "Descargando video de URI: " + video_found["firebase_uri"], logging.INFO)
+            storage.child(video_found["firebase_uri"]).download("", f"{folder_path}/{video_id}.mp4")
+
+            filepath = f"{folder_path}/{video_id}.mp4"
+
+            if processor is not None:
+                print("processing")
+                filepath = processor.process_video(filename, folder_path, video_id, video_found["language"], sub)
+
+            if not check_file_exists(filepath):
+                msg = "non-existent file: " + filepath
+                ns_log(video_controller, msg, logging.CRITICAL)
+                video_service.update_translation_status(trans_id, -1)
+                return
+
+            ns_log(video_controller, "Subiendo video a URI: " + video_found["firebase_uri"], logging.INFO)
+            storage.child(f"translated_videos/{trans_id}.mp4").put(filepath)
+
+            # Actualización en la base de datos indicando que la traducción está completa
+            if not video_service.update_translation_status(trans_id, 1):
+                ns_log(video_controller, "Error updating translation status in DB", logging.CRITICAL)
+
+        # Iniciar el hilo para la descarga y procesamiento del video
+        thread = Thread(target=download_and_process_video)
+        thread.start()
+
+        return {"message": "translation uploading"}
 
 @video_controller.route("/translation")
 class VideoTranslation(Resource):
@@ -182,7 +248,6 @@ class VideoTranslation(Resource):
         trans_id = headers.get("trans-id")
         video_id = headers.get("video-id")
 
-        print(str(video_id) + "$ - " + str(trans_id) + "$")
         result = video_service.delete_trans(trans_id, video_id)
         if not result:
             print("failed")

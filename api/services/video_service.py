@@ -26,6 +26,10 @@ class AbstractVideoService(metaclass=ABCMeta):
     def delete_trans(self, trans_id: str, video_id: str):
         pass
 
+    @abstractmethod
+    def update_translation_status(self, id:str, status:int):
+        pass
+
 class VideoService(AbstractVideoService):
     def preupload_video(self, email: str, id: str, title: str, language: str, uri: str):
         return db.preupload_video(email, id, title, language, uri)
@@ -38,6 +42,13 @@ class VideoService(AbstractVideoService):
 
     def insert_translation(self, id: str, sub: str, trans_id):
         return db.insert_translation(id, sub, trans_id)
+
+    def update_translation_status(self, id:str, status:int):
+        if status == 1:
+            return db.update_translation_status_done(id)
+        elif status == -1:
+            return db.update_translation_status_error(id)
+        return False
 
     def delete_video(self, id: str, email: str):
         return db.delete_video(id, email)
