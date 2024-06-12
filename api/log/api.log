@@ -26335,3 +26335,13 @@
 [12/Jun/2024 01:24:59] -  videos fetched from user: t@t.com
 [12/Jun/2024 01:25:28] -  Descargando video de URI: raw_videos/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192.mp4
 [12/Jun/2024 01:29:36] -  non-existent file: ./tmp/c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192_ES_EN-US\c65371794aac97a470a84fdcf96afa964764a638523ce8a7c205ef994ef35192_final.mp4
+[12/Jun/2024 01:38:12] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:38:19] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:38:21] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:38:21] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:38:23] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:38:24] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:38:25] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[12/Jun/2024 01:38:28] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:38:41] -  videos fetched from user: t@t.com
+[12/Jun/2024 01:38:47] -  videos fetched from user: t@t.com

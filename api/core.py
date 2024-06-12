@@ -30,18 +30,21 @@ class video_processor:
             if original_language == target_language:
                 raise ValueError("Target Language Must Be Different than Original Language")
 
+            print("---------if 0")
             if self.check_and_process_file(video_file_path, split, folder_path, id, video_file_path):
+                print("---------if 1")
                 audio_file_path = os.path.join(folder_path, f'{id}_audio_reduced.wav')
                 if self.check_and_process_file(audio_file_path, toText, folder_path, id, audio_file_path, original_language, target_language):
+                    print("---------if 2")
                     srt_file_path = os.path.join(folder_path, f'{id}_subtitle.srt')
-                    if self.check_and_process_file(srt_file_path, merge, folder_path, id, video_file_path, srt_file_path, target_language) is False:
-                        raise ValueError("Error merging text and video")
+                    self.check_and_process_file(srt_file_path, merge, folder_path, id, video_file_path, srt_file_path, target_language)
                 else:
-                    raise ValueError("Error transcripting text")
+                    return False
             else:
-                raise ValueError("Error splitting the video")
+                return False
 
             print("......Process End......")
+#            return os.path.join(folder_path, f'{id}_final.mp4')
 
         except ValueError as error:
             print("Error:", error)
