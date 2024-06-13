@@ -36,7 +36,6 @@ dora_search==0.1.12
 einops==0.7.0
 executing==2.0.1
 fastjsonschema==2.19.1
-ffmpeg==1.4
 ffmpeg-python==0.2.0
 filelock==3.13.1
 firebase-admin==6.5.0
