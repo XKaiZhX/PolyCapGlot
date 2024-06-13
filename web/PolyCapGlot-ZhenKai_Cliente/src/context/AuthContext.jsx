@@ -83,19 +83,16 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-  const ValidarToken = async(token) => {
+  const ValidarToken = async (token) => {
     try {
-      const response = await requestUserVideos(token);
-      if (response.success) {
-        return true;
-      } else {
-        return false;
-      }
+        const response = await requestUserVideos(token);
+        return response.status === 200;
     } catch (error) {
-      console.error('Error al validar token:', error);
-      throw new Error('Error al validar token');
-    }  
+        console.error('Error al validar token:', error);
+        return false;
+    }
   };
+
 
   const requestVideoFunc = async (videoData) => {
     try {
