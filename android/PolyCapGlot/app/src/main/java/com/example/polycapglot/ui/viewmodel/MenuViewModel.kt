@@ -200,16 +200,19 @@ class MenuViewModel(
         videos.value = list
     }
 
-    fun getDownloadLinks(videoUris: List<String>, callback: (List<String>) -> Unit) {
+    fun getDownloadLinks(videoUris: List<String>, videos: List<Video>, callback: (List<String>, List<String>) -> Unit) {
         val downloadLinks = mutableListOf<String>()
+        val videoIds = mutableListOf<String>()
         val tasks = mutableListOf<Task<Uri>>()
-
         // Iterate through each video URI and get its download link
-        for (uri in videoUris) {
-            val storageRef = storage.reference.child(uri)
+        for (i in videoUris.indices) {
+            videoIds.add(videos[i].id)
+            val storageRef = storage.reference.child(videoUris[i])
             val task = storageRef.downloadUrl
             tasks.add(task)
         }
+
+        // Iterate through each video and get its id
 
         // Wait for all tasks to complete
         Tasks.whenAllComplete(tasks).addOnCompleteListener { taskList ->
@@ -224,7 +227,7 @@ class MenuViewModel(
                 }
             }
             // Call the callback function with the list of download links
-            callback(downloadLinks)
+            callback(downloadLinks, videoIds)
             videoDownloadLinks.value = downloadLinks
         }
 
@@ -233,18 +236,18 @@ class MenuViewModel(
             Log.i("DOWNLOAD_LINK", link)
         }
     }
-    fun generateThumbnails(videoUrls: List<String>) {
+    fun generateThumbnails(videoUrls: List<String>, videoIds: List<String>) {
         viewModelScope.launch {
-            thumbnails.value = generateThumbnailsInternal(videoUrls)
+            thumbnails.value = generateThumbnailsInternal(videoUrls, videoIds)
         }
     }
 
-    private suspend fun generateThumbnailsInternal(videoUrls: List<String>): List<Bitmap?> {
+    private suspend fun generateThumbnailsInternal(videoUrls: List<String>, videoIds: List<String>): List<Bitmap?> {
         return withContext(Dispatchers.IO) {
             val generatedThumbnails = mutableListOf<Bitmap?>()
             try {
-                for (videoUrl in videoUrls) {
-                    val thumbnail = generateThumbnailInternal(videoUrl)
+                for (i in 0..videoUrls.size) {
+                    val thumbnail = generateThumbnailInternal(videoUrls[i], videoIds[i])
                     generatedThumbnails.add(thumbnail)
                 }
             } catch (e: Exception) {
@@ -254,10 +257,10 @@ class MenuViewModel(
         }
     }
 
-    private suspend fun generateThumbnailInternal(videoUrl: String): Bitmap? {
+    private suspend fun generateThumbnailInternal(videoUrl: String, videoId: String): Bitmap? {
         return withContext(Dispatchers.IO) {
             try {
-                val file = File(getApplication<Application>().cacheDir, "video_thumbnail.jpg")
+                val file = File(getApplication<Application>().cacheDir, "$videoId.jpg")
                 val command = "-y -i $videoUrl -ss 00:00:01 -vframes 1 ${file.absolutePath}"
                 val rc = FFmpegKit.execute(command)
                 if (ReturnCode.isSuccess(rc.returnCode)) {

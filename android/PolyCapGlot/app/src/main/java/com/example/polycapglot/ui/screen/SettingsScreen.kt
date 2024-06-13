@@ -51,7 +51,6 @@ fun SettingsScreen(vm: MenuViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(text = "Settings Screen", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(24.dp))
 
         Row(Modifier.fillMaxWidth(), Arrangement.SpaceBetween) {

@@ -59,7 +59,7 @@ RUN git checkout Andrew3
 
 # Instala las dependencias de Python del GitHub
 RUN pip install -r requirements.txt
-
+RUN pip install ffmpeg
 #Cambios en configuracion de ImageMagick para que MoviePy funcione
 RUN sed -i 's#<!-- <policy domain="cache" name="shared-secret" value="passphrase" stealth="true"/>#<!-- <policy domain="cache" name="shared-secret" value="passphrase" stealth="true"/> -->#' /etc/ImageMagick-6/policy.xml
 RUN sed -i 's#<!-- in order to avoid to get image with password text -->#<!-- in order to avoid to get image with password text --><!--#' /etc/ImageMagick-6/policy.xml

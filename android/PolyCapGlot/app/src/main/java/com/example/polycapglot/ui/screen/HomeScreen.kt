@@ -70,8 +70,8 @@ fun HomeScreen(vm: MenuViewModel) {
     LaunchedEffect(videos) {
         if (videos.isNotEmpty()) {
             val videoUris = videos.map { it.firebase_uri }
-            vm.getDownloadLinks(videoUris) { downloadLinks ->
-                vm.generateThumbnails(downloadLinks)
+            vm.getDownloadLinks(videoUris, videos) { downloadLinks, videoIds ->
+                vm.generateThumbnails(downloadLinks, videoIds)
             }
         }
     }
@@ -153,7 +153,7 @@ fun VideoCard(
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize()
                     )
-                } ?: Text("Loading thumbnail...")
+                } ?: Text("Loading")
             }
 
             Column(
@@ -169,29 +169,29 @@ fun VideoCard(
                     1 -> Text(text = "Translation available", color = Color.Green, style = MaterialTheme.typography.bodySmall)
                     -1 -> Text(text = "Translation failed", color = Color.Red, style = MaterialTheme.typography.bodySmall)
                 }
-            }
 
-            Box {
-                Button(
-                    onClick = { expanded = true },
-                    enabled = selectedTranslation?.status == 1
-                ) {
-                    Text(selectedTranslation?.sub_language ?: "Generating")
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    video.translations.forEach { translation ->
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedTranslation = translation
-                                expanded = false
-                            },
-                            text = {
-                                Text(text = translation.sub_language)
-                            }
-                        )
+                Box {
+                    Button(
+                        onClick = { expanded = true },
+                        enabled = selectedTranslation?.status == 1
+                    ) {
+                        Text(selectedTranslation?.sub_language ?: "No translation")
+                    }
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        video.translations.forEach { translation ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedTranslation = translation
+                                    expanded = false
+                                },
+                                text = {
+                                    Text(text = translation.sub_language)
+                                }
+                            )
+                        }
                     }
                 }
             }
