@@ -56,16 +56,12 @@ dependencies {
 
     //Others
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    implementation("com.arthenica:mobile-ffmpeg-full-gpl:4.4")
+    implementation("com.arthenica:ffmpeg-kit-full:6.0-2")
 
     //ExoPlayer
     implementation("androidx.media3:media3-exoplayer:1.3.1")
     implementation("androidx.media3:media3-exoplayer-dash:1.3.1")
     implementation("androidx.media3:media3-ui:1.3.1")
-
-    //implementation("com.google.android.exoplayer:exoplayer:2.19.1")
-    //implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    //androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
 
     //Navigation
     val nav_version = "2.7.7"

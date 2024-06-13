@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.arthenica.mobileffmpeg.Config
-import com.arthenica.mobileffmpeg.FFmpeg
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.ReturnCode
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.FutureTarget
 import com.example.polycapglot.services.retrofit.RetrofitInstance
@@ -258,15 +258,9 @@ class MenuViewModel(
         return withContext(Dispatchers.IO) {
             try {
                 val file = File(getApplication<Application>().cacheDir, "video_thumbnail.jpg")
-                val command = arrayOf(
-                    "-y",
-                    "-i", videoUrl,
-                    "-ss", "00:00:01",
-                    "-vframes", "1",
-                    file.absolutePath
-                )
-                val rc = FFmpeg.execute(command)
-                if (rc == Config.RETURN_CODE_SUCCESS) {
+                val command = "-y -i $videoUrl -ss 00:00:01 -vframes 1 ${file.absolutePath}"
+                val rc = FFmpegKit.execute(command)
+                if (ReturnCode.isSuccess(rc.returnCode)) {
                     val futureTarget: FutureTarget<Bitmap> = Glide.with(getApplication<Application>())
                         .asBitmap()
                         .load(file)

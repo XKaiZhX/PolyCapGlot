@@ -51,6 +51,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import com.example.polycapglot.ui.screen.PlayerScreen
 import com.example.polycapglot.ui.viewmodel.PlayerViewModel
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -76,7 +77,7 @@ class PlayerActivity : ComponentActivity() {
 
                 setContent {
                     Column(Modifier.fillMaxSize().background(Color.Black)) {
-                        ExoPlayerScreen(playerViewModel)
+                        PlayerScreen(playerViewModel)
                     }
                 }
             }.addOnFailureListener { exception ->
@@ -93,66 +94,4 @@ class PlayerActivity : ComponentActivity() {
         super.onDestroy()
         playerViewModel.releasePlayer()
     }
-}
-
-
-@Composable
-fun ExoPlayerScreen(playerViewModel: PlayerViewModel) {
-    val context = LocalContext.current
-    val exoPlayer = playerViewModel.exoPlayer
-
-    var showButton by remember { mutableStateOf(false) }
-
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)
-        .pointerInput(Unit) {
-            detectVerticalDragGestures(
-                onVerticalDrag = { change, dragAmount ->
-                    if (dragAmount < -10) {
-                        showButton = true
-                    } else if (dragAmount > 10) {
-                        showButton = false
-                    }
-                }
-            )
-        }
-    ) {
-        AndroidView(
-            factory = { context ->
-                PlayerView(context).apply {
-                    player = exoPlayer
-                }
-            },
-            modifier = Modifier.fillMaxSize()
-        )
-
-        AnimatedVisibility(
-            visible = showButton,
-            modifier = Modifier.align(Alignment.BottomEnd)
-        ) {
-            FloatingActionButton(
-                onClick = { rotateScreen(context) },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Refresh,
-                    contentDescription = "Rotate"
-                )
-            }
-        }
-    }
-}
-
-private fun rotateScreen(context: Context) {
-    val activity = context as? Activity ?: return
-    val orientation = context.resources.configuration.orientation
-    val newOrientation = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-    } else {
-        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-    }
-    activity.requestedOrientation = newOrientation
 }
