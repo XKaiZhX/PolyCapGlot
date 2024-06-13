@@ -7,15 +7,15 @@ export const RegisterRequest = user => axios.post(API + '/user/', user);
 export const LoginRequest = user => axios.post(API + '/user/login', user);
 
 export const UpdateUsernameRequest = (user, token) => axios.put(API + '/user/update/username', user, {
-    header: { 'x-access-token': token }
+    headers: { 'x-access-token': token }
 });
 
 export const UpdatePasswordRequest = (user, token) => axios.put(API + '/user/update/password', user, {
-    header: { 'x-access-token': token }
+    headers: { 'x-access-token': token }
 });
 
 export const DeleteUserRequest = (email, token) => axios.delete(API + '/user/' + email, {
-    header: { 'x-access-token': token }
+    headers: { 'x-access-token': token }
 });
 
 export const requestVideo = (videoData, token) => axios.post(API + '/video/request', videoData, {
