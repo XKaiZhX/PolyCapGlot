@@ -18,5 +18,5 @@ PyJWT==2.8.0
 pymongo==4.6.3
 Pyrebase4==4.7.1
 pysrt==1.1.2
-scipy==1.13.1
+scipy==1.10.1
 torchaudio==2.2.1
