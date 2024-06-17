@@ -50,7 +50,7 @@ class video_processor:
         except Exception as e:
             print("Critical error!:", e)
 
-    def check_and_process_file(self, file_path, process_class, *args):
+    def check_and_process_file(self, file_path, processing_function, *args):
         if os.path.exists(file_path):
             print("Ejecutando: " + processing_function.__name__)
             processing_function(*args)
