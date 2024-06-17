@@ -11,7 +11,6 @@ class toSub:
         :param original_language: Código del idioma original (ej. 'EN').
         :param target_language: Código del idioma objetivo para la traducción (ej. 'ES').
         """
-        self.completed = False
         self.id = id
         self.original = original_language
         self.target = target_language
@@ -111,9 +110,5 @@ class toSub:
                     end_time = palabra['end']
                     sub.write(f"{index}\n{self.format_time(start_time)} --> {self.format_time(end_time)}\n{palabra['speaker']}: {palabra['texto_traducido']}\n\n")
             print(f"Subtitles written to {srt_file}")
-            self.completed = True
         except Exception as e:
             print(f"Error al crear el archivo de subtítulos: {e}")
-            self.completed = False
-
-        return self.completed
