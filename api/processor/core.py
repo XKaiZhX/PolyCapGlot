@@ -30,34 +30,29 @@ class video_processor:
             if original_language == target_language:
                 raise ValueError("Target Language Must Be Different than Original Language")
 
-            if self.check_and_process_file(video_file_path, split, folder_path, id, video_file_path):
-                audio_file_path = os.path.join(folder_path, f'{id}_audio_reduced.wav')
-                if self.check_and_process_file(audio_file_path, toText, folder_path, id, audio_file_path, original_language, target_language):
-                    srt_file_path = os.path.join(folder_path, f'{id}_subtitle.srt')
-                    if self.check_and_process_file(srt_file_path, merge, folder_path, id, video_file_path, srt_file_path, target_language) is False:
-                        raise ValueError("Error merging text and video")
-                else:
-                    raise ValueError("Error transcripting text")
-            else:
-                raise ValueError("Error splitting the video")
+            # Verificar y procesar el archivo de audio reducido
+            video_file_path = os.path.join(folder_path, f'{id}.mp4')
+            self.check_and_process_file(video_file_path, split, folder_path, id, video_file_path)
+
+            # Verificar y procesar el archivo de audio reducido
+            audio_file_path = os.path.join(folder_path, f'{id}_audio_reduced.wav')
+            self.check_and_process_file(audio_file_path, toText, folder_path, id, audio_file_path, original_language, target_language)
+
+            # Verificar y procesar el archivo de subtítulos
+            srt_file_path = os.path.join(folder_path, f'{id}_subtitle.srt')
+            self.check_and_process_file(srt_file_path, merge, folder_path, id, video_file_path, srt_file_path, target_language)
 
             print("......Process End......")
-
+            
+            return os.path.join(folder_path, f'{id}_final.mp4')
         except ValueError as error:
             print("Error:", error)
         except Exception as e:
             print("Critical error!:", e)
-        
-        return os.path.join(folder_path, f'{id}_final.mp4')
 
     def check_and_process_file(self, file_path, process_class, *args):
-        if not os.path.exists(file_path):
-            print(f"File {file_path} not found.")
-            return False
-        
-        instance = process_class(*args)
-        if not instance.completed:
-            print(f"Failed to process {file_path}.")
-            return False
-
-        return True
+        if os.path.exists(file_path):
+            print("Ejecutando: " + processing_function.__name__)
+            processing_function(*args)
+        else:
+            print(f"The file '{file_path}' does not exist.")
