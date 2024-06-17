@@ -7,7 +7,6 @@ import numpy as np
 class split():
 
     def __init__(self, path, id, video):
-        self.completed = False
         self.id = id
         self.video = video
         self.path = path
@@ -27,10 +26,8 @@ class split():
             audio_editor.close()
             # Reducir ruido
             self.reducir_ruido()
-            self.completed = True
         except Exception as e:
             print("Error occurred during audio splitting:", str(e))
-            self.completed = False
 
     def reducir_ruido(self):
         try:
