@@ -13,7 +13,6 @@ class merge():
         :param subtitulo: Ruta del archivo de subtítulos (SRT).
         :param target_language: Código del idioma objetivo para la codificación de subtítulos.
         """
-        self.completed = False
         self.path = path
         self.id = id
         self.video = video
@@ -80,10 +79,8 @@ class merge():
             output_file = os.path.join(self.path, f'{self.id}_final.mp4')
             os.makedirs(self.path, exist_ok=True)
             final_video.write_videofile(output_file)
-            self.completed = True
         except Exception as e:
             print(f"Error al juntar el video con los subtítulos: {e}")
-            self.completed = False
 
     def time_to_seconds(self, time_obj):
         """
