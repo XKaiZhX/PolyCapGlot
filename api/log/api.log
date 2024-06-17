@@ -1,0 +1,11 @@
+[14/Jun/2024 07:20:56] -  Descargando video de URI: raw_videos/f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a.mp4
+[14/Jun/2024 07:20:58] -  non-existent file: ./tmp/f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a_ES_ES\f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a_final.mp4
+[14/Jun/2024 07:20:58] -  Deleted temporary folder: ./tmp/f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a_ES_ES
+[14/Jun/2024 07:21:42] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[14/Jun/2024 07:21:51] -  Exception: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+[14/Jun/2024 07:22:02] -  videos fetched from user: a@a.com
+[14/Jun/2024 07:22:33] -  videos fetched from user: a@a.com
+[14/Jun/2024 07:22:37] -  Descargando video de URI: raw_videos/f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a.mp4
+[14/Jun/2024 07:22:58] -  videos fetched from user: a@a.com
+[14/Jun/2024 07:27:34] -  non-existent file: ./tmp/f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a_ES_EN-GB\f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a_final.mp4
+[14/Jun/2024 07:27:34] -  Deleted temporary folder: ./tmp/f3609a9eacc7649af6143ef58e94758c44468f5ac7fe8e449167f0abfe335f8a_ES_EN-GB

@@ -23,21 +23,31 @@
     #docker exec -it api nvim
 
 # Usa la imagen base de Python 3.9
-FROM python:3.9
+FROM ubuntu:20.04
+
+# Establece la variable de entorno para que las instalaciones no soliciten interacción
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Actualiza el sistema operativo e instala varios paquetes
-RUN apt-get update && \
-    apt-get install -y git &&\
-    apt-get install -y ffmpeg &&\
-    apt-get install -y neovim &&\
-    apt-get install -y cabextract &&\
-    apt-get install -y wget &&\
-    apt-get install -y imagemagick &&\
-    apt-get install -y libmagick++-dev &&\
-    apt-get install -y build-essential &&\
-    apt-get install -y npm
-    
-RUN apt-get install -y nodejs
+RUN apt update
+RUN apt install -y git &&\
+    apt install -y ffmpeg &&\
+    apt install -y neovim &&\
+    apt install -y cabextract &&\
+    apt install -y wget &&\
+    apt install -y imagemagick &&\
+    apt install -y libmagick++-dev &&\
+    apt install -y build-essential &&\
+    apt install -y npm &&\
+    apt install -y curl
+
+RUN apt install -y python3.9 
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+RUN python3 get-pip.py 
+
+RUN apt install -y software-properties-common &&\
+    apt install -y gcc
+RUN apt install -y nodejs
 
 #Descargar fuentes (para Arial)
 RUN mkdir /delete-me-fonts
@@ -58,12 +68,15 @@ WORKDIR /PolyCapGlot/api
 RUN git checkout Andrew3
 
 # Instala las dependencias de Python del GitHub
-RUN pip install -r requirements.txt
-RUN pip install ffmpeg
+RUN pip3 install -r requirements.txt
+RUN pip3 install ffmpeg
 #Cambios en configuracion de ImageMagick para que MoviePy funcione
 RUN sed -i 's#<!-- <policy domain="cache" name="shared-secret" value="passphrase" stealth="true"/>#<!-- <policy domain="cache" name="shared-secret" value="passphrase" stealth="true"/> -->#' /etc/ImageMagick-6/policy.xml
 RUN sed -i 's#<!-- in order to avoid to get image with password text -->#<!-- in order to avoid to get image with password text --><!--#' /etc/ImageMagick-6/policy.xml
 RUN sed -i 's#<!-- disable ghostscript format types -->#--><!-- disable ghostscript format types -->#' /etc/ImageMagick-6/policy.xml
+
+# Dar permisos a los archivos de API
+RUN chmod -R 777 /PolyCapGlot/api 
 
 # Expone el puerto 9002 para acceder a la aplicación
 EXPOSE 9002
@@ -72,4 +85,4 @@ EXPOSE 9002
 ENV IS_THIS_CONTAINER Yes
 
 # Define el comando de ejecución del contenedor
-CMD ["python", "main.py"]
+CMD ["python3", "main.py"]
