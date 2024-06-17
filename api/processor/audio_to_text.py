@@ -18,7 +18,6 @@ class toText:
     SAMPLE_RATE = 16000
 
     def __init__(self, path, id, audio, original_language, target_language):
-        self.completed = False
         self.path = path
         self.id = id
         self.audio = audio
@@ -121,13 +120,10 @@ class toText:
                         temp_file = os.path.join(output_dir, chunk_name)
                         os.remove(temp_file)
 
-                    self.completed = True
         except Exception as e:
             print(f"Error: {str(e)}. Reattempting transcription...")
             self.transcribe(self.audio, 0)
-            self.completed = self.sub.toSubtitle()
-
-        return self.completed
+            self.sub.toSubtitle()
 
     def transcribe(self, audio_path, accumulated_time):
         try:
