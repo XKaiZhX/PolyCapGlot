@@ -34,6 +34,15 @@ export const VideoList = () => {
     navigate('/');
   };
 
+  const handleTranslationClick = (firebaseUri) => {
+    const uriParts = firebaseUri.split('/');
+    const folder = uriParts[0];
+    const newFileName = uriParts[1].split('.')[0];
+    const fileExtension = uriParts[1].split('.')[1];
+    
+    navigate(`/videoplayer/${folder}/${newFileName}/${fileExtension}`);
+  };
+
   return (
     <div>
       <NavbarTools />
@@ -50,7 +59,16 @@ export const VideoList = () => {
                     <p className='card-text'>{video.language}</p>
                     <p className='card-text'>{video.firebase_uri}</p>
                     <p className='card-text'>{video.translations.map((translation, index) => (
-                      <span key={index}>{translation.sub_language}: {translation.firebase_uri}<br /></span>
+                      <span key={index}>{translation.sub_language}: {translation.firebase_uri}<br />
+                      <button
+                        type="button"
+                        className="btn btn-link"
+                        onClick={() => handleTranslationClick(translation.firebase_uri)}
+                      >
+                        Ver video
+                      </button>
+                      </span>
+                      
                     ))}</p>
                   </div>
                 </div>
